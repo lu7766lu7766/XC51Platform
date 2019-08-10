@@ -1,0 +1,57 @@
+/**选择头像管理类 */
+class selectHeadIconMrf extends egret.DisplayObjectContainer {
+	private static _mInstance: selectHeadIconMrf;
+	public static get getInstance(): selectHeadIconMrf {
+		if (selectHeadIconMrf._mInstance == undefined)
+			selectHeadIconMrf._mInstance = new selectHeadIconMrf();
+		return selectHeadIconMrf._mInstance;
+	}
+	public constructor() {
+		super();
+		this._mListObj = new GHashMap<selectHeadIconItem>();
+	}
+
+	private _mListObj: GHashMap<selectHeadIconItem>;//数据列表
+
+	public show(): void {
+		if (this.parent == undefined) {
+			GUIManager.getInstance.bgLay.addChild(this);
+		}
+	}
+
+	public hide(): void {
+		if (this.parent != undefined) {
+			this.parent.removeChild(this);
+		}
+	}
+
+	/**初始化所有数据*/
+	public initallInfo(): void {
+		let len: number = 0;
+		let dataObj: selectHeadIconItem;
+		for (let i = 1; i <= len; i++) {
+			dataObj = this._mListObj.Gget(i);
+			if (dataObj == undefined) {
+				dataObj = new selectHeadIconItem();
+				this._mListObj.Gput(i, dataObj);
+			}
+			dataObj.setID(i);
+			dataObj.setPoint(0, 10 + (i - 1) * 155);
+			if (dataObj.parent == undefined) {
+				this.addChild(dataObj);
+			}
+		}
+	}
+
+	//清除对象数组
+	public hideData(): void {
+		for (let key of this._mListObj.keys) {
+			let data: selectHeadIconItem = this._mListObj.Gget(key);
+			if (data != undefined) {
+				if (data.parent != undefined) {
+					data.parent.removeChild(data);
+				}
+			}
+		}
+	}
+}

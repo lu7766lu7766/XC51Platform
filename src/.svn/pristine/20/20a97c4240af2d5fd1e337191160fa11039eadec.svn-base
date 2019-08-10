@@ -1,0 +1,16 @@
+class MyLotteryData {
+	/**id 标识*/
+	public id:number;
+	/**类型 1(竞足) 2(竞篮) 3(组三) 4(组5)*/
+	public type:number;
+	/**串关类型 1串关 2单关 */
+	public clType:number;
+	/**标题 */
+	public title:string;
+	/**下注金额 */
+	public xzMoney:number;
+	/**状态  1待开奖 2已开奖 3已中奖 */
+	public statue:number;
+	/**时间 */
+	public time:number;
+}

@@ -1,0 +1,71 @@
+/**
+ * 
+
+http://192.168.20.23/ticket/api/P10900.php
+
+返回t和数据列表
+ */
+class FootballBFConfin implements IProHandle {
+	private static _mInstance: FootballBFConfin;
+	public static get getInstance(): FootballBFConfin {
+		if (FootballBFConfin._mInstance == undefined)
+			FootballBFConfin._mInstance = new FootballBFConfin();
+		return FootballBFConfin._mInstance;
+	}
+	/**对象key */
+	private data: HttpData;
+	private constructor() {
+		this.data = new HttpData();
+		this.data.mKey = "FootballBFConfin";
+	}
+
+	/**
+	 * 
+	 */
+	public sendHttp(): void {
+		let url: string = 'http://192.168.20.23/ticket/api/P10900.php';
+		let content = "";
+		HTTPRequest.getInstance.proSend(url, content, this.data);
+	}
+
+	public backHTTP(res: boolean, httpObj: egret.HttpRequest, data: HttpData): void {
+		if (res == true && httpObj.response != "") {//请求成功
+			let text: Object;
+			try {
+				text = JSON.parse(httpObj.response);
+			} catch (error) {
+				return;
+			}
+			let listlistArray: Array<any> = text['data'];
+			for (let i = 0; i < listlistArray.length; i++) {
+				let objdata = listlistArray[i];
+				let data1: footballCofObj = new footballCofObj();
+
+				let id: string = objdata['id'];
+				let timer: string = objdata["time"];
+				let leftname: string = objdata["team_a_name"];
+				let leftteam_a_icon: string = objdata["team_a_icon"];
+				let rightname: string = objdata["team_b_name"];
+				let rightteam_a_icon: string = objdata["team_b_icon"];
+
+				let bfa: string = objdata["team_a_score"];
+				let bfb: string = objdata["team_b_score"];
+				let zbfen: string = "";
+				if (bfa != "-" || bfb != "-") {
+					zbfen = bfa + ":" + bfb;
+				} else {
+					zbfen = "";
+				}
+				let lsaiName: string = objdata["league_name"];
+				let statezt: number = Number(objdata["status"]);
+
+				FootballConfinData.getInstance.getlist().Gput(1, data1);
+
+			}
+
+
+
+		}
+	}
+
+}

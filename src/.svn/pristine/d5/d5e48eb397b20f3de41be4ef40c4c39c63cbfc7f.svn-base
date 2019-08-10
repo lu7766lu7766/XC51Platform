@@ -1,0 +1,405 @@
+/**篮球和足球详情 */
+class FofBDetail extends egret.DisplayObjectContainer {
+    private static _mInstance: FofBDetail;
+    public static get getInstance(): FofBDetail {
+        if (FofBDetail._mInstance == undefined)
+            FofBDetail._mInstance = new FofBDetail();
+        return FofBDetail._mInstance;
+    }
+
+    private _topUI: TopUI;
+    private _return: egret.Shape;
+
+    private _mContain: egret.DisplayObjectContainer;
+    private _scroView: egret.ScrollView;
+
+    private _dataInfoContain: egret.DisplayObjectContainer;
+
+    private _typeImg: egret.Bitmap;
+    /** 如：竞足串关 */
+    private _typeName: egret.TextField;
+    /** 如：待开奖(预测金额) */
+    private _typeState: egret.TextField;
+    /**投注金额 */
+    private _tzMoney: egret.TextField;
+    /**中奖金额 */
+    private _zjMoney: egret.TextField;
+    /**加奖金额 */
+    private _jiaMoney:egret.TextField;
+    /**订单号 */
+    private _codeNum: egret.TextField;
+    /**日期 */
+    private _dateText: egret.TextField;
+    /**过关方式 */
+    private _wayText: egret.TextField;
+    /**复制按钮 */
+    private _fzhiBnt: egret.Bitmap;
+    /**提示字 */
+    private _tipText: egret.TextField;
+    /**提示字背景 */
+    private _tipBJ: egret.Bitmap;
+    /**加奖图片 */
+    private _jiaBtn:egret.Bitmap;
+
+    private _infoItem: GHashMap<FofB_Info>;
+
+    constructor() {
+        super();
+
+        this.touchEnabled = true;
+        this._infoItem = new GHashMap<FofB_Info>();
+        this._topUI = new TopUI("方案详情");
+        this.addChild(this._topUI);
+        this._return = this._topUI.getReturn();
+
+        this.init();
+        this.setDB();
+    }
+
+    private init(): void {
+        this._mContain = new egret.DisplayObjectContainer();
+        this._dataInfoContain = new egret.DisplayObjectContainer();
+        this._mContain.addChild(this._dataInfoContain);
+        this._dataInfoContain.y = 396;
+        this.addScoll();
+
+        let shape1 = new egret.Bitmap();
+        this._mContain.addChild(shape1);
+        shape1.width = GameMain.getInstance.StageWidth;
+        shape1.height = 354;
+        RES.getResByUrl("resource/assets/images/ui/bai.png", (e) => { shape1.$setBitmapData(e); }, this);
+
+        this._jiaBtn = new egret.Bitmap();
+        this._mContain.addChild(this._jiaBtn);
+        RES.getResByUrl("resource/assets/images/ui/jiaFof.png", (e) => { this._jiaBtn.$setBitmapData(e); }, this);
+        this._jiaBtn.x = 644;
+        this._jiaBtn.y = 24;
+        this._jiaBtn.visible = false;
+
+        let shape3 = new egret.Bitmap();
+        this._mContain.addChild(shape3);
+        RES.getResByUrl("resource/assets/images/ui/hui.png", (e) => { shape3.$setBitmapData(e); }, this);
+        shape3.x = 0;
+        shape3.y = 266;
+        shape3.width = GameMain.getInstance.StageWidth;
+        shape3.height = 10;
+
+        this._typeImg = new egret.Bitmap();
+        this._mContain.addChild(this._typeImg);
+        this._typeImg.width = 32;
+        this._typeImg.height = 32;
+        this._typeImg.x = 28;
+        this._typeImg.y = 24;
+
+        this._typeName = ToolMrg.getText(68, 14 + 11, 28, 0x333333);
+        this._mContain.addChild(this._typeName);
+
+        this._typeState = ToolMrg.getText(552 + 72 - 300, 24 + 5, 24, 0xFF7000, 400);
+        this._mContain.addChild(this._typeState);
+        this._typeState.textAlign = egret.HorizontalAlign.RIGHT;
+
+        let mtext1 = ToolMrg.getText(0, 146 + 11, 28, 0x333333, 375);
+        this._mContain.addChild(mtext1);
+        mtext1.textAlign = egret.HorizontalAlign.CENTER;
+        mtext1.text = "投注金额";
+
+        let mtext2 = ToolMrg.getText(375, 146 + 11, 28, 0x333333, 375);
+        this._mContain.addChild(mtext2);
+        mtext2.textAlign = egret.HorizontalAlign.CENTER;
+        mtext2.text = "中奖金额";
+
+        let codeText = ToolMrg.getText(28, 220 + 4, 20, 0x333333);
+        this._mContain.addChild(codeText);
+        codeText.text = "订单号：";
+
+        this._codeNum = ToolMrg.getText(28 + codeText.textWidth, 220 + 4, 20, 0x999999);
+        this._mContain.addChild(this._codeNum);
+
+        this._dateText = ToolMrg.getText(526, 224, 20, 0x999999, 200);
+        this._mContain.addChild(this._dateText);
+        this._dateText.textAlign = egret.HorizontalAlign.RIGHT;
+
+        let tzImg = new egret.Bitmap();
+        this._mContain.addChild(tzImg);
+        tzImg.x = 28;
+        tzImg.y = 304;
+        RES.getResByUrl("resource/assets/images/ui/kjnr_mine@2x.png", (e) => { tzImg.$setBitmapData(e); }, this);
+
+        let tzText = ToolMrg.getText(62, 298 + 5, 24, 0x333333);
+        this._mContain.addChild(tzText);
+        tzText.text = "投注信息";
+
+        this._wayText = ToolMrg.getText(26 + 102, 300 + 4, 20, 0x333333, 600);
+        this._mContain.addChild(this._wayText);
+        this._wayText.text = "过关方式：";
+        this._wayText.textAlign = egret.HorizontalAlign.RIGHT;
+
+        this._tzMoney = ToolMrg.getText(0, 104 + 6, 28, 0x333333, 375);
+        this._mContain.addChild(this._tzMoney);
+        this._tzMoney.textAlign = egret.HorizontalAlign.CENTER;
+
+        this._zjMoney = ToolMrg.getText(375, 104, 28, 0xF72F53, 375);
+        this._zjMoney.height = 40;
+        // this._zjMoney.textAlign = egret.HorizontalAlign.CENTER;
+        this._zjMoney.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._mContain.addChild(this._zjMoney);
+
+        this._jiaMoney = ToolMrg.getText(508, 110, 20, 0xF72F53, 200);
+        this._jiaMoney.height = 28;
+        // this._jiaMoney.textAlign = egret.HorizontalAlign.CENTER;
+        this._jiaMoney.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._mContain.addChild(this._jiaMoney);
+
+        let mC1 = ToolMrg.getText(30, 366, 20, 0x646464);
+        this._mContain.addChild(mC1);
+        mC1.text = "场次";
+
+        let mC2 = ToolMrg.getText(214, 366, 20, 0x646464);
+        this._mContain.addChild(mC2);
+        mC2.text = "对阵";
+
+        let mC3 = ToolMrg.getText(464, 366, 20, 0x646464);
+        this._mContain.addChild(mC3);
+        mC3.text = "投注项";
+
+        let mC4 = ToolMrg.getText(660, 366, 20, 0x646464);
+        this._mContain.addChild(mC4);
+        mC4.text = "赛果";
+
+        let mde1 = new egret.Bitmap();
+        this._mContain.addChild(mde1);
+        mde1.y = 354;
+        mde1.width = GameMain.getInstance.StageWidth;
+        mde1.height = 1.5;
+        RES.getResByUrl("resource/assets/images/ui/hui.png", (e) => { mde1.$setBitmapData(e); }, this);
+
+        let mde2 = new egret.Bitmap();
+        this._mContain.addChild(mde2);
+        mde2.y = 396 - 1.5;
+        mde2.width = GameMain.getInstance.StageWidth;
+        mde2.height = 1.5;
+        RES.getResByUrl("resource/assets/images/ui/hui.png", (e) => { mde2.$setBitmapData(e); }, this);
+
+        this._fzhiBnt = new egret.Bitmap();
+        this._mContain.addChild(this._fzhiBnt);
+        this._fzhiBnt.y = 222;
+        this._fzhiBnt.x = 268;
+        this._fzhiBnt.touchEnabled = true;
+        RES.getResByUrl("resource/assets/images/ui/fzhiBnt.png", (e) => { this._fzhiBnt.$setBitmapData(e); }, this);
+
+        this._tipBJ = new egret.Bitmap();
+        this._dataInfoContain.addChild(this._tipBJ);
+        RES.getResByUrl("resource/assets/images/ui/hui.png", (e) => { this._tipBJ.$setBitmapData(e); }, this);
+        this._tipBJ.width = GameMain.getInstance.StageWidth;
+        this._tipBJ.height = 120;
+
+        this._tipText = ToolMrg.getText(28, 34, 22, 0x999999);
+        this._dataInfoContain.addChild(this._tipText);
+        this._tipText.lineSpacing = 8;
+        this._tipText.text = "注：全场90分钟(含伤停补时，不含加时赛及点球大战)，页面奖金仅\n供参考，实际奖金以投注成功为准。";
+    }
+
+    private updata(): void {
+        this._typeName.text = this._data.title;
+        RES.getResByUrl(`resource/assets/images/ui/${this._data.url}`, (e) => { this._typeImg.$setBitmapData(e); }, this);
+        this._jiaBtn.visible = false;
+
+        this._jiaMoney.text = "";
+        if (this._data.statue == 1) {
+            this._typeState.text = "待开奖";
+            this._zjMoney.text = "待开奖";
+            this._zjMoney.x = 375+(375 - this._zjMoney.textWidth)*0.5;
+        } else if (this._data.statue == 2) {
+            this._typeState.text = "未中奖";
+            this._zjMoney.text = "未中奖";
+            this._zjMoney.x = 375+(375 - this._zjMoney.textWidth)*0.5;
+        } else if (this._data.statue == 3) {
+            this._typeState.text = "已中奖";
+            this._zjMoney.text = `￥${this._data.xjMoney}`;
+
+            if(this._data._reward!=undefined && this._data._reward!=0){
+                this._jiaMoney.text = `(+${ToolMrg.getDecimal(this._data._reward,2)})`;
+                this._jiaBtn.visible = true;
+                this._zjMoney.x = 375+(375-this._jiaMoney.textWidth - this._zjMoney.textWidth)*0.5;
+                this._jiaMoney.x = this._zjMoney.x + this._zjMoney.textWidth + 3;
+            }else {
+                this._zjMoney.x = 375+(375 - this._zjMoney.textWidth)*0.5;
+            }
+        }
+        this._data._reward
+
+        let priceList: number[] = this._data.yePriceList;
+        if (priceList != undefined) {
+            if (priceList.length <= 0) {
+                this._typeState.text = "";
+            } else {
+                this._typeState.text = "预测回报" + ToolMrg.getDecimal(priceList[0] / 100,2) + "~" +ToolMrg.getDecimal(priceList[1] / 100,2) + "元";
+            }
+        }
+
+        this._tzMoney.text = `￥${this._data.xzMoney}`;
+        this._codeNum.text = `${this._data.id}`;
+        this._dateText.text = ToolMrg.getTime11(this._data.time);
+
+        this._fzhiBnt.x = this._codeNum.x + this._codeNum.textWidth + 18;
+
+        let objheight = 0;
+        let data = this._data.fbLotData;
+        let len: number = 0;
+        let dataobj: FBLotData;
+        if (data != undefined) {
+            len = data.size;
+        }
+        this.cleanList();
+        for (let i = 0; i < len; i++) {
+            let obj: FofB_Info;
+            dataobj = data.Gget(i);
+            if (this._infoItem.Gget(i)) {
+                obj = this._infoItem.Gget(i);
+            } else {
+                obj = new FofB_Info();
+                this._infoItem.Gput(i, obj);
+            }
+            // obj.aa();
+            obj.cleanall();
+            if (dataobj != undefined) {
+                obj.setdayName(dataobj.nameT, i + 1, dataobj.aName, dataobj.bName, dataobj._time);
+                obj.setAllX(dataobj.list);
+                if (dataobj.fruitList.length > 0) {
+                    obj.setBf(dataobj.fruitList, this._data.type);
+                } else {
+                    obj.setBFF(dataobj._static);
+                }
+            }
+
+            obj.y = objheight;
+            objheight = objheight + obj.height;
+            if (obj.parent == undefined)
+                this._dataInfoContain.addChild(obj);
+        }
+
+        this._tipBJ.y = objheight;
+        this._tipText.y = objheight + 34;
+
+        this.setPass(this._data.passList);
+    }
+
+    public cleanList() {
+        let obj: FofB_Info;
+        for (let key of this._infoItem.keys) {
+            obj = this._infoItem.Gget(key);
+            if (obj != undefined) {
+                if (obj.parent != undefined) {
+                    obj.parent.removeChild(obj);
+                }
+            }
+        }
+    }
+
+    private _data: MyLotteryData;
+    public show(data: MyLotteryData): void {
+        GUIManager.getInstance.tipLay.addChild(this);
+        this.addEvent();
+        this._data = data;
+        this.updata();
+    }
+
+    public hide(): void {
+        if (this.parent != undefined) {
+            this.parent.removeChild(this);
+            this.removeEvent();
+            this.clearData();
+        }
+    }
+
+    private clearData(): void {
+        this._typeName.text = "";
+        this._typeState.text = "";
+        this._tzMoney.text = "";
+        this._zjMoney.text = "";
+        this._codeNum.text = "";
+        this._dateText.text = "";
+        this._wayText.text = "过关方式：";
+        this._scroView.setScrollTop(0);
+    }
+
+    /**设置过关方式*/
+    public setPass(str: string): void {
+        let strN: string = "";
+        let one: string[] = [];
+        one = str.split(",");
+
+        if (one.length > 1) {
+            for (let i = 0; i < one.length; i++) {
+                 strN += this.getStr(Number(one[i]))+" ";
+            }
+        } else {
+            strN += this.getStr(Number(one[0]))+"";
+        }
+
+        this._wayText.text = "过关方式：" + strN;
+    }
+
+    public getStr(type: number): string {
+        if (type == 1) {
+            return "单关";
+        } else {
+            return type + "串1";
+        }
+    }
+
+    private touchDown(e: egret.TouchEvent): void {
+        if (e.target == this._return) {
+            this.hide();
+        } else if (e.target == this._fzhiBnt) {
+            //生成可复制input
+            var input = document.createElement("input");
+            //需复制内容
+            input.value = this._codeNum.text;
+            document.body.appendChild(input);
+            input.select();
+            input.setSelectionRange(0, input.value.length),
+                document.execCommand('Copy');
+            document.body.removeChild(input);
+
+            Alertpaner.getInstance.show("复制成功");
+        }
+    }
+
+    private addEvent(): void {
+        this._return.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._fzhiBnt.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+    }
+
+    private removeEvent(): void {
+        this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._fzhiBnt.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+    }
+
+    private _mShareC: egret.Shape;
+    /**适配处理 */
+    private setDB(): void {
+        this._mShareC = new egret.Shape();
+        this._mShareC.graphics.beginFill(0xf5f5f7, 1);
+        this._mShareC.graphics.drawRect(0, -this.y, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+        this._mShareC.graphics.endFill();
+        this.addChildAt(this._mShareC, 0);
+    }
+
+    private addScoll(): void {
+        this._scroView = new egret.ScrollView();
+        this._scroView.x = 0;
+        this._scroView.y = 96 + GameValue.adaptationScreen;
+        this._scroView.scrollSpeed = 0.4;
+        //设置滚动内容
+        this._scroView.setContent(this._mContain);
+        this._scroView.bounces = false;
+        this._scroView.verticalScrollPolicy = 'on';
+        this._scroView.horizontalScrollPolicy = 'off';
+        //设置滚动区域宽高
+        this._scroView.width = GameMain.getInstance.StageWidth;
+        this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y;
+        this.addChild(this._scroView);
+    }
+
+}

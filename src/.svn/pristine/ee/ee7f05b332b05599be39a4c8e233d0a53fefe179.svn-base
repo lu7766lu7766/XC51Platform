@@ -1,0 +1,344 @@
+class WorldWnd extends egret.DisplayObjectContainer {
+    private static _mInstance: WorldWnd;
+    public static get getInstance(): WorldWnd {
+        if (WorldWnd._mInstance == undefined)
+            WorldWnd._mInstance = new WorldWnd();
+        return WorldWnd._mInstance;
+    }
+
+    private _imgSrc = ["jzcg_home@2x", "jzdg_home@2x", "jlcg_home@2x", "jldg_home@2x", "pl3_home@2x", "pl5_home@2x"];
+    private _imgTitle = ["竞足串关", "竞足单关", "竞篮串关", "竞篮单关", "排列三", "排列五"];
+    private _imgContent = ["足球赛事竞猜", "赛事多，返奖高", "篮球赛事竞猜", "猜胜负，易中奖", "投注简单，返奖高", "最高奖金10万元"];
+    private _mContain: egret.DisplayObjectContainer;
+    private _scroView: egret.ScrollView;
+    private _tip: WorldTip;
+
+    private _item: GHashMap<DmC_info>;
+
+    /**开奖 */
+    private _kjBtn: egret.Bitmap;
+    /**联系客服 */
+    private _kfBtn: egret.Bitmap;
+
+    private _imgItem: GHashMap<WorldActivity>;
+    private _imgContain: egret.DisplayObjectContainer;
+    private _centerContain: egret.DisplayObjectContainer;
+    private _downContain: egret.DisplayObjectContainer;
+
+    private _banner: egret.Bitmap;
+
+    constructor() {
+        super();
+
+        this.y = 40;
+        this._imgItem = new GHashMap<WorldActivity>();
+        this._mContain = new egret.DisplayObjectContainer();
+        this._imgContain = new egret.DisplayObjectContainer();
+        this._centerContain = new egret.DisplayObjectContainer();
+        this._downContain = new egret.DisplayObjectContainer();
+        this._item = new GHashMap<DmC_info>();
+
+        this._kjBtn = new egret.Bitmap();
+        this._mContain.addChild(this._kjBtn);
+        this._kjBtn.x = 28;
+        this._kjBtn.y = 28;
+        RES.getResByUrl("resource/assets/images/ui/kjxx_nav@2x.png", (e) => {
+            this._kjBtn.$setBitmapData(e);
+        }, this);
+        this._kjBtn.touchEnabled = true;
+
+        this._kfBtn = new egret.Bitmap();
+        this._mContain.addChild(this._kfBtn);
+        this._kfBtn.x = 678;
+        this._kfBtn.y = 28;
+        RES.getResByUrl("resource/assets/images/ui/kefu_nav@2x.png", (e) => {
+            this._kfBtn.$setBitmapData(e);
+        }, this);
+        this._kfBtn.touchEnabled = true;
+
+        let titleImg = new egret.Bitmap();
+        this._mContain.addChild(titleImg);
+        titleImg.y = 34;
+        RES.getResByUrl("resource/assets/images/ui/51cd_home@2x.png", (e) => {
+            titleImg.$setBitmapData(e);
+            titleImg.x = (750 - titleImg.width) * 0.5;
+        }, this);
+
+        // this.imgBox = WorldTopImg.getInstance;
+        // this._imgContain.addChild(this.imgBox);
+        this._imgContain.addChild(ImgRace.getInstance);
+
+        this._tip = WorldTip.getInstance;
+        this._centerContain.addChild(this._tip);
+        this._tip.y = 32;
+        this._tip.x = 76;
+
+        let tipImg = new egret.Bitmap();
+        this._centerContain.addChild(tipImg);
+        tipImg.x = 30;
+        tipImg.y = 30;
+        RES.getResByUrl(`resource/assets/images/ui/tz_home@2x.png`, (e) => {
+            tipImg.$setBitmapData(e);
+        }, this);
+
+        let wlink1 = new egret.Shape();
+        this._centerContain.addChild(wlink1);
+        wlink1.graphics.beginFill(0xf3f3f3);
+        wlink1.graphics.drawRect(0, 80, 750, 10);
+        wlink1.graphics.endFill();
+
+        this.addScoll();
+
+        this.addChild(this._imgContain);
+        this._imgContain.y = 96;
+
+        this._mContain.addChild(this._centerContain);
+        this._centerContain.y = 300 + 96;
+
+        this._mContain.addChild(this._downContain);
+        this.addActivity();
+        this.joinDown();
+
+        this.setDB();
+    }
+
+    private addActivity(): void {
+        let objNum = 0;
+        let objHeight = 90 + 20;
+        for (let i = 0; i < this._imgTitle.length; i++) {
+            let obj = new WorldActivity(this._imgSrc[i], this._imgTitle[i], this._imgContent[i], i);
+            this._imgItem.Gput(i, obj);
+            obj.y = objHeight;
+            obj.x = 375 * objNum;
+            this._centerContain.addChild(obj);
+            if (objNum == 1) {
+                objNum = 0;
+                objHeight = objHeight + 136;
+            } else {
+                objNum += 1;
+            }
+        }
+
+        this._banner = new egret.Bitmap();
+        this._centerContain.addChild(this._banner);
+        this._banner.y = objHeight + 20;
+        RES.getResByUrl("resource/assets/images/ui/haibao_home@2x.png", (e) => {
+            this._banner.$setBitmapData(e);
+            this._banner.x = (GameMain.getInstance.StageWidth - this._banner.width) * 0.5;
+        }, this)
+
+        this._downContain.y = this._centerContain.y + objHeight + 20 + 140 + 34;
+    }
+
+    private touchDown(e: egret.TouchEvent) {
+        if (e.target == this._kfBtn) {//联系客服
+            KeFuWnd.getInstance.show();
+        } else if (e.target == this._kjBtn) {//开奖
+            AwareInfoMgr.getInstance.show();
+            OpenAwareConfin.getInstance.sendHttp();
+        }
+    }
+
+    public upDownData(): void {
+        let item = DmC_infoMsg.getInstance.item;
+        if (item == undefined || item.size < 1) {
+            this._downContain.visible = false;
+        } else {
+            this._downContain.visible = true;
+            let index = 0;
+            let objHeight = 97.5;
+            for (let key of item.keys) {
+                if (index > 1) break;//最多两条
+                let obj: DmC_info;
+                if (this._item.GhasKey(key)) {
+                    obj = this._item.Gget(key);
+                } else {
+                    obj = new DmC_info();
+                    this._item.Gput(key, obj);
+                }
+                obj.aa(item.Gget(key));
+                obj.addInterception();
+                obj.y = objHeight;
+                objHeight = objHeight + obj.height;
+                index += 1;
+                if (obj.parent == undefined)
+                    this._downContain.addChild(obj);
+            }
+            ToolMrg.upItemofGHashMap(this._item, item);
+        }
+    }
+
+    public show(): void {
+        GUIManager.getInstance.bgLay.addChild(this);
+        this.addInterception();
+        this.upDownData();
+    }
+
+    public hide(): void {
+        if (this.parent != undefined) {
+            this.parent.removeChild(this);
+            this.removeInterception();
+        }
+    }
+
+    private addScoll(): void {
+        this._scroView = new egret.ScrollView();
+        this._scroView.x = 0;
+        this._scroView.y = 0;
+        this._scroView.scrollSpeed = 0.4;
+        //设置滚动内容
+        this._scroView.setContent(this._mContain);
+        this._scroView.bounces = false;
+        this._scroView.verticalScrollPolicy = 'on';
+        this._scroView.horizontalScrollPolicy = 'off';
+        //设置滚动区域宽高
+        this._scroView.width = GameMain.getInstance.StageWidth;
+        this._scroView.height = GameMain.getInstance.StageHeight - this.y - 100;
+        this.addChild(this._scroView);
+    }
+
+    private addInterception(): void {
+        this._scroView.addEventListener(egret.TouchEvent.CHANGE, this.moveImg, this);
+        this._kjBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._kfBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        for (let key of this._imgItem.keys) {
+            this._imgItem.Gget(key).addInterception();
+        }
+    }
+
+    private removeInterception(): void {
+        this._scroView.removeEventListener(egret.TouchEvent.CHANGE, this.moveImg, this);
+        this._kjBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._kfBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        for (let key of this._imgItem.keys) {
+            this._imgItem.Gget(key).removeInterception();
+        }
+    }
+
+    private moveImg(e: egret.TouchEvent): void {
+        this._imgContain.y = 96 - this._scroView.scrollTop;
+    }
+
+    private joinDown(): void {
+        let downShape = new egret.Shape();
+        this._downContain.addChild(downShape);
+        downShape.graphics.beginFill(0xf5f5f7);
+        downShape.graphics.drawRect(0, 0, 750, 10);
+        downShape.graphics.endFill();
+
+        let downShape2 = new egret.Shape();
+        this._downContain.addChild(downShape2);
+        downShape2.graphics.beginFill(0xffffff);
+        downShape2.graphics.drawRect(0, 10, 750, 86);
+        downShape2.graphics.endFill();
+
+        let downTitle = ToolMrg.getText(28, 10, 32, 0x333333);
+        this._downContain.addChild(downTitle);
+        downTitle.bold = true;
+        downTitle.height = 86;
+        downTitle.verticalAlign = egret.VerticalAlign.MIDDLE;
+        downTitle.text = "热门抄单";
+
+        let downShape3 = new egret.Shape();
+        this._downContain.addChild(downShape3);
+        downShape3.graphics.beginFill(0xDEDEDE);
+        downShape3.graphics.drawRect(0, 96, 750, 1.5);
+        downShape3.graphics.endFill();
+    }
+
+    private _mShareC: egret.Shape;
+    /**适配处理 */
+    private setDB(): void {
+        this._mShareC = new egret.Shape();
+        this._mShareC.graphics.beginFill(0xffffff, 1);
+        this._mShareC.graphics.drawRect(0, -this.y, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+        this._mShareC.graphics.endFill();
+        this.addChildAt(this._mShareC, 0);
+
+        let mShareC = new egret.Shape();
+        mShareC.graphics.beginFill(0xffffff, 1);
+        mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, this._scroView.height);
+        mShareC.graphics.endFill();
+        this._mContain.addChildAt(mShareC, 0);
+    }
+}
+
+class WorldActivity extends egret.DisplayObjectContainer {
+    private _id;
+    private _img: egret.Bitmap;
+    private _title: egret.TextField;
+    private _content: egret.TextField;
+
+    constructor(imgsrc, title, content, id) {
+        super();
+        this._id = id;
+
+        this._img = new egret.Bitmap();
+        this._img.x = 40;
+        this.addChild(this._img);
+        this._img.y = 20;
+        RES.getResByUrl(`resource/assets/images/ui/${imgsrc}.png`, (e) => {
+            this._img.$setBitmapData(e);
+        }, this);
+
+        this._title = ToolMrg.getText(164, 20 + 8, 32, 0x333333);
+        this.addChild(this._title);
+        this._title.text = title;
+
+        if (title == "更多玩法")
+            this._title.y = 48;
+
+        this._content = ToolMrg.getText(164, 20 + 54, 24, 0x999999);
+        this.addChild(this._content);
+        this._content.text = content;
+
+        this.setDB();
+    }
+
+    private _isInterception = false;
+    public addInterception(): void {
+        if (!this._isInterception) {
+            this._mShareC.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+            this._isInterception = true;
+        }
+    }
+
+    public removeInterception(): void {
+        if (this._isInterception) {
+            this._mShareC.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+            this._isInterception = false;
+        }
+    }
+    private touchDown(e: egret.TouchEvent): void {
+        if (this._id == 0) {//足球串关
+            FbWnd.getInstance.show();
+        } else if (this._id == 1) {//足球单关
+            FbWnd.getInstance._index = 1;
+            FbWnd.getInstance.show();
+        } else if (this._id == 2) {//篮球串关
+            BasketBallWnd.getInstance.show();
+        } else if (this._id == 3) {//篮球单关
+            BasketBallWnd.getInstance._index = 1;
+            BasketBallWnd.getInstance.show();
+        } else if (this._id == 4) {//列三
+            ThreeBox.getInstance.show();
+        } else if (this._id == 5) {//列五
+            FiveBox.getInstance.show();
+        } else if (this._id == 6) {//11选5
+
+        } else if (this._id == 7) {//更多玩法
+
+        }
+    }
+
+    private _mShareC: egret.Shape;
+    /**适配处理 */
+    private setDB(): void {
+        this._mShareC = new egret.Shape();
+        this._mShareC.graphics.beginFill(0xffffff, 1);
+        this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth / 2, 96 + 40);
+        this._mShareC.graphics.endFill();
+        this.addChildAt(this._mShareC, 0);
+        this._mShareC.touchEnabled = true;
+    }
+}

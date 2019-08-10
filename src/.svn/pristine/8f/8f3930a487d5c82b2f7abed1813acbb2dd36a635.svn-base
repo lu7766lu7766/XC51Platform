@@ -1,0 +1,66 @@
+class RCway_info extends egret.DisplayObjectContainer{
+
+    private _title:egret.TextField;
+    private _content:egret.TextField;
+    private _link:egret.Bitmap;
+    private _click:egret.Bitmap;
+
+    constructor(){
+        super();
+
+        let bj = new egret.Bitmap();
+        this.addChild(bj);
+        bj.width = GameMain.getInstance.StageWidth;
+        bj.height = 140;
+        RES.getResByUrl("resource/assets/images/ui/bai.png",(e)=>{bj.$setBitmapData(e);},this);
+        
+        this._link = new egret.Bitmap();
+        this.addChild(this._link);
+        RES.getResByUrl("resource/assets/images/ui/kuang2_mine@2x.png",(e)=>{bj.$setBitmapData(e);},this);
+
+        this._click = new egret.Bitmap();
+        this.addChild(this._click);
+        this._click.x = 590;
+        this._click.y = 40;
+        RES.getResByUrl("resource/assets/images/ui/select_nor_home@2x.png",(e)=>{this._click.$setBitmapData(e); },this);
+        RES.getResByUrl("resource/assets/images/ui/select_home@2x.png",(e)=>{},this);
+
+        this._title = ToolMrg.getText(40,14+6,28,0x333333);
+        this.addChild(this._title);
+
+        this._content = ToolMrg.getText(40,75,24,0xf72e52);
+        this.addChild(this._content);
+    }
+
+    private _id:number;
+    private _data:RCway_Data;
+    public aa(data:RCway_Data,id):void{
+        this._data = data;
+        this._id = id;
+
+        if(data)
+        this._title.text = data._title;
+        this._content.text = data._content;
+
+    }
+
+    private touchDown():void{
+        if(this._data._titleType==0)return;
+
+    }
+
+    private _isEvent = false;
+    public addEvent():void{
+        if(!this._isEvent){
+            this._link.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isEvent = true;
+        }
+    }
+
+    public removeEvent():void{
+        if(this._isEvent){
+            this._link.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isEvent = false;
+        }
+    }
+}

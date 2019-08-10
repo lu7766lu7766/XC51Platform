@@ -1,0 +1,422 @@
+/**方案详情 */
+class DmDetails extends egret.DisplayObjectContainer{
+    private _mContain:egret.DisplayObjectContainer;
+    private _scroView:egret.ScrollView;
+    private _topUI:TopUI;
+    private _return:egret.Shape;
+
+    private _tx:egret.Bitmap;
+    private _txName:egret.TextField;
+    /**回报率 */
+    private _rate:egret.TextField;
+    private _rateText:egret.TextField;
+    private _rateA:egret.TextField;
+    /**类型图标 */
+    private _typeImg:egret.Bitmap;
+    /**类型 */
+    private _typeText:egret.TextField;
+    private _moneyTake:egret.TextField;
+    private _content:egret.TextField;
+    private _zgje:egret.TextField;
+    private _gdje:egret.TextField;
+    private _yjhb:egret.TextField;
+    private _gdyj:egret.TextField;
+    private _gdyjImg:egret.Bitmap;
+    /**是否开奖 且是否中奖 */
+    private _staticImg:egret.Bitmap;
+    /**中奖金额 */
+    private _staticText:egret.TextField;
+    private _centerContain:egret.DisplayObjectContainer;
+    private _downContain:egret.DisplayObjectContainer;
+    /**战绩 */
+    public statistics:DD_Statistics;
+    /**方案详情 */
+    public details:DD_Detail
+    /**跟单用户 */
+    public user:DD_user;
+
+    /**0方案详情 1跟单用户 */
+    private _index = 0;
+    private _data;
+
+    constructor(){
+        super();
+        this.y = 40;
+        this.touchEnabled = true;
+
+        this._topUI = new TopUI("方案详情",-this.y);
+        this.addChild(this._topUI);
+        this._return = this._topUI.getReturn();
+
+        this._mContain = new egret.DisplayObjectContainer();
+        this.addScoll();
+
+        this._tx = new egret.Bitmap();
+        this._mContain.addChild(this._tx);
+        this._tx.touchEnabled = true;
+        this._tx.width = 84;
+        this._tx.height = 84;
+        this._tx.x = 28;
+        this._tx.y = 30;
+
+        this._txName = ToolMrg.getText(130,24,32,0x333333);
+        this._mContain.addChild(this._txName);
+
+        this._rate = ToolMrg.getText(552+50,20,32,0xf72e52,100);
+        this._mContain.addChild(this._rate);
+        this._rate.textAlign = egret.HorizontalAlign.RIGHT;
+        
+        this._rateA = ToolMrg.getText(708,32,16,0xf72e52);
+        this._mContain.addChild(this._rateA);
+        this._rateA.text = "%";
+
+        this._rateText = ToolMrg.getText(652,58,24,0x999999);
+        this._mContain.addChild(this._rateText);
+        this._rateText.text = "回报率";
+
+        this.statistics = new DD_Statistics();
+        this._mContain.addChild(this.statistics);
+        this.statistics.y = 86;
+        this.statistics.x = 130;
+
+        let topShape = new egret.Shape();
+        this._mContain.addChild(topShape);
+        topShape.graphics.beginFill(0xdedede);
+        topShape.graphics.drawRect(0,142,750,1.5);
+
+        this._typeImg = new egret.Bitmap();
+        this._mContain.addChild(this._typeImg);
+        this._typeImg.width = 32;
+        this._typeImg.height = 32;
+        this._typeImg.x = 28;
+        this._typeImg.y = 170;
+
+        this._typeText = ToolMrg.getText(66,166,28,0x333333);
+        this._mContain.addChild(this._typeText);
+        this._typeText.height = 50;
+        this._typeText.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._moneyTake = ToolMrg.getText(190,168,24,0x999999);
+        this._mContain.addChild(this._moneyTake);
+        this._moneyTake.height = 34;
+        this._moneyTake.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._moneyTake.text = "2元起投";
+
+        this._content = ToolMrg.getText(28,226,24,0x333333,694);
+        this._mContain.addChild(this._content);
+        this._content.lineSpacing = 14;
+
+        this._zgje = ToolMrg.getText(28,268,24,0x333333);
+        this._mContain.addChild(this._zgje);
+        this._zgje.height = 34;
+        this._zgje.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._gdje = ToolMrg.getText(368,268,24,0x333333);
+        this._mContain.addChild(this._gdje);
+        this._gdje.height = 34;
+        this._gdje.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._yjhb = ToolMrg.getText(28,310,24,0x333333);
+        this._mContain.addChild(this._yjhb);
+        this._yjhb.height = 34;
+        this._yjhb.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._gdyj = ToolMrg.getText(368,310,24,0x333333);
+        this._mContain.addChild(this._gdyj);
+        this._gdyj.height = 34;
+        this._gdyj.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._gdyjImg = new egret.Bitmap();
+        this._mContain.addChild(this._gdyjImg);
+        RES.getResByUrl("resource/assets/images/ui/wt_expert@2x.png",(e)=>{
+            this._gdyjImg.$setBitmapData(e); 
+        },this);
+        this._gdyjImg.touchEnabled = true;
+
+        this._staticImg = new egret.Bitmap();
+        this._mContain.addChild(this._staticImg);
+        this._staticImg.x = 546;
+        this._staticImg.y = 120;
+
+        this._staticText = ToolMrg.getText(519,126,20,0xf72e52,150);
+        this._mContain.addChild(this._staticText);
+        this._staticText.height = 94;
+        this._staticText.textAlign = egret.HorizontalAlign.CENTER;
+        this._staticText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._staticText.skewY = -23.5;
+        this._staticText.skewX = -23.5;
+
+        this.joinCenter();
+        this.joinDown();
+        this.setDB();
+    }
+
+    public updata():void{
+        RES.getResByUrl("resource/assets/images/ui/user_default@2x.png",(e)=>{this._tx.$setBitmapData(e); },this);
+        RES.getResByUrl("resource/assets/images/ui/jzdg_home@2x.png",(e)=>{this._typeImg.$setBitmapData(e); },this);
+
+        this._txName.text = "红红火火恍呼呼";
+        this._typeText.text = "竞足串关";
+        this._rate.text = "130";
+        this._content.text = ToolMrg.nameMode2(60,"昨日挪超已红！今日千串关，开启连红模式！");;
+
+        this._zgje.y = this._content.y+this._content.textHeight+10;
+        this._yjhb.y = this._content.y+this._content.textHeight+52;
+        this._gdje.y = this._content.y+this._content.textHeight+10;
+        this._gdyj.y = this._content.y+this._content.textHeight+52;
+        this._centerContain.y = this._content.y+this._content.textHeight+108;
+
+        this._zgje.textFlow = <Array<egret.ITextElement>>[
+            {"text":"自购金额：",style:{"textColor":0x333333}},
+            {"text":"500元",style:{"textColor":0xf72f53}}
+        ];
+        this._gdje.textFlow = <Array<egret.ITextElement>>[
+            {"text":"跟单金额：",style:{"textColor":0x333333}},
+            {"text":"238元",style:{"textColor":0xf72f53}}
+        ];
+        this._yjhb.textFlow = <Array<egret.ITextElement>>[
+            {"text":"预计回报：",style:{"textColor":0x333333}},
+            {"text":"37850.00倍",style:{"textColor":0xf72f53}}
+        ];
+        this._gdyj.textFlow = <Array<egret.ITextElement>>[
+            {"text":"跟单佣金：",style:{"textColor":0x333333}},
+            {"text":"7%",style:{"textColor":0xf72f53}}
+        ];
+        this._gdyjImg.y = this._gdyj.y+4;
+        this._gdyjImg.x = this._gdyj.x + this._gdyj.textWidth + 10;
+
+        // this._downContain.visible = false;
+        // this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y;
+        this._downContain.visible = true;
+        this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 218;
+    }
+
+    public show():void{
+        GUIManager.getInstance.topLay.addChild(this);
+        this.addInterception();
+        this.updata();
+        this.changeCenter();
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this.removeInterception();
+        }
+    }
+
+    private touchDown(e:egret.TouchEvent):void{
+        if(e.target == this._gdyjImg){//跟单佣金提示
+
+        }else if(e.target == this._return){
+            this.hide();
+        }else if(this._tx){//打开个人详情
+            if(DmC_infoMsg.phID!=undefined && this._data.id!=DmC_infoMsg.phID){
+                this.hide();
+            }else{
+                DmC_infoMsg.personalHome = new PersonalHome();
+                DmC_infoMsg.personalHome.show();
+            }
+        }
+    }
+
+    public addInterception():void{
+        this._detail.addEventListener(egret.TouchEvent.TOUCH_TAP,this.centerClick,this);
+        this._user.addEventListener(egret.TouchEvent.TOUCH_TAP,this.centerClick,this);
+        this._gdyjImg.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._return.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._tx.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+    }
+
+    public removeInterception():void{
+        this._detail.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.centerClick,this);
+        this._user.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.centerClick,this);
+        this._gdyjImg.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._tx.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+    }
+
+    private _user:egret.TextField;
+    private _detail:egret.TextField;
+    private _centerLink:egret.Shape;
+    /**跟单用户数 */
+    private _withNum:egret.TextField;
+    private _withShape:egret.Shape;
+    private joinCenter():void{
+        this._centerContain = new egret.DisplayObjectContainer();
+        this._mContain.addChild(this._centerContain);
+        this._centerContain.y = 366;
+
+        let centerShape = new egret.Shape();
+        this._centerContain.addChild(centerShape);
+        centerShape.graphics.beginFill(0xf5f5f7);
+        centerShape.graphics.drawRect(0,0,750,10);
+
+        this._detail = ToolMrg.getText(0,10,28,0x999999,375);
+        this._centerContain.addChild(this._detail);
+        this._detail.height = 64;
+        this._detail.textAlign = egret.HorizontalAlign.CENTER;
+        this._detail.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._detail.text = "方案详情";
+        this._detail.touchEnabled = true;
+
+        this._user = ToolMrg.getText(375,10,28,0x999999,375);
+        this._centerContain.addChild(this._user);
+        this._user.height = 64;
+        this._user.textAlign = egret.HorizontalAlign.CENTER;
+        this._user.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._user.text = "跟单用户";
+        this._user.touchEnabled = true;
+
+        this._centerLink = new egret.Shape();
+        this._centerContain.addChild(this._centerLink);
+        this._centerLink.graphics.beginFill(0xF96D67);
+        this._centerLink.graphics.drawRoundRect(133.5,60,108,4,4);
+
+        this._withShape = new egret.Shape();
+        this._centerContain.addChild(this._withShape);
+        this._withShape.graphics.beginFill(0xe72e52);
+        this._withShape.graphics.drawEllipse(622,18,26,26);
+
+        this._withNum = ToolMrg.getText(622,18,16,0xffffff);
+        this._centerContain.addChild(this._withNum);
+        this._withNum.width = 26;
+        this._withNum.height = 26;
+        this._withNum.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._withNum.textAlign = egret.HorizontalAlign.CENTER;
+        this._withNum.text = "22"
+
+        let ctLink = new egret.Shape();
+        this._centerContain.addChild(ctLink);
+        ctLink.graphics.beginFill(0xdedede);
+        ctLink.graphics.drawRect(0,64,750,1.5);
+
+        this.details = new DD_Detail();
+        this._centerContain.addChild(this.details);
+        this.details.y = 65.5;
+
+        this.user = new DD_user();
+        this._centerContain.addChild(this.user);
+        this.user.y = 65.5;
+    }
+
+    private centerClick(e:egret.TouchEvent):void{
+        if(e.target == this._detail){
+            if(this._index==0)return;
+            this._index=0;
+        }else if(e.target == this._user){
+            if(this._index==1)return;
+            this._index=1;
+        }
+        this.changeCenter();
+    }
+
+    private changeCenter():void{
+        if(this._index == 0){
+            this._detail.textColor = 0xf72d52;
+            this._user.textColor = 0x999999;
+            this._centerLink.x = 0;
+            this.details.show();
+            this.user.hide();
+            this._mContain.height = 426 + this.details.height;
+        }else if(this._index == 1){
+            this._detail.textColor = 0x999999;
+            this._user.textColor = 0xf72d52;
+            this._centerLink.x = 375;
+            this.details.hide();
+            this.user.show();
+            this._mContain.height = 426 + this.user.height+20;
+        }
+
+    }
+    private _downLetfText:egret.TextField;
+    private _downRightText:egret.TextField;
+    private _downClick:egret.Bitmap;
+    private _downBtnText:egret.TextField;
+    private joinDown():void{
+        this._downContain = new egret.DisplayObjectContainer();
+        this.addChild(this._downContain);
+        this._downContain.y = GameMain.getInstance.StageHeight - this.y - 218;
+
+        let bj = new egret.Bitmap();
+        this._downContain.addChild(bj);
+        RES.getResByUrl("resource/assets/images/ui/bg_tabbar@2x.png",(e)=>{
+            bj.$setBitmapData(e);
+            var rect:egret.Rectangle = new egret.Rectangle(0,50,750,60);
+            bj.scale9Grid = rect;
+            bj.y = -10;
+            bj.height = 218;
+        },this);
+
+        this._downLetfText = ToolMrg.getText(28,28,28,0x333333);
+        this._downContain.addChild(this._downLetfText);
+        this._downLetfText.textFlow = <Array<egret.ITextElement>>[
+            {"text":"1倍, ","style":{"textColor":0x333333}},
+            {"text":"2元","style":{"textColor":0xf72e52}}
+        ];
+
+        let downText = ToolMrg.getText(544,28,28,0x333333);
+        this._downContain.addChild(downText);
+        downText.text = "投               倍";
+
+        let downBox = new egret.Shape();
+        this._downContain.addChild(downBox);
+        downBox.graphics.beginFill(0xdedede);
+        downBox.graphics.drawRoundRect(578,22,112,40,15);
+
+        let downBoxZZ = new egret.Shape();
+        this._downContain.addChild(downBoxZZ);
+        downBoxZZ.graphics.beginFill(0xffffff);
+        downBoxZZ.graphics.drawRoundRect(579.5,23.5,109,37,15);
+
+        this._downClick = new egret.Bitmap();
+        this._downContain.addChild(this._downClick);
+        this._downClick.y = 92;
+        RES.getResByUrl("resource/assets/images/ui/bg_button@2x.png",(e)=>{
+            this._downClick.$setBitmapData(e);
+            this._downClick.x = (750-this._downClick.width)*0.5;
+        },this);
+
+        this._downRightText = ToolMrg.getText(578,22,28,0x333333,112);
+        this._downContain.addChild(this._downRightText);
+        this._downRightText.height = 40;
+        this._downRightText.textAlign = egret.HorizontalAlign.CENTER;
+        this._downRightText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._downRightText.text = "1";
+
+        this._downBtnText = ToolMrg.getText(0,122,36,0xffffff,750);
+        this._downContain.addChild(this._downBtnText);
+        this._downBtnText.textAlign = egret.HorizontalAlign.CENTER;
+        this._downBtnText.text = "果断跟单";
+    }
+
+    private addScoll(): void {
+		this._scroView = new egret.ScrollView();
+		this._scroView.x = 0;
+		this._scroView.y = 96;
+		this._scroView.scrollSpeed = 0.4;
+		//设置滚动内容
+		this._scroView.setContent(this._mContain);
+		this._scroView.bounces = false;
+		this._scroView.verticalScrollPolicy = 'on';
+		this._scroView.horizontalScrollPolicy = 'off';
+		//设置滚动区域宽高
+		this._scroView.width = GameMain.getInstance.StageWidth;
+		this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y;
+		this.addChild(this._scroView);
+	}
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, 400);
+		this._mContain.addChildAt(this._mShareC, 0);
+
+        let zz = new egret.Shape();
+        this.addChildAt(zz,0);
+        zz.graphics.beginFill(0xffffff);
+        zz.graphics.drawRect(0,0,GameMain.getInstance.StageWidth,GameMain.getInstance.StageHeight);
+	}
+}

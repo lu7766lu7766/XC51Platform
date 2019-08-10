@@ -1,0 +1,142 @@
+class FindInfo extends egret.DisplayObjectContainer{
+
+    private _bj:egret.Bitmap;
+    private _imgBtn:egret.Bitmap;
+    private _titleText:egret.TextField;
+
+    constructor(){
+        super();
+        this.touchEnabled = true;
+
+        this.x = 28;
+        this._bj = new egret.Bitmap();
+        this._bj.touchEnabled = true;
+        this.addChild(this._bj);
+        RES.getResByUrl("resource/assets/images/ui/bg_find@2x.png",(e)=>{this._bj.$setBitmapData(e); },this);
+
+        let imgZZ = new egret.Shape();
+        this.addChild(imgZZ);
+        imgZZ.graphics.beginFill(0xffffff);
+        imgZZ.graphics.drawRoundRect(6,6,658,248,20);
+        imgZZ.graphics.endFill();
+
+        this._imgBtn = new egret.Bitmap();
+        this.addChild(this._imgBtn);
+        this._imgBtn.x = 6;
+        this._imgBtn.y = 6;
+        this._imgBtn.width = 658;
+        this._imgBtn.height = 248;
+        this._imgBtn.mask = imgZZ;
+
+        this._titleText = ToolMrg.getText(44,260,28,0x333333);
+        this.addChild(this._titleText);
+        this._titleText.height = 60;
+        this._titleText.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        let detailText = ToolMrg.getText(574,260,24,0x999999);
+        detailText.height = 60;
+        detailText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this.addChild(detailText);
+        detailText.text = "查看详情";
+
+        this.setDB();
+    }
+
+    private _data:FindData;
+    public aa(data:FindData):void{
+        this._data = data;
+        egret.log(data.imgSrc);
+        RES.getResByUrl(`resource/assets/images/ui/${data.imgSrc}`,(e)=>{
+            this._imgBtn.$setBitmapData(e); 
+        },this,RES.ResourceItem.TYPE_IMAGE);
+        // LoadNetPic.getLoadNetPic.loadPic(`${data.imgSrc}`,(e)=>{this._imgBtn.$setBitmapData(e);},this);
+        this._titleText.text = ToolMrg.nameMode2(20,data.title);
+    }
+
+    private touchDown(e:egret.TouchEvent):void{
+        egret.log(this._data.id);
+    }
+
+    private _isInterception = false;
+    public addInterception(): void {
+        if(!this._isInterception){
+            this._bj.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isInterception = true;
+        }
+    }
+
+    public removeInterception(): void {
+        if(this._isInterception){
+            this._bj.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isInterception = false;
+        }
+    }
+
+    private _mShareC: egret.Shape;
+    /**适配处理 */
+    private setDB(): void {
+        this._mShareC = new egret.Shape();
+        this._mShareC.graphics.beginFill(0xF5F5F7, 1);
+        this._mShareC.graphics.drawRect(-this.x, 0, GameMain.getInstance.StageWidth, 400);
+        this._mShareC.graphics.endFill();
+        this.addChildAt(this._mShareC, 0);
+    }
+}
+
+class FindMrg{
+    private static _mInstance: FindMrg;
+    public static get getInstance(): FindMrg {
+        if (FindMrg._mInstance == undefined)
+            FindMrg._mInstance = new FindMrg();
+        return FindMrg._mInstance;
+    }
+
+    public _findItem:GHashMap<FindData>;
+
+    constructor(){
+        this._findItem = new GHashMap<FindData>();
+
+        let a = new FindData();
+        a.id=1;
+        a.title = "下载APP 免费领取18元";
+        a.imgSrc = "bt1.png";
+        this._findItem.Gput(1,a)
+
+        let b = new FindData();
+        b.id=2;
+        b.title = "首存豪礼，最高领取8388元";
+        b.imgSrc = "bt2.png";
+        this._findItem.Gput(2,b)
+
+        let c = new FindData();
+        c.id=3;
+        c.title = "51彩站合营计划";
+        c.imgSrc = "bt3.png";
+        this._findItem.Gput(3,c)
+
+        let d = new FindData();
+        d.id=4;
+        d.title = "竞彩加奖10%，奖金不封顶";
+        d.imgSrc = "bt4.png";
+        this._findItem.Gput(4,d)
+
+        let e = new FindData();
+        e.id=5;
+        e.title = "首存红利赠送，8388元等您拿";
+        e.imgSrc = "bt5.png";
+        this._findItem.Gput(5,e)
+
+        let f = new FindData();
+        f.id=6;
+        f.title = "首存红利一倍水";
+        f.imgSrc = "bt6.png";
+        this._findItem.Gput(6,f)
+    }
+
+}
+
+class FindData{
+    public id;
+    public title:string;
+    public imgSrc:string;
+}

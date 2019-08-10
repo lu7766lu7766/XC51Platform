@@ -1,0 +1,14 @@
+/**头像选择逻辑管理类 */
+class selectHeadIconData extends egret.DisplayObjectContainer {
+	private static _mInstance: selectHeadIconData;
+	public static get getInstance(): selectHeadIconData {
+		if (selectHeadIconData._mInstance == undefined)
+			selectHeadIconData._mInstance = new selectHeadIconData();
+		return selectHeadIconData._mInstance;
+	}
+	public constructor() {
+		super();
+	}
+
+	public static headIconID:number=1;//用户头像id
+}

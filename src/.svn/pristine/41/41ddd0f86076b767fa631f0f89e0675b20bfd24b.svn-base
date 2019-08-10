@@ -1,0 +1,13 @@
+class MyLotteryDataMrg {
+	private static _mInstance: MyLotteryDataMrg;
+	public static get getInstance(): MyLotteryDataMrg {
+		if (MyLotteryDataMrg._mInstance == undefined)
+			MyLotteryDataMrg._mInstance = new MyLotteryDataMrg();
+		return MyLotteryDataMrg._mInstance;
+	}
+	/**我的彩票列表 */
+	public _mList:Array<MyLotteryData>;
+	private constructor() {
+		this._mList = new Array<MyLotteryData>();
+	}
+}

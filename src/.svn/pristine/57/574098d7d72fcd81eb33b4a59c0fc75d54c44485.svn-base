@@ -1,0 +1,26 @@
+class FootballDataMrg {
+	private static _mInstance: FootballDataMrg;
+	public static get getInstance(): FootballDataMrg {
+		if (FootballDataMrg._mInstance == undefined)
+			FootballDataMrg._mInstance = new FootballDataMrg();
+		return FootballDataMrg._mInstance;
+	}
+	/**足球列表 */
+	public _mZQLB:GHashMap<FootballData>;
+
+	private constructor() {
+		this._mZQLB = new GHashMap<FootballData>();
+	}
+
+	/**添加数据 */
+	public addData(data:FootballData):void {
+		if(data != undefined) {
+			this._mZQLB.Gput(data.id, data)
+		}	
+	}	
+
+	/**通过id获取对象 */
+	public getData(id:number):FootballData {
+		return this._mZQLB.Gget(id);
+	}
+}

@@ -1,0 +1,269 @@
+/**充值页面 */
+class RechargeWnd extends egret.DisplayObjectContainer{
+    private static _mInstance: RechargeWnd;
+    public static get getInstance(): RechargeWnd {
+        if (RechargeWnd._mInstance == undefined)
+            RechargeWnd._mInstance = new RechargeWnd();
+        return RechargeWnd._mInstance;
+    }
+
+    private _topUI:TopUIWhite;
+    private _return:egret.Shape;
+
+    private _mContain:egret.DisplayObjectContainer;
+    private _scroView:egret.ScrollView;
+    /**实际支付 */
+    private _payContain:egret.DisplayObjectContainer;
+    private _payText:egret.TextField;
+    /**支付方式 */
+    private _payWayContain:egret.DisplayObjectContainer;
+
+    /**支付按钮 */
+    private _payBtn:egret.Bitmap;
+
+    private _tipShape:egret.Shape;
+    private tipText = "充值金额不可体现，只能用于购彩，中奖后的奖金可以提现";
+    private moneyStr = [10,50,100,300,500,1000];
+    private _moneyItem:GHashMap<RCmoney_info>;
+    private _index = 0;
+
+    constructor(){
+        super();
+
+        this.y = 96+GameValue.adaptationScreen;
+        this.touchEnabled = true;
+
+        this._topUI = new TopUIWhite("充值",-this.y);
+        this.addChild(this._topUI);
+        this._return = this._topUI.getReturn();
+        this._topUI.hideTxText();
+
+        this._moneyItem = new GHashMap<RCmoney_info>();
+
+        this._mContain = new egret.DisplayObjectContainer();
+        this.addScoll();
+
+        this.init();
+        this.setDB();
+    }
+
+    private init():void{
+        //top
+        this._tipShape = new egret.Shape();
+        this.addChild(this._tipShape);
+        this._tipShape.graphics.beginFill(0xFF7000,0.06);
+        this._tipShape.graphics.drawRect(0,-5,GameMain.getInstance.StageWidth,56+5);
+        this._tipShape.graphics.endFill();
+        this._tipShape.touchEnabled = true;
+
+        let imgTip = new egret.Bitmap();
+        this.addChild(imgTip);
+        imgTip.x = 28,
+        imgTip.y = 10;
+        RES.getResByUrl("resource/assets/images/ui/tip_mine@2x.png",(e)=>{imgTip.$setBitmapData(e); },this);
+
+        let text = ToolMrg.getText(76,0,24,0xff7000);
+        this.addChild(text);
+        text.height = 56;
+        text.verticalAlign = egret.VerticalAlign.MIDDLE;
+        text.text = this.tipText;
+
+        //_mContain
+        let text1 = ToolMrg.getText(40,32+6,28,0x333333);
+        this._mContain.addChild(text1);
+        text1.text = "请输入充值金额：";
+
+        for(let i=0;i<this.moneyStr.length;i++){
+            let obj = new RCmoney_info(i,this.moneyStr[i]);
+            this._mContain.addChild(obj);
+            this._moneyItem.Gput(i,obj);
+            if(i<3){
+                obj.x = 40+234*i;
+                obj.y = 100;
+            }else{
+                obj.x = 40+234*(i-3);
+                obj.y = 200;
+            }
+        }
+        
+        this._payContain = new egret.DisplayObjectContainer();
+        this._payContain.y = 200+120;
+        this._mContain.addChild(this._payContain);
+
+        let payShape1 = new egret.Bitmap();
+        this._payContain.addChild(payShape1);
+        payShape1.width = GameMain.getInstance.StageWidth;
+        payShape1.height = 10;
+        RES.getResByUrl("resource/assets/images/ui/hui.png",(e)=>{payShape1.$setBitmapData(e); },this);
+
+        let payText = ToolMrg.getText(38,10,28,0x333333);
+        this._payContain.addChild(payText);
+        payText.height = 80;
+        payText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        payText.text = "实际支付：";
+
+        this._payText = ToolMrg.getText(464+46,10,28,0xf72e52,200);
+        this._payContain.addChild(this._payText);
+        this._payText.height = 80;
+        this._payText.textAlign = egret.HorizontalAlign.RIGHT;
+        this._payText.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        let payShape2 = new egret.Bitmap();
+        this._payContain.addChild(payShape2);
+        payShape2.y = 90;
+        payShape2.width = GameMain.getInstance.StageWidth;
+        payShape2.height = 10;
+        RES.getResByUrl("resource/assets/images/ui/hui.png",(e)=>{payShape2.$setBitmapData(e); },this);
+
+        this._payWayContain = new egret.DisplayObjectContainer();
+        this._mContain.addChild(this._payWayContain);
+        this._payWayContain.y = 300+120;
+
+        let wayText = ToolMrg.getText(38,38+5,24,0x333333);
+        this._payWayContain.addChild(wayText);
+        wayText.text = "选择支付方式";
+
+        //底部按钮
+        this._payBtn = new egret.Bitmap();
+        this.addChild(this._payBtn);
+        this._payBtn.touchEnabled = true;
+        this._payBtn.y = GameMain.getInstance.StageHeight - this.y - 130;
+        RES.getResByUrl("resource/assets/images/ui/bg_button@2x.png",(e)=>{
+            this._payBtn.$setBitmapData(e); 
+            this._payBtn.x = (GameMain.getInstance.StageWidth - this._payBtn.width)*0.5;
+        },this);    
+
+        let btnText = ToolMrg.getText(0,this._payBtn.y - 30,26,0xffffff,GameMain.getInstance.StageWidth);    
+        this.addChild(btnText);
+        btnText.textAlign = egret.HorizontalAlign.CENTER;
+        btnText.text = "立即充值";
+    }
+
+    private changeCss():void{
+        for(let key of this._moneyItem.keys){
+            if(key == this._index){
+                this._moneyItem.Gget(key).select();
+            }else{
+                this._moneyItem.Gget(key).noselect();
+            }
+        }
+        this._payText.text = this.moneyStr[this._index]+"元";
+    }
+
+    public changeNum(num:number):void{
+        this._index = num;
+        this.changeCss();
+    }
+
+    public show():void{
+        GUIManager.getInstance.topLay.addChild(this);
+        this.addEvent();
+        this.changeCss();
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this.removeEvent();
+            this._index = 0;
+        }
+    }
+
+    private touchDown(e:egret.TouchEvent):void{
+        if(e.target == this._return){
+            this.hide();
+        }else if(e.target == this._tipShape){//头部提示
+
+        }else if(e.target == this._payBtn){//支付按钮
+
+        }
+    }
+
+    private addEvent():void{
+        this._return.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._payBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        for(let key of this._moneyItem.keys)
+            this._moneyItem.Gget(key).addEvent();
+    }
+
+    private removeEvent():void{
+        this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._payBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        for(let key of this._moneyItem.keys)
+            this._moneyItem.Gget(key).removeEvent();
+    }
+
+    private _mShareC: egret.Shape;
+    /**适配处理 */
+    private setDB(): void {
+        this._mShareC = new egret.Shape();
+        this._mShareC.graphics.beginFill(0xffffff, 1);
+        this._mShareC.graphics.drawRect(0, -this.y, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+        this._mShareC.graphics.endFill();
+        this.addChildAt(this._mShareC, 0);
+    }
+
+    private addScoll(): void {
+        this._scroView = new egret.ScrollView();
+        this._scroView.x = 0;
+        this._scroView.y = 56;
+        this._scroView.scrollSpeed = 0.4;
+        //设置滚动内容
+        this._scroView.setContent(this._mContain);
+        this._scroView.bounces = false;
+        this._scroView.verticalScrollPolicy = 'on';
+        this._scroView.horizontalScrollPolicy = 'off';
+        //设置滚动区域宽高
+        this._scroView.width = GameMain.getInstance.StageWidth;
+        this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 130;
+        this.addChild(this._scroView);
+    }
+}
+
+class RCmoney_info extends egret.DisplayObjectContainer{
+
+    private _img:egret.Bitmap;
+    private _content:egret.TextField;
+
+    private _id:number;
+    constructor(id,str:number){
+        super();
+        this._id = id; 
+        this.touchEnabled = true;
+
+        this._img = new egret.Bitmap();
+        this.addChild(this._img);
+        RES.getResByUrl("resource/assets/images/ui/czxz_nor_mine@2x.png",(e)=>{this._img.$setBitmapData(e); },this);
+        RES.getResByUrl("resource/assets/images/ui/czxz_mine@2x.png",(e)=>{},this);
+
+        this._content = ToolMrg.getText(0,0,28,0x333333,202);
+        this.addChild(this._content);
+        this._content.height = 80;
+        this._content.textAlign = egret.HorizontalAlign.CENTER;
+        this._content.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._content.text = str+"元";
+    }
+
+    public select():void{
+        RES.getResByUrl("resource/assets/images/ui/czxz_mine@2x.png",(e)=>{this._img.$setBitmapData(e); },this);
+        this._content.textColor = 0xf72e52;
+    }
+
+    public noselect():void{
+        RES.getResByUrl("resource/assets/images/ui/czxz_nor_mine@2x.png",(e)=>{this._img.$setBitmapData(e); },this);
+        this._content.textColor = 0x333333;
+    }
+
+    private touchDown():void{
+        RechargeWnd.getInstance.changeNum(this._id);
+    }
+
+    public addEvent():void{
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+    }
+
+    public removeEvent():void{
+        this.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+    }
+
+}

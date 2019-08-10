@@ -1,0 +1,109 @@
+/**篮球 胜负 */
+class B3Wnd extends egret.DisplayObjectContainer{
+    private static _mInstance: B3Wnd;
+	public static get getInstance(): B3Wnd {
+		if (B3Wnd._mInstance == undefined)
+			B3Wnd._mInstance = new B3Wnd();
+		return B3Wnd._mInstance;
+	}
+
+    private _mContain:egret.DisplayObjectContainer;
+    private _scroView:egret.ScrollView;
+    private _item:GHashMap<B3infoTop>;
+
+    constructor(){
+        super();
+        this.touchEnabled = true;
+        this._mContain = new egret.DisplayObjectContainer();
+		this._item = new GHashMap<B3infoTop>();
+
+        this.addScoll();
+        this.setDB();
+    }
+
+    public GetItem():GHashMap<B3infoTop>{
+        return this._item;
+    }
+
+    public changeText(id,num:number[]):void{
+        for(let key of this._item.keys){
+            if(id!=undefined){
+                if(this._item.Gget(key).getSubItem().GhasKey(id)){
+                    this._item.Gget(key).getSubItem().Gget(id).changeText(num);
+                }
+            }else{
+                for(let akey of this._item.Gget(key).getSubItem().keys){
+                    this._item.Gget(key).getSubItem().Gget(akey).changeText([]);
+                }
+            }
+        }
+        
+    }
+
+	public updata():void{
+        let item = BasketballDataMrg.getInstance._mLQLB;
+        let objHeight=0;
+        for(let key of item.keys){
+            let obj:B3infoTop;
+            if(this._item.GhasKey(key)){
+                obj = this._item.Gget(key);
+            }else{
+                obj = new B3infoTop();
+                this._item.Gput(key,obj);
+            }
+            obj.aa(item.Gget(key),key);
+            obj.y = objHeight;
+            objHeight = objHeight + obj.height;
+            if(obj.parent==undefined)
+                this._mContain.addChild(obj);
+        }
+        ToolMrg.upItemofGHashMap(this._item,item);
+    }
+
+    public removeInterception():void{
+        for(let key of this._item.keys){
+            let obj = this._item.Gget(key);
+            for(let akey of obj.getSubItem().keys){
+                obj.getSubItem().Gget(akey).removeInterception();
+            }
+        }
+    }
+
+    public show():void{
+        GUIManager.getInstance.topLay.addChild(this);
+        this.updata();
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this._scroView.setScrollTop(0);
+            this.removeInterception();
+        }
+    }
+
+    private addScoll(): void {
+		this._scroView = new egret.ScrollView();
+		this._scroView.x = 0;
+		this._scroView.y = 136+80;
+		this._scroView.scrollSpeed = 0.4;
+		//设置滚动内容
+		this._scroView.setContent(this._mContain);
+		this._scroView.bounces = false;
+		this._scroView.verticalScrollPolicy = 'on';
+		this._scroView.horizontalScrollPolicy = 'off';
+		//设置滚动区域宽高
+		this._scroView.width = GameMain.getInstance.StageWidth;
+		this._scroView.height = GameMain.getInstance.StageHeight - this.y - 100 - this._scroView.y;
+		this.addChild(this._scroView);
+	}
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth,GameMain.getInstance.StageHeight - this.y - 100 - this._scroView.y);
+		this._mContain.addChildAt(this._mShareC, 0);
+    }
+}

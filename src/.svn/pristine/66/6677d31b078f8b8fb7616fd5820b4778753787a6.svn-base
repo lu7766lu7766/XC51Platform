@@ -1,0 +1,314 @@
+class OnePass extends egret.DisplayObjectContainer{
+    private static _mInstance: OnePass;
+	public static get getInstance(): OnePass {
+		if (OnePass._mInstance == undefined)
+			OnePass._mInstance = new OnePass();
+		return OnePass._mInstance;
+	}
+    private _topStr = ["胜平负","进球数","比分","半全场"];
+    private _topInfo:GHashMap<OnePassTopInfo>;
+    private _topShape:egret.Shape;
+
+    /**当前下标 默认0 0胜平负 1进球数 2比分 3半全场 */
+    private _index=0;
+    /** map 当前所有选中的数组（转换 Array<zqObjData>） */
+    public allItem:GHashMap<zqObjData>;
+    /**保存此data 选好返回 */
+    private _data:Array<Strand>;
+    /**为所选数组 */
+    private _arr:Array<zqObjData>;
+
+    constructor(){
+        super();
+        this.y = 136;
+
+        this.allItem = new GHashMap<zqObjData>();
+        this._topInfo = new GHashMap<OnePassTopInfo>();
+
+        for(let i=0;i<this._topStr.length;i++){
+            let obj = new OnePassTopInfo(this._topStr[i]);
+            this._topInfo.Gput(i,obj);
+            obj.x = 187.5*i;
+            obj.touchEnabled = true;
+            this.addChild(obj);
+        }
+        this._topShape = new egret.Shape();
+        this.addChild(this._topShape);
+        this._topShape.graphics.beginFill(0xf96d67);
+        this._topShape.graphics.drawRoundRect(74.5,76,48,4,8);
+
+        this.joinDown();
+        this.setDB();
+    }
+
+    public ClickRemove(id?:number){
+        if(id!=undefined){
+            let mitem;
+            if(FbWnd.inIndex==1){//胜平负
+                mitem = G2Wnd.getInstance.GetItem(); 
+            }else if(FbWnd.inIndex==2){//进球数
+                mitem = G3Wnd.getInstance.GetItem(); 
+            }else if(FbWnd.inIndex==3){//比分
+               mitem = G4Wnd.getInstance.GetItem(); 
+            }else if(FbWnd.inIndex==4){//半全场
+                mitem = G5Wnd.getInstance.GetItem(); 
+            }
+            for(let key of mitem.keys){
+                let item = mitem.Gget(key).getSubItem();
+                for(let akey of item.keys){
+                    if(item.Gget(akey).id==id)
+                        item.Gget(akey).clear();
+                }
+            }
+            let arr:zqObjData[] = [];
+            for(let i=0;i<this._arr.length;i++){
+                if(this._arr[i].dlxId!=id)
+                    arr = arr.concat(this._arr[i]);
+            }
+            this._arr = arr;
+            this._selectText.text = `${arr.length}`;
+            if(this.allItem.GhasKey(id))
+                this.allItem.GremoveByKey(id);
+        }else{
+            this.clearAllData();
+        }
+    }
+
+    /**传入当前id 以及足球表对象 */
+    public changeTextAndData(id,obj:zqObjData):void{
+        this.allItem.Gput(id,obj);
+        let arr:Array<zqObjData> = [];
+        for(let key of this.allItem.keys){
+            if(this.allItem.Gget(key).xlxIdList.length!=0)
+                arr = arr.concat(this.allItem.Gget(key));
+        }
+        this._arr = arr;
+        this._selectText.text = ""+arr.length;
+        egret.log(this.allItem);
+        egret.log(this._arr);
+    }
+
+    /**清除G1所有数据 */
+    private clearAllData():void{
+        let mitem:any;
+        if(FbWnd.inIndex==1){//胜平负
+            mitem = G2Wnd.getInstance.GetItem(); 
+        }else if(FbWnd.inIndex==2){//进球数
+            mitem = G3Wnd.getInstance.GetItem(); 
+        }else if(FbWnd.inIndex==3){//比分
+            mitem = G4Wnd.getInstance.GetItem(); 
+        }else if(FbWnd.inIndex==4){//半全场
+            mitem = G5Wnd.getInstance.GetItem(); 
+        }
+        this._arr = [];
+        this._selectText.text = "0";
+        this.allItem.clear();
+        if(mitem!=undefined){
+        for(let key of mitem.keys){
+            let item = mitem.Gget(key).getSubItem();
+                for(let akey of item.keys){
+                    item.Gget(akey).clear();
+                }
+            }
+        }
+    }
+
+    private GoChange(e:egret.TouchEvent):void{
+        if(e.target == this._clearBtn){//清除数据
+            this.clearAllData();
+        }else if(e.target == this._goBtn){
+            if(this._arr != undefined && this._arr.length>0){
+                this._data = GuessingFootballMrg.getInstance.getGuessingList(this._arr);
+
+                GoFBBuy.getInstance.show(this._data,this._arr);
+            }else 
+                Alertpaner.getInstance.show("请至少选择一场比赛");
+        }
+    }
+
+
+    public show():void{
+        GUIManager.getInstance.topLay.addChild(this);
+        this.addInterception();
+        this.showWnd();
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this.removeInterception();
+            this._index = 0;
+            this._data = [];
+            this.clearAllData();
+            this._topShape.x = 0;
+            G2Wnd.getInstance.hide();
+            G3Wnd.getInstance.hide();
+            G4Wnd.getInstance.hide();
+            G5Wnd.getInstance.hide();
+        }
+    }
+
+    private selectOn(e:egret.TouchEvent):void{
+        if(e.target == this._topInfo.Gget(0)){
+            if(this._index==0)return;
+            this._index = 0;
+        }else if(e.target == this._topInfo.Gget(1)){
+            if(this._index==1)return;
+            this._index = 1;
+        }else if(e.target == this._topInfo.Gget(2)){
+            if(this._index==2)return;
+            this._index = 2;
+        }else if(e.target == this._topInfo.Gget(3)){
+            if(this._index==3)return;
+            this._index = 3;
+        }
+        this.showWnd();
+    }
+
+    private showWnd():void{
+        this.clearAllData();
+        if(this._index==0){
+            G2Wnd.getInstance.show();
+            G3Wnd.getInstance.hide();
+            G4Wnd.getInstance.hide();
+            G5Wnd.getInstance.hide();
+        }else if(this._index==1){
+            G2Wnd.getInstance.hide();
+            G3Wnd.getInstance.show();
+            G4Wnd.getInstance.hide();
+            G5Wnd.getInstance.hide();
+        }else if(this._index==2){
+            G2Wnd.getInstance.hide();
+            G3Wnd.getInstance.hide();
+            G4Wnd.getInstance.show();
+            G5Wnd.getInstance.hide();
+        }else if(this._index==3){
+            G2Wnd.getInstance.hide();
+            G3Wnd.getInstance.hide();
+            G4Wnd.getInstance.hide();
+            G5Wnd.getInstance.show();
+        }
+        egret.Tween.get(this._topShape).to({x:187.5*this._index},200);
+        FbWnd.inIndex = this._index+1;
+    }
+
+    private addInterception():void{
+        for(let key of this._topInfo.keys){
+            this._topInfo.Gget(key).addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectOn,this);
+        }
+    }
+
+    private removeInterception():void{
+        for(let key of this._topInfo.keys){
+            this._topInfo.Gget(key).removeEventListener(egret.TouchEvent.TOUCH_TAP,this.selectOn,this);
+        }
+    }
+
+    private _downContain:egret.DisplayObjectContainer;
+	private _clearBtn:egret.Bitmap;
+    private _goBtn:egret.Bitmap;
+    private _selectText:egret.TextField;
+    private _selectBtn:egret.Bitmap;
+	private joinDown():void{
+		this._downContain = new egret.DisplayObjectContainer();
+
+        this._downContain.y = GameMain.getInstance.StageHeight - this.y - 100;
+        this.addChild(this._downContain);
+        let bj = new egret.Bitmap();
+        this._downContain.addChild(bj);
+        RES.getResByUrl("resource/assets/images/ui/bg_tabbar@2x.png",(e)=>{
+            bj.$setBitmapData(e);
+            bj.y = -10;
+        },this);
+
+        this._clearBtn = new egret.Bitmap();
+        this._downContain.addChild(this._clearBtn);
+        this._clearBtn.x = 26;
+        this._clearBtn.y = 20;
+        this._clearBtn.touchEnabled = true;
+        RES.getResByUrl("resource/assets/images/ui/clear_nav@2x.png",(e)=>{
+            this._clearBtn.$setBitmapData(e);
+        },this);
+
+        let downT1 = ToolMrg.getText(0,10,32,0x333333,750);
+        this._downContain.addChild(downT1);
+        downT1.textAlign = egret.HorizontalAlign.CENTER;
+        downT1.text = "已选择   场比赛";
+
+        this._selectText = ToolMrg.getText(0,10,32,0xF72E52,750);
+        this._downContain.addChild(this._selectText);
+        this._selectText.textAlign = egret.HorizontalAlign.CENTER;
+        this._selectText.text = "0";
+
+        let downT2 = ToolMrg.getText(0,58,24,0x999999,750);
+        this._downContain.addChild(downT2);
+        downT2.textAlign = egret.HorizontalAlign.CENTER;
+        downT2.text = "请至少选择1场比赛";
+
+        this._selectBtn = new egret.Bitmap();
+        this._downContain.addChild(this._selectBtn);
+
+        this._goBtn = new egret.Bitmap();
+        this._downContain.addChild(this._goBtn);
+        this._goBtn.touchEnabled = true;
+        RES.getResByUrl("resource/assets/images/ui/xhl_button@2x.png",(e)=>{
+            this._goBtn.$setBitmapData(e);
+            this._goBtn.x = 556;
+            this._goBtn.y = 8;
+        },this);
+
+        let goText = ToolMrg.getText(556,28,32,0xFFFFFF,176);
+        this._downContain.addChild(goText);
+        goText.height = 44;
+        goText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        goText.textAlign = egret.HorizontalAlign.CENTER;
+        goText.text = "选好了";
+
+        this._clearBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.GoChange,this);
+        this._goBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.GoChange,this);
+	}
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth,GameMain.getInstance.StageHeight - this.y);
+		this.addChildAt(this._mShareC, 0);
+    }
+}
+
+class OnePassTopInfo extends egret.DisplayObjectContainer{
+    private _title:egret.TextField;
+    private _titleShape:egret.Shape;
+
+    constructor(str:string){
+        super();
+
+        this._title = ToolMrg.getText(0,0,28,0x333333,187.5);
+        this.addChild(this._title);
+        this._title.height = 80;
+        this._title.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._title.textAlign = egret.HorizontalAlign.CENTER;
+        this._title.text = str;
+
+        this.setDB();
+    }
+
+    public selectInfo():void{
+        this._title.textColor = 0xF72F52;
+    }
+
+    public noselectInfo():void{
+        this._title.textColor = 0x333333;
+    }
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, 80,187.5);
+		this.addChildAt(this._mShareC, 0);
+    }
+}

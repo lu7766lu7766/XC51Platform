@@ -1,0 +1,64 @@
+class DmWnd_2 extends egret.DisplayObjectContainer{
+    private static _mInstance: DmWnd_2;
+	public static get getInstance(): DmWnd_2 {
+		if (DmWnd_2._mInstance == undefined)
+			DmWnd_2._mInstance = new DmWnd_2();
+		return DmWnd_2._mInstance;
+	}
+
+    private _topUI:TopUI;
+    private _mContain:egret.DisplayObjectContainer;
+    private _scroView:egret.ScrollView;
+    private CenterWnd:DmCenterWnd;
+
+    constructor(){
+        super();
+        this.y = 40;
+        this._topUI = new TopUI("抄单",-this.y,1);
+        this.addChild(this._topUI);
+
+        this._mContain = new egret.DisplayObjectContainer();
+        this.addScoll();
+
+        this.CenterWnd = new DmCenterWnd(null);
+        this._mContain.addChild(this.CenterWnd);
+
+        this.setDB();
+    }
+
+    public show():void{
+        GUIManager.getInstance.bgLay.addChild(this);
+        this.CenterWnd.upData(null);
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+        }
+    }
+
+    private addScoll(): void {
+		this._scroView = new egret.ScrollView();
+		this._scroView.x = 0;
+		this._scroView.y = 96;
+		this._scroView.scrollSpeed = 0.4;
+		//设置滚动内容
+		this._scroView.setContent(this._mContain);
+		this._scroView.bounces = false;
+		this._scroView.verticalScrollPolicy = 'on';
+		this._scroView.horizontalScrollPolicy = 'off';
+		//设置滚动区域宽高
+		this._scroView.width = GameMain.getInstance.StageWidth;
+		this._scroView.height = GameMain.getInstance.StageHeight - this.y - 100 - this._scroView.y;
+		this.addChild(this._scroView);
+	}
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight - this.y - 206);
+		this._mContain.addChildAt(this._mShareC, 0);
+	}
+}

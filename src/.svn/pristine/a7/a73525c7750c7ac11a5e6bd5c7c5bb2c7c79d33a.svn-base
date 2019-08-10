@@ -1,0 +1,87 @@
+class GDRecordInfo extends egret.DisplayObjectContainer{
+    private _img:egret.Bitmap;
+    private _typeText:egret.TextField;
+    private _buyText:egret.TextField;
+    private _sendNameText:egret.TextField;
+    private _isWin:egret.TextField;
+    private _timeText:egret.TextField;
+
+    constructor(){
+        super();
+
+        this._img = new egret.Bitmap();
+        this.addChild(this._img);
+        this._img.width = 28;
+        this._img.height = 28;
+        this._img.x = 28;
+        this._img.y = 20;
+
+        this._typeText = ToolMrg.getText(62,19,28,0x333333);
+        this.addChild(this._typeText);
+        
+        this._buyText = ToolMrg.getText(202,20,28,0x72e52);
+        this.addChild(this._buyText);
+
+        this._sendNameText = ToolMrg.getText(28,66,20,0x999999);
+        this.addChild(this._sendNameText);
+
+        this._isWin = ToolMrg.getText(404+72,20,24,0xff7000,250);
+        this.addChild(this._isWin);
+        this._isWin.textAlign = egret.HorizontalAlign.RIGHT;
+
+        this._timeText = ToolMrg.getText(404+72,70,20,0x999999,250);
+        this.addChild(this._timeText);
+        this._timeText.textAlign = egret.HorizontalAlign.RIGHT;
+
+        let shape = new egret.Shape();
+        this.addChild(shape);
+        shape.graphics.beginFill(0xdedede);
+        shape.graphics.drawRect(0,108,GameMain.getInstance.StageWidth,2);
+        shape.graphics.endFill();
+
+        this.setDB();
+    }
+
+    private _data:GDRecordData;
+    public aa():void{
+        // this._data = data;
+        RES.getResByUrl("resource/assets/images/ui/jzcg_home@2x.png",(e)=>{this._img.$setBitmapData(e); },this);
+        
+        //未中奖 待开奖 中奖
+        // this._isWin.textColor = 0x999999;
+        // this._isWin.textColor = 0xff7000;
+        // this._isWin.textColor = 0xF72E52;
+
+        this._typeText.text = "竞足单关";
+        this._isWin.text = "待开奖";
+        this._buyText.text = `30元`;
+        this._sendNameText.text = `发单者：昵称最多六字`; 
+        this._timeText.text = "19-02-06 15:24";
+    }
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, -this.y, GameMain.getInstance.StageWidth, 110);
+        this._mShareC.graphics.endFill();
+		this.addChildAt(this._mShareC, 0);
+	}
+}
+
+class GDRecordData{
+    public id;
+    /**发单者 */
+    public sendName:string;
+    /**类型 足球串关 足球单关 篮球串关 篮球单关 */
+    public _type;
+    /**是否中奖 */
+    public _isWin;
+    /***中奖金额 */
+    public winMoney:string;
+    /**购买金额 */
+    public buyMoney:string;
+    /**时间 */
+    public day:string;
+}

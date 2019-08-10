@@ -1,0 +1,62 @@
+class BasketballDataMrg {
+	private static _mInstance: BasketballDataMrg;
+	public static get getInstance(): BasketballDataMrg {
+		if (BasketballDataMrg._mInstance == undefined)
+			BasketballDataMrg._mInstance = new BasketballDataMrg();
+		return BasketballDataMrg._mInstance;
+	}
+	/**足球列表 */
+	public _mLQLB:GHashMap<GHashMap<BasketballData>>;
+
+	/**篮球 0-17 */
+	public BasketballList = ["客胜","主胜","客胜","主胜","1-5","6-10","11-15","16-20","21-25","26+","1-5","6-10","11-15","16-20","21-25","26+","客胜","主胜"];
+	private constructor() {
+		this._mLQLB = new GHashMap<GHashMap<BasketballData>>();
+	}
+
+	/**添加数据 */
+	public addData(time:string,lq:GHashMap<BasketballData>):void {
+		if(lq != undefined) {
+			this._mLQLB.Gput(time,lq);
+		}	
+	}	
+
+	/**通过id获取对象 */
+	public getData(time:string,id:number):BasketballData {
+		if(this._mLQLB[time] != undefined) {
+			return this._mLQLB[time].Gget(id);
+		} else {
+			return undefined;
+		}
+	}
+
+	/**通过id获取对象 */
+	public getDataById(id:number):BasketballData {
+		let lq:GHashMap<BasketballData>;
+		for(let key of this._mLQLB.keys) {
+			lq = this._mLQLB.Gget(key);
+			if(lq.Gget(id) != undefined) {//
+				return lq.Gget(id);
+			}
+		}
+
+		return undefined;
+	}
+
+	/**通过单关当天time获取对象*/
+	public getDataByTime(time:string):GHashMap<FootballData> {
+		return this._mLQLB[time];
+	}
+
+	/**通过id和下标取对象 */
+	public getDataByIdAndXB(id:number,xb:number):number {
+		let lq:GHashMap<BasketballData>;
+		for(let key of this._mLQLB.keys) {
+			lq = this._mLQLB.Gget(key);
+			if(lq.Gget(id) != undefined ) {//
+				return lq.Gget(id).listSX[xb];
+			}
+		}
+		return undefined;
+	}
+}

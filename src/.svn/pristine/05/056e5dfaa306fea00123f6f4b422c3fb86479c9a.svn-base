@@ -1,0 +1,201 @@
+/**提现界面*/
+class withdrawViewMrg extends egret.DisplayObjectContainer {
+	private static _mInstance: withdrawViewMrg;
+	public static get getInstance(): withdrawViewMrg {
+		if (withdrawViewMrg._mInstance == undefined)
+			withdrawViewMrg._mInstance = new withdrawViewMrg();
+		return withdrawViewMrg._mInstance;
+	}
+	public constructor() {
+		super();
+		this.y = 136;
+		this._mListObj = new GHashMap<bgxianTx>();
+		this._topUI = new TopUIWhite("", -this.y);
+		this._topUI.changeTitle("提款申请");
+		this.addChild(this._topUI);
+		this._return = this._topUI.getReturn();
+		this._return.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+			this.hide();
+		}, this);
+
+		let link = new egret.Shape();
+		this.addChild(link);
+		link.graphics.beginFill(0xDEDEDE);
+		link.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, 5);
+		link.graphics.endFill();
+
+		let link1 = new egret.Shape();
+		this.addChild(link1);
+		link1.graphics.beginFill(0xDEDEDE);
+		link1.graphics.drawRect(0, 257, GameMain.getInstance.StageWidth, 10);
+		link1.graphics.endFill();
+
+		this._selectTypeText = ToolMrg.getText(40, 47, 28, 0x333333, 300);
+		this._selectTypeText.text = "选择提款类型：";
+		this._selectTypeText.textAlign = egret.HorizontalAlign.CENTER;
+		this._selectTypeText.fontFamily = "微软雅黑";
+		this.addChild(this._selectTypeText);
+
+		this.setDB();
+	}
+
+	private _topUI: TopUIWhite;
+	private _return: egret.Shape;
+	private _selectTypeText: egret.TextField;//选择提现类型text
+	private _mListObj: GHashMap<bgxianTx>;//数据列表
+
+
+
+	public show(): void {
+		if (this.parent == undefined) {
+			GUIManager.getInstance.tipLay.addChild(this);
+		}
+		this.initallInfo();
+	}
+
+	public hide(): void {
+		if (this.parent != undefined) {
+			this.parent.removeChild(this);
+		}
+	}
+
+	private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+		this._mShareC.graphics.endFill();
+		this.addChildAt(this._mShareC, 0);
+	}
+
+	/**初始化所有数据*/
+	public initallInfo(): void {
+		let len: number = 2;
+		let dataObj: bgxianTx;
+		for (let i = 1; i <= len; i++) {
+			dataObj = this._mListObj.Gget(i);
+			if (dataObj == undefined) {
+				dataObj = new bgxianTx();
+				this._mListObj.Gput(i, dataObj);
+			}
+			dataObj.setID(i);
+			dataObj.setPoint(0, 60 + (i - 1) * 109);
+			if (dataObj.parent == undefined) {
+				this.addChild(dataObj);
+			}
+		}
+	}
+
+	private addevent() {
+		// this.nextBnt.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onclick, this);
+	}
+
+	private onclick(): void {
+
+	}
+}
+
+class bgxianTx extends egret.DisplayObjectContainer {
+	public constructor() {
+		super();
+
+
+		let link1 = new egret.Shape();
+		this.addChild(link1);
+		link1.graphics.beginFill(0xffffff);
+		link1.graphics.drawRect(0, 2, GameMain.getInstance.StageWidth, 104);
+		link1.graphics.endFill();
+
+		this.lowSP = new egret.Shape();
+		this.addChild(this.lowSP);
+		this.lowSP.graphics.beginFill(0xDEDEDE);
+		this.lowSP.graphics.drawRect(0, 105, GameMain.getInstance.StageWidth, 2);
+		this.lowSP.graphics.endFill();
+
+		this.tatleText = ToolMrg.getText(26, 0, 28, 0x333333, 200);
+		this.addChild(this.tatleText);
+		this.tatleText.height = 108;
+		this.tatleText.verticalAlign = egret.VerticalAlign.MIDDLE;
+		this.tatleText.text = "真实姓名";
+		this.tatleText.touchEnabled = true;
+		this.tatleText.bold = true;
+
+		this.inputText = ToolMrg.getText(170, 0, 28, 0x999999, 400);
+		this.addChild(this.inputText);
+		this.inputText.height = 108;
+		this.inputText.type = egret.TextFieldType.INPUT;
+		this.inputText.verticalAlign = egret.VerticalAlign.MIDDLE;
+		this.inputText.text = "提交后不可修改";
+		this.inputText.touchEnabled = true;
+
+		this.addevent();
+
+	}
+
+	private lowSP: egret.Shape;
+	private tatleText: egret.TextField;//标题
+	private myid: number = 0;//自身id
+	private inputText: egret.TextField;//输入文本
+
+	public getStr(): string {
+		return this.inputText.text;
+	}
+
+	public setInpText(str: string) {
+		if (this.inputText == undefined) return;
+		this.inputText.text = str;
+	}
+
+	public settatleText(str: string) {
+		if (this.tatleText == undefined) return;
+		this.tatleText.text = str;
+	}
+
+	public setID(id: number): void {
+		this.myid = id;
+		if (this.myid == 1) {
+			this.lowSP.visible = false;
+		}
+		if (id == 1) {
+			this.setInpText("提交后不可修改");
+			this.settatleText("真实姓名");
+		} else {
+			this.setInpText("15或18位，提交后不可修改");
+			this.settatleText("身份证号");
+		}
+	}
+
+	public setPoint(x: number, y: number): void {
+		this.x = x;
+		this.y = y;
+	}
+
+
+	private addevent() {
+		this.inputText.addEventListener(egret.Event.FOCUS_IN, this.textInput, this);
+		this.inputText.addEventListener(egret.Event.FOCUS_OUT, this.textInput, this);
+	}
+
+	private textInput() {
+		if (this.inputText != undefined && this.inputText.text == "提交后不可修改" || this.inputText.text == "15或18位，提交后不可修改") {
+			this.inputText.text = "";
+			this.inputText.textColor = 0x000000;
+			this.inputText.alpha = 1;
+			this.inputText.text = "";
+		} else if (this.inputText != undefined && this.inputText.text == "") {
+			if (this.myid == 1) {
+				this.inputText.text = "提交后不可修改";
+				this.inputText.textColor = 0xA9A9A9;
+				this.inputText.alpha = 1;
+				this.inputText.text = "提交后不可修改";
+			} else {
+				this.inputText.text = "15或18位，提交后不可修改";
+				this.inputText.textColor = 0xA9A9A9;
+				this.inputText.alpha = 1;
+				this.inputText.text = "15或18位，提交后不可修改";
+			}
+
+		}
+	}
+}

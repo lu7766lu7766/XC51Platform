@@ -1,0 +1,135 @@
+/**客服 */
+class KeFuWnd extends egret.DisplayObjectContainer{
+    private static _mInstance: KeFuWnd;
+    public static get getInstance(): KeFuWnd {
+        if (KeFuWnd._mInstance == undefined)
+            KeFuWnd._mInstance = new KeFuWnd();
+        return KeFuWnd._mInstance;
+    }
+
+    private _topUI:TopUI
+    private _return:egret.Shape;
+
+    constructor(){
+        super();
+
+        this.touchEnabled = true;
+        this._topUI = new TopUI("联系客服");
+        this.addChild(this._topUI);
+        this._return = this._topUI.getReturn();
+
+        let btn1 = new egret.Bitmap();
+        this.addChild(btn1);
+        btn1.y = 182;
+        RES.getResByUrl("resource/assets/images/ui/kftx_mine@2x.png",(e)=>{
+            btn1.$setBitmapData(e); 
+            btn1.x = (GameMain.getInstance.StageWidth - btn1.width)*0.5;
+        },this);
+
+        let btn2 = new egret.Bitmap();
+        this.addChild(btn2);
+        btn2.y = 634;
+        RES.getResByUrl("resource/assets/images/ui/kfbt2_mine@2x.png",(e)=>{
+            btn2.$setBitmapData(e); 
+            btn2.x = (GameMain.getInstance.StageWidth - btn2.width)*0.5;
+        },this);
+
+        let btn3 = new egret.Bitmap();
+        this.addChild(btn3);
+        btn3.y = 774;
+        RES.getResByUrl("resource/assets/images/ui/kfbt2_mine@2x.png",(e)=>{
+            btn3.$setBitmapData(e); 
+            btn3.x = (GameMain.getInstance.StageWidth - btn3.width)*0.5;
+        },this);
+
+        let btn4 = new egret.Bitmap();
+        this.addChild(btn4);
+        btn4.y = 914;
+        RES.getResByUrl("resource/assets/images/ui/kfbt2_mine@2x.png",(e)=>{
+            btn4.$setBitmapData(e); 
+            btn4.x = (GameMain.getInstance.StageWidth - btn3.width)*0.5;
+        },this);
+
+        let img1 = new egret.Bitmap();
+        this.addChild(img1);
+        RES.getResByUrl("resource/assets/images/ui/kfwx_mine@2x.png",(e)=>{
+            img1.$setBitmapData(e);
+            img1.y = 664;
+        },this);
+        img1.x= 166;
+
+        let img2 = new egret.Bitmap();
+        this.addChild(img2);
+        img2.x = 166;
+        RES.getResByUrl("resource/assets/images/ui/kfqq_mine@2x.png",(e)=>{
+            img2.$setBitmapData(e); 
+            img2.y = 800;
+        },this);
+
+        let img3 = new egret.Bitmap();
+        this.addChild(img3);
+        img3.x = 166;
+        RES.getResByUrl("resource/assets/images/ui/skype_mine@2x.png",(e)=>{
+            img3.$setBitmapData(e); 
+            img3.y = 940;
+        },this);
+
+        let wx = ToolMrg.getText(234,660+7,36,0xF72E52,560);
+        this.addChild(wx);
+        // wx.textAlign = egret.HorizontalAlign.CENTER;
+        wx.text = "微信：2102744802";
+
+        let qq = ToolMrg.getText(234,800+7,36,0xF72E52,560);
+        this.addChild(qq);
+        // qq.textAlign = egret.HorizontalAlign.CENTER;
+        qq.text = "QQ：312288881";
+
+        let phone = ToolMrg.getText(234,940+7,36,0xF72E52,560);
+        this.addChild(phone);
+        // phone.textAlign = egret.HorizontalAlign.CENTER;
+        phone.text = "Skype：caizhan51";
+
+        this.setDB();
+    }
+
+    public show():void{
+        GUIManager.getInstance.mostLay.addChild(this);
+        this.addInterception();
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this.removeInterception();
+
+            if(WorldWnd._worldState==1){
+                WorldWnd.getInstance.show();
+            }
+        }
+    }
+
+    private touchDown(e:egret.TouchEvent):void{
+        if(e.target == this._return){
+            this.hide();
+        }
+    }
+
+    public addInterception(): void {
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+    }
+
+    public removeInterception(): void {
+        this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+    }
+
+    private _mShareC: egret.Shape;
+    /**适配处理 */
+    private setDB(): void {
+        this._mShareC = new egret.Shape();
+        
+        this._mShareC.graphics.beginFill(0xFEF9F9, 1);
+        this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+        this._mShareC.graphics.endFill();
+        this.addChildAt(this._mShareC, 0);
+    }
+}

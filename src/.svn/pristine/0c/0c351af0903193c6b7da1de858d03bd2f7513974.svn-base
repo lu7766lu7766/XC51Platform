@@ -1,0 +1,72 @@
+/**软键盘 */
+class keyboard extends egret.DisplayObjectContainer{
+    private static _mInstance: keyboard;
+    public static get getInstance(): keyboard {
+        if (keyboard._mInstance == undefined)
+            keyboard._mInstance = new keyboard();
+        return keyboard._mInstance;
+    }
+
+    private _link:egret.Bitmap;
+    private _strText:egret.TextField;
+
+    constructor(){
+        super();
+
+        this.touchEnabled = true;
+
+        let bj = new egret.Shape();
+        this.addChild(bj);
+        bj.graphics.beginFill(0xffffff);
+        bj.graphics.drawRoundRect(0,0,GameMain.getInstance.StageWidth,80,20);
+        bj.graphics.endFill();
+        bj.y = (GameMain.getInstance.StageHeight - bj.height)*0.5;
+
+        this._link = new egret.Bitmap();
+        this.addChild(this._link);
+        RES.getResByUrl("resource/assets/images/ui/kuang_mine@2x.png",(e)=>{
+            this._link.$setBitmapData(e); 
+            this._link.y = (GameMain.getInstance.StageHeight - this._link.height)*0.5;
+        },this);
+        var rect:egret.Rectangle = new egret.Rectangle(100,0,500,0);
+        this._link.scale9Grid = rect;
+        this._link.width = GameMain.getInstance.StageWidth;
+        
+        //(GameMain.getInstance.StageHeight - 80)*0.5
+        this._strText = ToolMrg.getText(30,(GameMain.getInstance.StageHeight - 80)*0.5,30,0x000000);
+        this.addChild(this._strText);
+        this._strText.height = 80;
+        this._strText.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this.setDB();
+    }
+
+    public updata(str:string):void{
+        this._strText.text = str;
+    }
+
+    public show(str):void{
+        if(this.parent==undefined){
+            GUIManager.getInstance.mostLay.addChild(this);
+        }
+
+        this._strText.text = str;
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this._strText.text = "";
+        }
+    }
+
+    private _mShareC: egret.Shape;
+    /**适配处理 */
+    private setDB(): void {
+        this._mShareC = new egret.Shape();
+        this._mShareC.graphics.beginFill(0x1f1f1f, 0.4);
+        this._mShareC.graphics.drawRect(0, -this.y, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+        this._mShareC.graphics.endFill();
+        this.addChildAt(this._mShareC, 0)
+    }
+}

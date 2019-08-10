@@ -1,0 +1,203 @@
+class WorldWnd extends egret.DisplayObjectContainer{
+    private static _mInstance: WorldWnd;
+	public static get getInstance(): WorldWnd {
+		if (WorldWnd._mInstance == undefined)
+			WorldWnd._mInstance = new WorldWnd();
+		return WorldWnd._mInstance;
+	}
+
+    private _imgSrc=["11x5_home@2x","11x5_home@2x","pl3_home@2x","pl5_home@2x","11x5_home@2x","11x5_home@2x","11x5_home@2x"];
+    private _imgTitle=["竞彩篮球","竞彩足球","排列三","排列五"];
+    private _imgContent=["冷门少中奖高","倍投收益更高","单注赢千元","2元中10万"];
+    private _mContain:egret.DisplayObjectContainer;
+    private _scroView:egret.ScrollView;
+    private _tip:WorldTip;
+
+    private _imgItem:GHashMap<WorldActivity>;
+    private _imgContain:egret.DisplayObjectContainer;
+    private imgBox:WorldTopImg;
+
+    constructor(){
+        super();
+
+        this.y = 40;
+        this._imgItem = new GHashMap<WorldActivity>();
+        this._mContain = new egret.DisplayObjectContainer();
+        this._imgContain = new egret.DisplayObjectContainer();
+
+        this.imgBox = WorldTopImg.getInstance;
+        this._imgContain.addChild(this.imgBox);
+
+        this._tip = WorldTip.getInstance;
+        this._mContain.addChild(this._tip);
+        this._tip.y = 320+16+8;
+        this._tip.x = 76;
+
+        let tipImg = new egret.Bitmap();
+        this._mContain.addChild(tipImg);
+        tipImg.x = 28;
+        tipImg.y = 20+320;
+        RES.getResByUrl(`resource/assets/images/ui/tz_home@2x.png`,(e)=>{
+            tipImg.$setBitmapData(e);
+        },this);
+
+        let wlink1 = new egret.Shape();
+        this._mContain.addChild(wlink1);
+        wlink1.graphics.beginFill(0xf3f3f3);
+        wlink1.graphics.drawRect(0,70+320,750,10);
+
+        this.addActivity();
+        this.addScoll();
+
+        this.addChild(this._imgContain);
+        this.setDB();
+    }
+
+    private addActivity():void{
+        let objNum = 0;
+        let objHeight = 98+8+320;
+        for(let i=0;i<this._imgTitle.length;i++){
+            let obj = new WorldActivity(this._imgSrc[i],this._imgTitle[i],this._imgContent[i],i);
+            this._imgItem.Gput(i,obj);
+            obj.y = objHeight;
+            obj.x = 375*objNum;
+            this._mContain.addChild(obj);
+            if(objNum == 1){
+                objNum=0;
+                objHeight = objHeight + 136;
+            }else{
+                objNum+=1;
+            }
+        }
+    }
+
+    private _mPayData;
+    public show():void{
+        GUIManager.getInstance.bgLay.addChild(this);
+        this.addInterception();
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this.removeInterception();
+        }
+    }
+
+    private addScoll(): void {
+		this._scroView = new egret.ScrollView();
+		this._scroView.x = 0;
+		this._scroView.y = 0;
+		this._scroView.scrollSpeed = 0.4;
+		//设置滚动内容
+		this._scroView.setContent(this._mContain);
+		this._scroView.bounces = false;
+		this._scroView.verticalScrollPolicy = 'on';
+		this._scroView.horizontalScrollPolicy = 'off';
+		//设置滚动区域宽高
+		this._scroView.width = GameMain.getInstance.StageWidth;
+		this._scroView.height = GameMain.getInstance.StageHeight - this.y - 100;
+		this.addChild(this._scroView);
+	}
+
+    private addInterception():void{
+        this._scroView.addEventListener(egret.TouchEvent.CHANGE,this.moveImg,this);
+        for(let key of this._imgItem.keys){
+            this._imgItem.Gget(key).addInterception();
+        }
+    }
+
+    private removeInterception():void{
+        this._scroView.removeEventListener(egret.TouchEvent.CHANGE,this.moveImg,this);
+        for(let key of this._imgItem.keys){
+            this._imgItem.Gget(key).removeInterception();
+        }
+    }
+
+    private moveImg(e:egret.TouchEvent):void{
+        this._imgContain.y = -this._scroView.scrollTop;
+    }
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, -this.y, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+		this.addChildAt(this._mShareC, 0);
+
+        let mShareC = new egret.Shape();
+        mShareC.graphics.beginFill(0xffffff, 1);
+		mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
+		this._mContain.addChildAt(mShareC, 0);
+	}
+}
+
+class WorldActivity extends egret.DisplayObjectContainer{
+    private _id;
+    private _img:egret.Bitmap;
+    private _title:egret.TextField;
+    private _content:egret.TextField;
+
+    constructor(imgsrc,title,content,id){
+        super();
+        this._id = id;
+
+        this._img = new egret.Bitmap();
+        this._img.x  = 40;
+        this.addChild(this._img);
+        this._img.y = 20;
+        RES.getResByUrl(`resource/assets/images/ui/${imgsrc}.png`,(e)=>{
+            this._img.$setBitmapData(e);
+        },this);
+
+        this._title = ToolMrg.getText(164,20+8,32,0x333333);
+        this.addChild(this._title);
+        this._title.text = title;
+
+        this._content = ToolMrg.getText(164,20+54,24,0x999999);
+        this.addChild(this._content);
+        this._content.text = content;
+
+        this.setDB();
+    }
+
+    private _isInterception = false;
+    public addInterception():void{
+        if(!this._isInterception){
+            this._mShareC.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isInterception = true;
+        }
+    }
+
+    public removeInterception():void{
+        if(this._isInterception){
+            this._mShareC.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isInterception = false;
+        }
+    }
+
+    private touchDown(e:egret.TouchEvent):void{
+        if(this._id == 0){//篮球
+            BasketBallWnd.getInstance.show();
+        }else if(this._id == 1){//足球
+            FbWnd.getInstance.show();
+        }else if(this._id == 2){//列三
+            ThreeBox.getInstance.show();
+        }else if(this._id == 3){//列五
+            FiveBox.getInstance.show();
+        }else if(this._id == 4){
+            
+        }
+    }
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth/2,96+40);
+		this.addChildAt(this._mShareC, 0);
+        this._mShareC.touchEnabled = true;
+    }
+}

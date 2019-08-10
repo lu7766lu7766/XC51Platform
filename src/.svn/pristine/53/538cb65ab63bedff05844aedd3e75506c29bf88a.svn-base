@@ -1,0 +1,159 @@
+class FBselect extends egret.DisplayObjectContainer{
+    private static _mInstance: FBselect;
+	public static get getInstance(): FBselect {
+		if (FBselect._mInstance == undefined)
+			FBselect._mInstance = new FBselect();
+		return FBselect._mInstance;
+	}
+
+    private _mContain:egret.DisplayObjectContainer;
+    private _topContain:egret.DisplayObjectContainer;
+    private _centerContain:egret.DisplayObjectContainer;
+    private _downContain:egret.DisplayObjectContainer;
+    private _mShape:egret.Shape;
+
+    constructor(){
+        super();
+
+        this._mContain = new egret.DisplayObjectContainer();
+        this.addChild(this._mContain);
+
+        this._mShape = new egret.Shape();
+        this._mContain.addChild(this._mShape);
+
+        this._topContain = new egret.DisplayObjectContainer();
+        this._centerContain = new egret.DisplayObjectContainer();
+        this._downContain = new egret.DisplayObjectContainer();
+        this._mContain.addChild(this._topContain);
+        this._mContain.addChild(this._centerContain);
+        this._mContain.addChild(this._downContain);
+
+        this.joinTop();
+        this.joinDown();
+        this.setDB();
+    }
+
+    private touchDown(e:egret.TouchEvent){
+        if(e.target == this._defineBtn){
+
+        }
+        this.hide();
+    }
+
+    private _data:Array<Strand>;
+    public show(data:Array<Strand>):void{
+        GUIManager.getInstance.tipLay.addChild(this);
+        this._data = data;
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+        }
+    }
+
+    private joinTop():void{
+        let topTitle = ToolMrg.getText(0,37,36,0x333333,680);
+        this._topContain.addChild(topTitle);
+        topTitle.textAlign = egret.HorizontalAlign.CENTER;
+        topTitle.text = "串关选择";
+
+        let topShape = new egret.Shape();
+        this._topContain.addChild(topShape);
+        topShape.graphics.beginFill(0xdedede);
+        topShape.graphics.drawRect(52,110.5,576,1.5);
+    }
+
+    private _cancelBtn:egret.Bitmap;
+    private _defineBtn:egret.Bitmap;
+    private joinDown():void{
+        let downShape = new egret.Shape();
+        this._downContain.addChild(downShape);
+        downShape.graphics.beginFill(0xdedede);
+        downShape.graphics.drawRect(52,0,576,1.5);
+
+        this._cancelBtn = new egret.Bitmap();
+        this._downContain.addChild(this._cancelBtn);
+        this._cancelBtn.x = 44;
+        this._cancelBtn.y = 34;
+        RES.getResByUrl("resource/assets/images/ui/bg2_nor_button@2x.png",(e)=>{this._cancelBtn.$setBitmapData(e); },this);
+
+        this._defineBtn = new egret.Bitmap();
+        this._downContain.addChild(this._defineBtn);
+        this._defineBtn.x = 360;
+        this._defineBtn.y = 34;
+        RES.getResByUrl("resource/assets/images/ui/bg2_button@2x.png",(e)=>{this._defineBtn.$setBitmapData(e); },this);
+        
+        let cancelText = ToolMrg.getText(150,54,32,0x333333);
+        this._downContain.addChild(cancelText);
+        cancelText.text = "取消";
+
+        let defineText = ToolMrg.getText(466,54,32,0xffffff);
+        this._downContain.addChild(defineText);
+        defineText.text = "确定";
+
+        this._cancelBtn.touchEnabled = true;
+        this._defineBtn.touchEnabled = true;
+        this._cancelBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._defineBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+    }
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0x1f1f1f, 0.5);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth,GameMain.getInstance.StageHeight);
+		this.addChildAt(this._mShareC, 0);
+        this._mShareC.touchEnabled = true;
+        this._mShareC.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+    }
+}
+
+class FBselectInfo extends egret.DisplayObjectContainer{
+    public id;
+    private _box:egret.Shape;
+    private _boxShape:egret.Shape;
+    private _content:egret.TextField;
+    public selectType = false;
+
+    constructor(){
+        super();
+
+        this._box = new egret.Shape();
+        this.addChild(this._box);
+        this._box.graphics.beginFill(0x979797);
+        this._box.graphics.drawRoundRect(0,0,160,72,20);
+
+        this._boxShape = new egret.Shape();
+        this.addChild(this._boxShape);
+        this._boxShape.graphics.beginFill(0xf5f5f7);
+        this._boxShape.graphics.drawRoundRect(1.5,1.5,157,69,20);
+
+        this._content = ToolMrg.getText(0,0,28,0x999999,160);
+        this.addChild(this._content);
+        this._content.height = 72;
+        this._content.textAlign = egret.HorizontalAlign.CENTER;
+        this._content.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+    }
+
+    public aa(content:string,id):void{
+        this.id = id;
+        this._content.text = content;
+    }
+
+    public changeCss():void{
+        this._boxShape.graphics.clear();
+        if(this.selectType){
+            this._content.textColor = 0xffffff;
+            this._boxShape.graphics.beginFill(0xF72E52);
+            this._boxShape.graphics.drawRoundRect(0,0,160,72,20);
+        }else{
+            this._content.textColor = 0x999999;
+            this._boxShape.graphics.beginFill(0xf5f5f7);
+            this._boxShape.graphics.drawRoundRect(1.5,1.5,157,69,20);
+        }
+    }
+
+}

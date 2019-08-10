@@ -1,0 +1,30 @@
+/**足球选择日期数据类 */
+class selectDayFootballData {
+	private static _mInstance: selectDayFootballData;
+	public static get getInstance(): selectDayFootballData {
+		if (selectDayFootballData._mInstance == undefined)
+			selectDayFootballData._mInstance = new selectDayFootballData();
+		return selectDayFootballData._mInstance;
+	}
+	public constructor() {
+	}
+
+	public static defaultselectNum: number = 1;//当前选者期数id
+	public static ifshow: boolean = false;//当前是否有显示选择列表
+
+	/**日期选择逻辑处理*/
+	public selectqq(): void {
+		let list: GHashMap<selectdayItem> = selectDayFootball.getInstance.getlist();
+		let len: number = list.size;
+		for (let i = 1; i <= len; i++) {
+			let dataobj: selectdayItem = list.Gget(i);
+			if (dataobj != undefined) {
+				if (selectDayFootballData.defaultselectNum == i) {
+					dataobj.selcet(1);
+				} else {
+					dataobj.selcet(2);
+				}
+			}
+		}
+	}
+}

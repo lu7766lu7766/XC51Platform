@@ -1,0 +1,157 @@
+/**足球比分数据管理类 */
+class FootballConfinData {
+	private static _mInstance: FootballConfinData;
+	public static get getInstance(): FootballConfinData {
+		if (FootballConfinData._mInstance == undefined)
+			FootballConfinData._mInstance = new FootballConfinData();
+		return FootballConfinData._mInstance;
+	}
+
+	private _mListObj: GHashMap<footballCofObj>;//足球即时信息列表
+	private _mListObj1: GHashMap<footballCofObj>;//足球赛果信息列表
+	private _mListObj2: GHashMap<footballCofObj>;//足球赛程信息列表
+	private _mListObj3: GHashMap<footballCofObj>;//足球关注信息列表
+	public constructor() {
+		this._mListObj = new GHashMap<footballCofObj>();
+		this._mListObj1 = new GHashMap<footballCofObj>();
+		this._mListObj2 = new GHashMap<footballCofObj>();
+		this._mListObj3 = new GHashMap<footballCofObj>();
+	}
+
+	/**获取列表(即时)*/
+	public getlist(): GHashMap<footballCofObj> {
+		return this._mListObj;
+	}
+
+	/**获取列表(赛果)*/
+	public getlist1(): GHashMap<footballCofObj> {
+		return this._mListObj1;
+	}
+
+	/**获取列表(赛程)*/
+	public getlist2(): GHashMap<footballCofObj> {
+		return this._mListObj2;
+	}
+
+	/**获取列表(关注)*/
+	public getlist3(): GHashMap<footballCofObj> {
+		return this._mListObj3;
+	}
+
+	/**根据id查找对应数据(即时)*/
+	public getInfo(id: number): footballCofObj {
+		let data: footballCofObj;
+		for (let key of this._mListObj.keys) {
+			data = this._mListObj.Gget(key);
+			if (id == Number(key)) {
+				return data;
+			}
+		}
+	}
+
+	/**根据id查找对应数据(赛果)*/
+	public getInfo1(id: number): footballCofObj {
+		let data: footballCofObj;
+		for (let key of this._mListObj.keys) {
+			data = this._mListObj1.Gget(key);
+			if (id == Number(key)) {
+				return data;
+			}
+		}
+	}
+
+	/**根据id查找对应数据(赛程)*/
+	public getInfo2(id: number): footballCofObj {
+		let data: footballCofObj;
+		for (let key of this._mListObj.keys) {
+			data = this._mListObj2.Gget(key);
+			if (id == Number(key)) {
+				return data;
+			}
+		}
+	}
+
+	/**根据id查找对应数据(关注)*/
+	public getInfo3(id: number): footballCofObj {
+		let data: footballCofObj;
+		for (let key of this._mListObj.keys) {
+			data = this._mListObj3.Gget(key);
+			if (id == Number(key)) {
+				return data;
+			}
+		}
+	}
+
+	//清除对象数组
+	public hideData(): void {
+		this._mListObj.clear();
+	}
+
+	//清除对象数组
+	public hideData1(): void {
+		this._mListObj1.clear();
+	}
+
+	//清除对象数组
+	public hideData2(): void {
+		this._mListObj2.clear();
+	}
+
+	//清除对象数组
+	public hideData3(): void {
+		this._mListObj3.clear();
+	}
+
+
+}
+
+class footballCofObj {
+	public id: number;//id
+	public name: string;//名字
+	public timer: string;//时间
+	public leftIcon: string;//国家左图标
+	public rightIcon: string;//国家右图标
+	public leftname: string;//国家左名字
+	public rightname: string;//国家右名字
+	public bfText: string;//比分
+	public bcBF: string;//半场比分
+	public touding: string;//中间头顶赛事时间
+	public ifgz: number;//是否关注(0为关注 1关注) 
+	public rqday: string;//日期
+	public status: number = 0;//赛事状态
+	public statusxians: string;//赛事状态显示
+	public leftrednum: number;//左红牌
+	public leftyellownum: number;//左黄牌
+	public rightrednum: number;//右红牌
+	public rightyellownum: number;//右黄牌
+
+
+	/**获取对应赛事状态*/
+	public getstatus(): string {
+		if (this.status == 0) {
+			return "未开";
+		} else if (this.status == 1) {
+			return "上半场";
+		} else if (this.status == 2) {
+			return "中场";
+		} else if (this.status == 3) {
+			return "下半场";
+		} else if (this.status == 4) {
+			return "加时";
+		} else if (this.status == 5) {
+			return "点球";
+		} else if (this.status == -11) {
+			return "待定";
+		} else if (this.status == -12) {
+			return "腰斩";
+		} else if (this.status == -13) {
+			return "中断";
+		} else if (this.status == -14) {
+			return "推迟";
+		} else if (this.status == -1) {
+			return "完场";
+		} else if (this.status == -10) {
+			return "取消";
+		}
+	}
+}

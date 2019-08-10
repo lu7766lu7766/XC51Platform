@@ -1,0 +1,43 @@
+/**
+ * 跟单详情
+
+ */
+class GD_detail implements IProHandle {
+	private static _mInstance: GD_detail;
+	public static get getInstance(): GD_detail {
+		if (GD_detail._mInstance == undefined)
+			GD_detail._mInstance = new GD_detail();
+		return GD_detail._mInstance;
+	}
+	/**对象key */
+	private data: HttpData;
+	private constructor() {
+		this.data = new HttpData();
+		this.data.mKey = "GD_detail";
+	}
+
+	/**
+	 * 注数列表
+	 */
+	public sendHttp(o,m): void {
+		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/tie_two.php";
+		let content = `o=${o}&=${m}`;
+		HTTPRequest.getInstance.proSend(url, content, this.data);
+	}
+
+	public backHTTP(res: boolean, httpObj: egret.HttpRequest, data: HttpData): void {
+        if (res == true && httpObj.response != "") {//请求成功
+            let text: Object;
+            try {
+				text = JSON.parse(httpObj.response);
+			} catch (error) {
+				return;
+			}
+            if(text["res"]!="0"){
+                Alertpaner.getInstance.show(text["res"]+":"+text["msg"]);
+            } else {
+                // let arr = 
+			}
+        }
+    }
+}

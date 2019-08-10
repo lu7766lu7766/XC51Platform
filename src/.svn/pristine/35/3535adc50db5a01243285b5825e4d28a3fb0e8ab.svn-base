@@ -1,0 +1,43 @@
+class FootballDataMrg {
+	private static _mInstance: FootballDataMrg;
+	public static get getInstance(): FootballDataMrg {
+		if (FootballDataMrg._mInstance == undefined)
+			FootballDataMrg._mInstance = new FootballDataMrg();
+		return FootballDataMrg._mInstance;
+	}
+	/**足球列表 */
+	public _mZQLB:GHashMap<GHashMap<FootballData>>;
+
+	private constructor() {
+		this._mZQLB = new GHashMap<GHashMap<FootballData>>();
+	}
+
+	/**添加数据 */
+	public addData(time:string,fb:GHashMap<FootballData>):void {
+		if(fb != undefined) {
+			this._mZQLB.Gput(time,fb);
+		}	
+	}	
+
+	/**通过id获取对象 */
+	public getData(time:string,id:number):FootballData {
+		if(this._mZQLB[time] != undefined) {
+			return this._mZQLB[time].Gget(id);
+		} else {
+			return undefined;
+		}
+	}
+
+	/**通过id获取对象 */
+	public getDataById(id:number):FootballData {
+		let fb:GHashMap<FootballData>;
+		for(let key of this._mZQLB.keys) {
+			fb = this._mZQLB.Gget(key);
+			if(fb.Gget(id) != undefined) {//
+				return fb.Gget(id);
+			}
+		}
+
+		return undefined;
+	}
+}

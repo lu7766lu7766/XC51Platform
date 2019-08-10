@@ -1,0 +1,29 @@
+{
+  "engineVersion": "5.2.19",
+  "compilerVersion": "5.2.19",
+  "template": {},
+  "target": {
+    "current": "web"
+  },
+  "modules": [
+    {
+      "name": "egret"
+    },
+    {
+      "name": "game"
+    },
+    {
+      "name": "tween"
+    },
+    {
+      "name": "RES"
+    },
+    {
+      "name": "socket"
+    },
+    {
+      "name": "gameapi",
+      "path": "E:/gameAPI/gameapi"
+    }
+  ]
+}

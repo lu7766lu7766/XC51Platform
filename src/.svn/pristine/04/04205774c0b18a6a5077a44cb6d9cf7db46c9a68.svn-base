@@ -1,0 +1,193 @@
+/**竞猜足球开奖详情item */
+class jcFootBallItem extends egret.DisplayObjectContainer {
+	public constructor() {
+		super();
+		this._mListObj = new GHashMap<xianxian>();
+		let link = new egret.Shape();
+		this.addChild(link);
+		link.graphics.beginFill(0xffffff);
+		link.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, 250);
+		link.graphics.endFill();
+
+		let link1 = new egret.Shape();
+		this.addChild(link1);
+		link1.graphics.beginFill(0xF5F5F7);
+		link1.graphics.drawRect(0, 250, GameMain.getInstance.StageWidth, 10);
+		link1.graphics.endFill();
+
+		this.dayandLsName = ToolMrg.getText(38, 22, 20, 0x999999, 300);
+		this.addChild(this.dayandLsName);
+		this.dayandLsName.text = "周二001  韩职";
+
+		this.teama = ToolMrg.getText(132, 66, 28, 0x333333, 300);
+		this.addChild(this.teama);
+		this.teama.text = "江源FC";
+		this.teama.bold = true;
+
+		this.teamb = ToolMrg.getText(520, 66, 28, 0x333333, 300);
+		this.addChild(this.teamb);
+		this.teamb.text = "无敌FC";
+		this.teamb.bold = true;
+
+		this.bbFen = ToolMrg.getText(0, 68, 24, 0xFF7000, 750);
+		this.addChild(this.bbFen);
+		this.bbFen.textAlign = egret.HorizontalAlign.CENTER;
+		this.bbFen.textFlow = <Array<egret.ITextElement>>[
+			{ "text": "4:0", style: { "textColor": 0xF72E52, size: 24 } },
+			{ "text": " 半(2:0)", style: { "textColor": 0x333333, size: 24 } }
+		];
+		this.bbFen.touchEnabled = true;
+	}
+
+	private myid: number = 0;
+	private dayandLsName: egret.TextField;//日期和联赛名字
+	private teama: egret.TextField;//队a名字
+	private teamb: egret.TextField;//队b名字
+	private bbFen: egret.TextField;//比分
+	private _mListObj: GHashMap<xianxian>;//数据列表
+
+
+	public setID(id: number): void {
+		this.myid = id;
+		this.initallInfo();
+	}
+
+	public setPoint(x: number, y: number): void {
+		this.x = x;
+		this.y = y;
+	}
+
+	/**设置日期和联赛名字*/
+	public setdayandLsName(strname: string) {
+		this.dayandLsName.text = strname;
+	}
+
+	/**设置队名 a b 和比分 */
+	public setteamandBF(teamName: string, teambName: string, bf1: string, bf2: string): void {
+		this.teama.text = teamName;
+		this.teamb.text = teambName;
+		this.bbFen.textFlow = <Array<egret.ITextElement>>[
+			{ "text": "" + bf1, style: { "textColor": 0xF72E52, size: 24 } },
+			{ "text": " 半(" + bf2 + ")", style: { "textColor": 0x333333, size: 24 } }
+		];
+	}
+
+	/**初始化所有数据*/
+	public initallInfo(): void {
+		let len: number = 10;
+		let dataObj: xianxian;
+		for (let i = 1; i <= len; i++) {
+			dataObj = this._mListObj.Gget(i);
+			if (dataObj == undefined) {
+				dataObj = new xianxian(i);
+				this._mListObj.Gput(i, dataObj);
+			}
+			dataObj.setID(i);
+			if (i < 6) {
+				dataObj.setPoint(40 + (i - 1) * 134, 124);
+				if (i > 1) {
+					dataObj.leftline.visible = false;
+					dataObj.rightline1.visible = false;
+					if (i == 5) {
+						dataObj.rightline1.visible = true;
+						dataObj.rightline2.visible = false;
+					}
+				} else {
+					dataObj.rightline1.visible = false;
+					dataObj.rightline2.visible = true;
+				}
+			} else {
+				dataObj.setPoint(40 + (i - 6) * 134, 124 + 49);
+				if (i > 6) {
+					dataObj.leftline.visible = false;
+					dataObj.rightline1.visible = false;
+					if (i == 10) {
+						dataObj.rightline1.visible = true;
+						dataObj.rightline2.visible = false;
+					}
+				} else {
+					dataObj.rightline1.visible = false;
+					dataObj.rightline2.visible = true;
+				}
+			}
+
+			if (dataObj.parent == undefined) {
+				this.addChild(dataObj);
+			}
+		}
+	}
+}
+
+class xianxian extends egret.DisplayObjectContainer {
+	public constructor(id: number) {
+		super();
+
+		let link = new egret.Shape();
+		this.addChild(link);
+		link.graphics.beginFill(0xffffff);
+		link.graphics.drawRect(0, 0, 134, 50);
+		link.graphics.endFill();
+
+		let linkTop = new egret.Shape();
+		this.addChild(linkTop);
+		linkTop.graphics.beginFill(0xCACACA);
+		linkTop.graphics.drawRect(0, 0, 133, 1);
+		linkTop.graphics.endFill();
+
+		let linklow = new egret.Shape();
+		this.addChild(linklow);
+		linklow.graphics.beginFill(0xCACACA);
+		linklow.graphics.drawRect(0, 49, 133, 1);
+		linklow.graphics.endFill();
+
+		this.leftline = new egret.Shape();
+		this.addChild(this.leftline);
+		this.leftline.graphics.beginFill(0xCACACA);
+		this.leftline.graphics.drawRect(0, 0, 1, 49);
+		this.leftline.graphics.endFill();
+
+		this.rightline1 = new egret.Shape();
+		this.addChild(this.rightline1);
+		this.rightline1.graphics.beginFill(0xCACACA);
+		this.rightline1.graphics.drawRect(133, 0, 1, 50);
+		this.rightline1.graphics.endFill();
+
+		this.rightline2 = new egret.Shape();
+		this.addChild(this.rightline2);
+		this.rightline2.graphics.beginFill(0xCACACA);
+		this.rightline2.graphics.drawRect(133, 10, 1, 32);
+		this.rightline2.graphics.endFill();
+
+		this.connet = ToolMrg.getText(0, 0, 24, 0x333333, 134);
+		this.addChild(this.connet);
+		this.connet.height = 50;
+		this.connet.textAlign = egret.HorizontalAlign.CENTER;
+		this.connet.verticalAlign = egret.VerticalAlign.MIDDLE;
+		this.connet.text = "主主胜";
+		this.connet.touchEnabled = true;
+		this.connet.bold = true;
+
+
+	}
+
+	public leftline: egret.Shape;//左线
+	public rightline1: egret.Shape;//右线1
+	public rightline2: egret.Shape;//右线2
+	private myid: number = 0;//自身id
+	private connet: egret.TextField;//显示内容
+
+	public setID(id: number): void {
+		this.myid = id;
+	}
+
+	public setPoint(x: number, y: number): void {
+		this.x = x;
+		this.y = y;
+	}
+
+	/**设置显示内容*/
+	public setconnet(str: string): void {
+		this.connet.text = str;
+	}
+
+}

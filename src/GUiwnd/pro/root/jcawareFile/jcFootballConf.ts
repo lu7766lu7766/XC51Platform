@@ -1,0 +1,4 @@
+class jcFootballConf {
+	public constructor() {
+	}
+}

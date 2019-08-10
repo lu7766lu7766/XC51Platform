@@ -1,0 +1,281 @@
+class DmC_info extends egret.DisplayObjectContainer{
+    private _tx:egret.Bitmap;
+    private _txName:egret.TextField;
+    private _title:egret.TextField;
+    private _content:egret.TextField;
+    private _bj1:egret.Shape;
+    private _bj1zz:egret.Shape;
+    private _bj2:egret.Bitmap;
+    private _bj1Text:egret.TextField;
+    private _bj2Text:egret.TextField;
+    private _time:egret.TextField;
+    private _type:egret.TextField;
+    private _multiple:egret.TextField;
+    private _multipleText:egret.TextField;
+    private _nowBtn:egret.Bitmap;
+    private _money:egret.TextField;
+    private _link:egret.Shape;
+
+    private _boxTitle:egret.TextField;
+    private _boxContent:egret.TextField;
+
+    private _data:DmC_infoData;
+    constructor(){
+        super();
+
+        this._tx = new egret.Bitmap();
+        this.addChild(this._tx);
+        this._tx.touchEnabled = true;
+        this._tx.width = 80;
+        this._tx.height = 80;
+        this._tx.x = 28;
+        this._tx.y = 32;
+
+        this._txName = ToolMrg.getText(128,30,28,0x333333);
+        this.addChild(this._txName);
+
+        let zgBtn = new egret.Bitmap();
+        this.addChild(zgBtn);
+        zgBtn.x = 614;
+        zgBtn.y = 34;
+        RES.getResByUrl("resource/assets/images/ui/zgzg_expert@2x.png",(e)=>{zgBtn.$setBitmapData(e); },this);
+
+        this._bj1 = new egret.Shape();
+        this.addChild(this._bj1);
+        this._bj1.graphics.beginFill(0xf72e52);
+        this._bj1.graphics.drawRoundRect(128,86,150,26,15);
+        this._bj1.graphics.endFill();
+
+        this._bj1zz = new egret.Shape();
+        this.addChild(this._bj1zz);
+        this._bj1zz.graphics.beginFill(0xffffff);
+        this._bj1zz.graphics.drawRoundRect(129.5,87.5,147,23,15);
+        this._bj1zz.graphics.endFill();
+
+        this._bj2 = new egret.Bitmap();
+        this.addChild(this._bj2);
+        this._bj2.x = 290;
+        this._bj2.y = 86;
+        RES.getResByUrl("resource/assets/images/ui/cdbg_expert@2x.png",(e)=>{this._bj2.$setBitmapData(e); },this);
+        
+        this._bj1Text = ToolMrg.getText(128,86,18,0xf72e52,150);
+        this.addChild(this._bj1Text);
+        this._bj1Text.height = 26;
+        this._bj1Text.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._bj1Text.textAlign = egret.HorizontalAlign.CENTER;
+
+        this._bj2Text = ToolMrg.getText(290,86,18,0xffffff,92);
+        this.addChild(this._bj2Text);
+        this._bj2Text.height = 26;
+        this._bj2Text.textAlign = egret.HorizontalAlign.CENTER;
+        this._bj2Text.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._type = ToolMrg.getText(128,138,20,0x333333);
+        this.addChild(this._type);
+
+        this._time = ToolMrg.getText(276,138,20,0x999999);
+        this.addChild(this._time);
+
+        this._multiple = ToolMrg.getText(650,102,28,0xf72e52);
+        this.addChild(this._multiple);
+
+        this._multipleText = ToolMrg.getText(650,136,18,0x999999);
+        this.addChild(this._multipleText);
+        this._multipleText.text = "预计回报";
+
+        this._content = ToolMrg.getText(128,184,28,0x333333);
+        this.addChild(this._content);
+
+        let box = new egret.Shape();
+        this.addChild(box);
+        box.graphics.beginFill(0xdedede);
+        box.graphics.drawRoundRect(128,232,548,48,20);
+        box.graphics.endFill();
+
+        let boxShape = new egret.Shape();
+        this.addChild(boxShape);
+        boxShape.graphics.beginFill(0xffffff);
+        boxShape.graphics.drawRoundRect(129.5,233.5,545,45,20);
+        boxShape.graphics.endFill();
+
+        this._boxTitle = ToolMrg.getText(148,232,22,0x21b037);
+        this.addChild(this._boxTitle);
+        this._boxTitle.height = 48;
+        this._boxTitle.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._boxContent = ToolMrg.getText(240,232,22,0x333333);
+        this.addChild(this._boxContent);
+        this._boxContent.height = 48;
+        this._boxContent.verticalAlign = egret.VerticalAlign.MIDDLE;
+
+        this._money = ToolMrg.getText(128,307,24,0x333333);
+        this.addChild(this._money);
+
+        this._nowBtn = new egret.Bitmap();
+        this.addChild(this._nowBtn);
+        this._nowBtn.x = 582;
+        this._nowBtn.y = 298;
+        RES.getResByUrl("resource/assets/images/ui/ljcd_expert@2x.png",(e)=>{this._nowBtn.$setBitmapData(e); },this);
+
+        this._link = new egret.Shape();
+        this.addChild(this._link);
+        this._link.graphics.beginFill(0xdedede);
+        this._link.graphics.drawRect(0,368.5,750,1.5);
+
+        this.setDB();
+    }
+
+    public aa(data:DmC_infoData):void{
+        this._data = data;
+        if(data.id == UserData.getInstance.userId) {
+            this._nowBtn.visible =false;
+        } else  {
+            this._nowBtn.visible = true;
+        }
+        if(data.txSrc!=undefined && data.txSrc!=""){
+            LoadNetPic.getLoadNetPic.loadPic(data.txSrc,(e)=>{this._tx.$setBitmapData(e); },this);
+        }else{
+            RES.getResByUrl("resource/assets/images/ui/user1_default.png",(e)=>{this._tx.$setBitmapData(e); },this);
+        }
+        this._txName.text = data.txName;
+        this._bj1Text.text = `${data.ticke}单回报率${data.lv}%`;
+        this._bj2Text.text = `${data.num}人跟单`;
+        this._type.text = `${data.mold}`;
+        this._time.text = `${ToolMrg.getTime1(data.time)} 截止`;
+        this._multiple.textFlow = <Array<egret.ITextElement>>[
+            {text:data.multiple,style:{"size":28}},
+            {text:"倍",style:{"size":18}}
+        ];
+        this._content.text = ToolMrg.nameMode2(21,data.content);
+        this._money.textFlow = <Array<egret.ITextElement>>[
+            {text:"自购：",style:{"textColor":0x333333}},
+            {text:ToolMrg.getDecimal(data.money/100,2),style:{"textColor":0xFC861A}},
+            {text:"元",style:{"textColor":0x333333}}
+        ];
+
+        if(data._type=="1"){
+            this._boxTitle.text = `${data.oneType}`;
+            this._boxContent.text = `${data.one}`;
+        }else{
+            this._boxTitle.text = `保密`;
+            this._boxContent.text = ``;
+        }
+    }
+
+    private _isInterception=false;
+    public addInterception():void{
+        if(!this._isInterception){
+            this._tx.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._mShareC.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isInterception = true;
+        }
+    }
+
+    public removeInterception():void{
+        if(this._isInterception){
+            this._tx.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._mShareC.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+            this._isInterception = false;
+        }
+    }
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth,370);
+        this._mShareC.graphics.endFill();
+		this.addChildAt(this._mShareC, 0);
+        this._mShareC.touchEnabled = true;
+	}
+
+    private touchDown(e:egret.TouchEvent):void{
+        if(WorldWnd.getInstance.parent!=undefined){
+            WorldWnd.getInstance.hide();
+            WorldWnd._worldState = 1;
+        }
+
+        if(e.target == this._mShareC){
+            // if(this._data.id == UserData.getInstance.userId) {
+            //     return;
+            // }
+            
+            DmC_infoMsg.dmdetail = new DmDetails();
+            if(this._data.time*1000 < new Date().getTime())//截止
+                DmC_infoMsg.dmdetail.show(this._data.oid,this._data.mold,this._data.id,1);
+            else   
+                DmC_infoMsg.dmdetail.show(this._data.oid,this._data.mold,this._data.id);
+            GD_detail.getInstance.sendHttp(this._data.oid,this._data.model);
+        }else if(e.target == this._tx){
+            // DmC_infoMsg.personalHome = new PersonalHome();
+            // DmC_infoMsg.personalHome.show();
+        }
+    }
+
+}
+
+class DmC_infoMsg{
+    private static _mInstance: DmC_infoMsg;
+	public static get getInstance(): DmC_infoMsg {
+		if (DmC_infoMsg._mInstance == undefined)
+			DmC_infoMsg._mInstance = new DmC_infoMsg();
+		return DmC_infoMsg._mInstance;
+	}
+    public item:GHashMap<DmC_infoData>;
+
+    /**方案详情页 */
+    public static dmdetail:DmDetails;
+    /**方案详情页id */
+    public static dmdID;
+    /**个人主页 */
+    public static personalHome:PersonalHome;
+    /**个人主页ID 记录上一个个人主页的id */
+    
+    public static phID;
+
+    constructor(){
+        this.item = new GHashMap<DmC_infoData>();
+    }
+}
+
+class DmC_infoData{
+    /**单子id */
+    public oid:string;
+    /**用户id  */
+    public id;
+    public txSrc:string;
+    public txName:string;
+    /**类型 */
+    public type:string;
+    /**宣言 */
+    public content:string;
+    /**自购金额 */
+    public money:number;
+    /**时间 */
+    public time:number;
+    /**预计回报倍数 */
+    public multiple:string;
+    /**回报率 */
+    public lv:string;
+    /**单数 */
+    public ticke:string;
+    /**mold："竞彩足球 单关" */
+    public mold:string;
+    /**跟单人数 */
+    public num:string;
+    /**类型： 0不公开 1截止公开 2保密 */
+    public _type:string;
+    /**赛事 */
+    public one:string;
+    /**赛事类型： 欧洲杯 */
+    public oneType:string;
+    /**model 回传类型 1=>足球 2=>篮球 */
+    public model:string;
+    /**vip等级 */
+    public vip:number;
+
+    constructor(){
+        
+    }
+}
