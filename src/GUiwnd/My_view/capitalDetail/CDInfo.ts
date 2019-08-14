@@ -14,7 +14,7 @@ class CDInfo extends egret.DisplayObjectContainer {
         this._title.height = 50;
         this._title.verticalAlign = egret.VerticalAlign.MIDDLE;
 
-        this.status = ToolMrg.getText(28, 65,22, 0x333333);
+        this.status = ToolMrg.getText(28, 65, 22, 0x333333);
         this.addChild(this.status);
         this.status.height = 50;
         this.status.bold = true;
@@ -45,7 +45,7 @@ class CDInfo extends egret.DisplayObjectContainer {
     public aa(data: CDDataSub, index: number) {
         this._data = data;
 
-        let num:number = 0;
+        let num: number = 0;
         let str = "";
         if (index == 0) {
             str = "发起认购";
@@ -75,10 +75,10 @@ class CDInfo extends egret.DisplayObjectContainer {
         this._dateText.text = `${ToolMrg.getTime11(data._dateTime)}`;
         if (num > 0) {
             this._yeText.textColor = 0xF72E52;
-            this._yeText.text = `+${ToolMrg.getDecimal(num/100,2)}元`;
+            this._yeText.text = `+${ToolMrg.getDecimal(num / 100, 2)}元`;
         } else {
             this._yeText.textColor = 0x17B22C;
-            this._yeText.text = `${ToolMrg.getDecimal(num/100,2)}元`;
+            this._yeText.text = `${ToolMrg.getDecimal(num / 100, 2)}元`;
         }
     }
 
@@ -129,7 +129,7 @@ class CDData {
     public w: number;
     public wItem: GHashMap<CDDataSub>;
 
-    /**返水 */
+    /**红利 */
     public f: number;
     public fItem: GHashMap<CDDataSub>;
 
@@ -154,7 +154,7 @@ class CDDataSub {
     public _money: number;
     public _dateTime: number;
     public status: number = -1;//类型(提款 特有类型  提款  0:待审核 1:审核通过 2:审核不通过)
-    public type: number = 0;//名字类型(4 1:佣金 2:中奖金额  5 1:发单奖励  3:佣金  )
+    public type: number = 0;//名字类型(4 1:佣金 2:中奖金额  5 1:发单奖励  3:佣金  6: "type": 10001  //10012=>返水  10001=>新用户注册即送18元 10002=>首存5888元等你 10003=>VIP成长礼包送不停 10004=>助力中超，每周彩金大放送 10005=>呼朋唤友一起来战斗)
 
     /**提取特有审核状态 */
     public gettatle(): string {
@@ -198,6 +198,19 @@ class CDDataSub {
             }
         } else if (this.typemax == 6) {
             str = "返水收入";
+            if (this.type == 10012) {
+                str = "返水";
+            } else if (this.type == 10001) {
+                str = "新用户注册即送18元";
+            } else if (this.type == 10002) {
+                str = "首存5888元等你";
+            } else if (this.type == 10003) {
+                str = "VIP成长礼包送不停";
+            } else if (this.type == 10004) {
+                str = "助力中超，每周彩金大放送";
+            } else if (this.type == 10005) {
+                str = "呼朋唤友一起来战斗";
+            }
         } else if (this.typemax == 7) {
             str = "奖励收入";
         }

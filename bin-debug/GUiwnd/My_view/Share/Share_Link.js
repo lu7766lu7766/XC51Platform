@@ -31,7 +31,7 @@ var Share_Link = (function () {
      */
     Share_Link.prototype.sendHttp = function (id) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/shareLink.php";
-        var content = "id=" + id + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     Share_Link.prototype.backHTTP = function (res, httpObj, data) {
@@ -44,7 +44,7 @@ var Share_Link = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 this._userLink = text["url"];

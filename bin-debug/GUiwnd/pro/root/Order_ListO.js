@@ -70,9 +70,9 @@ var Order_ListO = (function () {
     /**
      * 注数列表
      */
-    Order_ListO.prototype.sendHttp = function (o) {
+    Order_ListO.prototype.sendHttp = function (o, t) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/order_ListO.php";
-        var content = "o=" + o + "&v=" + GameValue.verPhp;
+        var content = "o=" + o + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey + "&t=" + t;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     Order_ListO.prototype.backHTTP = function (res, httpObj, data) {
@@ -85,18 +85,26 @@ var Order_ListO = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var objData = new MyLotteryData();
                 var listTTTT = text["list"];
                 objData.id = listTTTT[0]["order_id"];
                 objData.type = listTTTT[0]["itemid"];
+                objData.lotteryType = listTTTT[0]["ifg"];
+                objData._fs = listTTTT[0]["rebate"] / 100; //返水
                 objData.model = listTTTT[0]["model"];
                 objData.x = listTTTT[0]["x"];
                 objData._reward = listTTTT[0]["reward"] / 100;
                 objData.xzMoney = listTTTT[0]["total"] / 100;
                 objData.statue = Number(listTTTT[0]["type"]) + 1;
+                if (objData.statue != 1) {
+                    objData.isjia = 0;
+                }
+                else {
+                    objData.isjia = listTTTT[0]["isJa"];
+                }
                 objData.xjMoney = listTTTT[0]["money"] / 100;
                 objData.time = listTTTT[0]["time"];
                 if (objData.type == 1 || objData.type == 5) {
@@ -128,7 +136,10 @@ var Order_ListO = (function () {
                         objData.title = "竞足单关";
                         objData.url = "jzdg_home@2x.png";
                     }
-                    FofBDetail.getInstance.show(objData);
+                    if (objData.lotteryType == undefined || objData.lotteryType == 0)
+                        FofBDetail.getInstance.show(objData);
+                    else
+                        fagxMrgView.getInstance.show(objData, objData.lotteryType);
                 }
                 else if (objData.type == 2 || objData.type == 6) {
                     objData.passList = listTTTT[0]["way"];
@@ -158,7 +169,10 @@ var Order_ListO = (function () {
                         objData.title = "竞篮单关";
                         objData.url = "jldg_home@2x.png";
                     }
-                    FofBDetail.getInstance.show(objData);
+                    if (objData.lotteryType == undefined || objData.lotteryType == 0)
+                        FofBDetail.getInstance.show(objData);
+                    else
+                        fagxMrgView.getInstance.show(objData, objData.lotteryType);
                 }
                 else if (objData.type == 3) {
                     var ddobj = new ThreeOrFive();

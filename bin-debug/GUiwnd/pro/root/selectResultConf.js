@@ -72,7 +72,7 @@ var selectResultConf = (function () {
      */
     selectResultConf.prototype.sendHttp = function (type, timer) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "jqs_Choose.php";
-        var content = "type=" + type + "&time=" + timer + "&v=" + GameValue.verPhp;
+        var content = "type=" + type + "&time=" + timer + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     selectResultConf.prototype.backHTTP = function (res, httpObj, data) {

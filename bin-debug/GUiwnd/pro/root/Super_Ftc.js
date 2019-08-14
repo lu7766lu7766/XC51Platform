@@ -77,7 +77,7 @@ var Super_Ftc = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
                 PaymentWnd.canPay = true;
             }
             else {

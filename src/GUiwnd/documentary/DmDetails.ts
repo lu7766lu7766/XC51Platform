@@ -12,7 +12,7 @@ class DmDetails extends egret.DisplayObjectContainer{
     /**vip等级 距离背景x轴30px */
     private _LvText:egret.TextField;
     /**回报率 */
-    private _rate:egret.TextField;
+    private _rate:egret.BitmapText;
     private _rateText:egret.TextField;
     private _rateA:egret.TextField;
     /**类型图标 */
@@ -95,11 +95,18 @@ class DmDetails extends egret.DisplayObjectContainer{
         this._LvText.verticalAlign = egret.VerticalAlign.MIDDLE;
         this._LvText.text = "Lv 1";
 
-        this._rate = ToolMrg.getText(378+128,22,48,0xf72e52,200);
+        // this._rate = ToolMrg.getText(378+128,22,48,0xf72e52,200);
+        // this._mContain.addChild(this._rate);
+        // this._rate.textAlign = egret.HorizontalAlign.RIGHT;
+
+        this._rate = FontMgr.getText(FontMgr.FONT_3);
         this._mContain.addChild(this._rate);
+        this._rate.x = 378+128;
+        this._rate.y = 30;
+        this._rate.width = 200;
         this._rate.textAlign = egret.HorizontalAlign.RIGHT;
         
-        this._rateA = ToolMrg.getText(706,46,20,0xf72e52);
+        this._rateA = ToolMrg.getText(708,46,20,0xf72e52);
         this._mContain.addChild(this._rateA);
         this._rateA.text = "%";
 
@@ -360,6 +367,18 @@ class DmDetails extends egret.DisplayObjectContainer{
                 Alertpaner.getInstance.show("倍数必须为整数");
                 return;
             }
+            if(this._data._typeStatic==2 || this._data._typeStatic==4){//单关
+                if((this._money)*this._multiple>200000){
+                    Alertpaner.getInstance.show("单关下注上限为20万");
+                    return;
+                }
+            }else{//串关跟单
+                if((this._money)*this._multiple>100000){
+                    Alertpaner.getInstance.show("串关下注上限为10万");
+                    return;
+                }
+            }
+            
             
             this._multiple//当前倍数
             this._money//当前单倍跟单金额

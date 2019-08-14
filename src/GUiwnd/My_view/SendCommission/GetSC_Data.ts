@@ -21,7 +21,7 @@ class GetSC_Data implements IProHandle {
 	 */
 	public sendHttp(id): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/Yj.php";
-		let content = `id=${id}&v=${GameValue.verPhp}`;
+		let content = `id=${id}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
@@ -34,7 +34,7 @@ class GetSC_Data implements IProHandle {
 				return;
 			}
             if(text["res"]!="0"){
-                Alertpaner.getInstance.show(text["res"]+":"+text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
                 SCMrg.getInstance.clear();
 				let arr1:Array<GHashMap<any>> = text["all"];

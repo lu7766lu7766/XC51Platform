@@ -52,8 +52,8 @@ var FathreeViewMrg = (function (_super) {
     FathreeViewMrg.prototype.setTopConnet = function () {
         if (this.dataObj != undefined) {
             if (this.dataObj.threeOrFive != undefined) {
-                this.topObj.setdefaultTatle(this.dataObj.title, this.dataObj.threeOrFive.qs, this.dataObj.statue);
                 this.topObj.settzgold(this.dataObj.xzMoney, this.dataObj.threeOrFive.doubleNum, this.dataObj.xjMoney);
+                this.topObj.setdefaultTatle(this.dataObj.title, this.dataObj.threeOrFive.qs, this.dataObj.statue, this.dataObj);
                 this.topObj.setddNum(this.dataObj.id + "", this.dataObj.time);
                 this.topObj.setIcon(this.dataObj.type);
             }

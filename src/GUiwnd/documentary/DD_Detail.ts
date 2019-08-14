@@ -4,10 +4,13 @@ class DD_Detail extends egret.DisplayObjectContainer{
     private _shape:egret.Shape;
     private _text:egret.TextField;
 
+    // private objList:GSlideObj;
+
     constructor(){
         super();
         this.hide();
 
+        // this.objList = new GSlideObj();
         this._item = new GHashMap<DetailInfo>();
 
         let text1 = ToolMrg.getText(160,12,24,0x999999);

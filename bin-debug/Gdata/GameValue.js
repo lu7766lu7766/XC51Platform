@@ -16,7 +16,7 @@ var GameValue = (function () {
     /**服务器是否为调试模式 true:测试服 false:正式服 ===重点===*/
     GameValue.isDebug = false;
     /**游戏版本 */
-    GameValue.gameVer = "7.9";
+    GameValue.gameVer = "9.4";
     /**php版本 */
     GameValue.verPhp = "1.1";
     /**socket地址 */
@@ -45,8 +45,12 @@ var GameValue = (function () {
     GameValue.stopTime = 0;
     /**1销售中 0停止销售 */
     GameValue.typeQS = 0;
+    /**是否可以打开竞猜 0不能打开 1可打开*/
+    GameValue.isJ = 1;
     /**单倍下注 反水比例*/
     GameValue.fsRate = 10;
+    /**客服跳转 */
+    GameValue.kfUrl = "https://vm.providesupport.com/0o9t1ktmxghcq1oagixycxoww1";
     return GameValue;
 }());
 __reflect(GameValue.prototype, "GameValue");

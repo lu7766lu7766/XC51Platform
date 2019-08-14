@@ -120,7 +120,8 @@ class SCWnd extends egret.DisplayObjectContainer{
         if(e.target instanceof SCInfo) {
 			let data:SCInfo = e.target
 			if(data._data != undefined) {
-                Gen_Info.getInstance.sendHttp(data._data.id, data._data._type);
+                // Gen_Info.getInstance.sendHttp(data._data.id, data._data._type,2);
+                Order_ListT.getInstance.sendHttp(data._data.id,2);
 			}
 		}
     }

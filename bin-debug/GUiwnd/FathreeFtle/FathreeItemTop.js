@@ -102,11 +102,18 @@ var FathreeItemTop = (function (_super) {
         }
     };
     /**设置标题 期数 和中奖状态*/
-    FathreeItemTop.prototype.setdefaultTatle = function (tatle, qs, status) {
+    FathreeItemTop.prototype.setdefaultTatle = function (tatle, qs, status, dataT) {
         this.tatleText.text = tatle;
         this.qsText.text = qs + "期";
         if (status == 1) {
             this.defaultText.text = "待开奖";
+            if (dataT.threeOrFive.tzList != undefined && dataT.threeOrFive.tzList.length > 0) {
+                this.defaultText.text = "待结算";
+                this.awareNum.text = "---";
+            }
+            else {
+                this.defaultText.text = "待开奖";
+            }
         }
         else if (status == 2) {
             this.defaultText.text = "未中奖";

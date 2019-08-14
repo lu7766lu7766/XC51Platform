@@ -34,7 +34,7 @@ var BankCard_add = (function () {
      */
     BankCard_add.prototype.sendHttp = function (id, c, n, r) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/care.php";
-        var content = "id=" + id + "&c=" + c + "&n=" + n + "&r=" + r + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&c=" + c + "&n=" + n + "&r=" + r + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     BankCard_add.prototype.backHTTP = function (res, httpObj, data) {
@@ -47,7 +47,7 @@ var BankCard_add = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 text["id"];

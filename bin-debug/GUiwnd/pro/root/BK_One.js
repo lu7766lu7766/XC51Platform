@@ -42,7 +42,8 @@ var BK_One = (function () {
         if (obj == undefined || obj.parent == undefined || (this._mIsSend[type] == 1 && BasketballDataMrg.getInstance.getDGList(type).size > 0)) {
             return;
         }
-        LoadtoWaitWnd.getInstance.show(true);
+        if (BtOnePass.getInstance.getDGList(type).size <= 0)
+            LoadtoWaitWnd.getInstance.show(true);
         this._mIsSend[type] = 1;
         this._mParent.Gput(type, obj);
         if (bool == true) {
@@ -52,7 +53,7 @@ var BK_One = (function () {
             this.data.mValue = 0;
         }
         var url = HTTPRequest.getInstance.httpHeadUrl + "/bk_One.php";
-        var content = "t=" + type + "&v=" + GameValue.verPhp;
+        var content = "t=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     BK_One.prototype.backHTTP = function (res, httpObj, data) {
@@ -67,7 +68,7 @@ var BK_One = (function () {
             var type = 2;
             var cf = 0;
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var map = text["map"];

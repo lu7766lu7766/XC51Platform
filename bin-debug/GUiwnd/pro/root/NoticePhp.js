@@ -38,7 +38,7 @@ var NoticePhp = (function () {
      */
     NoticePhp.prototype.sendHttp = function () {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/notice.php";
-        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     NoticePhp.prototype.backHTTP = function (res, httpObj, data) {
@@ -51,7 +51,7 @@ var NoticePhp = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var arr = text["data"];

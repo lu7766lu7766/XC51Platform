@@ -24,7 +24,7 @@ var GD_detail = (function () {
      */
     GD_detail.prototype.sendHttp = function (o, m) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/tie_two.php";
-        var content = "o=" + o + "&m=" + m + "&v=" + GameValue.verPhp;
+        var content = "o=" + o + "&m=" + m + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     GD_detail.prototype.backHTTP = function (res, httpObj, data) {
@@ -37,7 +37,7 @@ var GD_detail = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var obj = new GD_DetailData();

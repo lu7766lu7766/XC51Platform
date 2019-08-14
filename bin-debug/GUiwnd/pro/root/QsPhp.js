@@ -9,6 +9,8 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
     "three": "20190701",//排列三期数
     "five":"20190701",//排列五期数
     "time": 1563191700 //截止时间
+    "type":1销售中 2停止销售
+    "isJ":0不能打开 1可打开
 }
  */
 var QsPhp = (function () {
@@ -44,13 +46,14 @@ var QsPhp = (function () {
             }
             if (text["res"] != "0") {
                 if (text["res"] != 1000)
-                    Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                    Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 GameValue.threeQS = text["three"];
                 GameValue.fiveQS = text["five"];
                 GameValue.stopTime = text["time"];
                 GameValue.typeQS = text["type"];
+                GameValue.isJ = text["isJ"];
             }
         }
     };

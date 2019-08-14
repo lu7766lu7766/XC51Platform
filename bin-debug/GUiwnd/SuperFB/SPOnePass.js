@@ -202,6 +202,23 @@ var SPOnePass = (function (_super) {
                 Alertpaner.getInstance.show("请选择1场以上赛事");
         }
     };
+    /**获取单场数据列表 */
+    SPOnePass.prototype.getDGList = function (id) {
+        var mitem;
+        if (id == 2) {
+            mitem = SPG2Wnd.getInstance.GetItem();
+        }
+        else if (id == 3) {
+            mitem = SPG3Wnd.getInstance.GetItem();
+        }
+        else if (id == 4) {
+            mitem = SPG4Wnd.getInstance.GetItem();
+        }
+        else if (id == 5) {
+            mitem = SPG5Wnd.getInstance.GetItem();
+        }
+        return mitem;
+    };
     SPOnePass.prototype.updata = function (e) {
         if (e.data != undefined) {
             var mitem = void 0;

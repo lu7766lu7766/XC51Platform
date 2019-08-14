@@ -56,23 +56,43 @@ var MyLotteryObj = (function (_super) {
         this._mZJ.height = 34;
         this._mZJ.textAlign = egret.HorizontalAlign.CENTER;
         this._mZJ.verticalAlign = egret.VerticalAlign.MIDDLE;
+        var src = "";
         if (data.statue == 1) {
             this._mZJ.textColor = 0xFF7000;
             this._mZJ.text = "待开奖";
+            if (data.lotteryType == 1)
+                src = "cd_mine@2x";
+            else if (data.lotteryType == 2)
+                src = "dg_mine@2x";
         }
         else if (data.statue == 2) {
             this._mZJ.textColor = 0x999999;
             this._mZJ.text = "未中奖";
+            if (data.lotteryType == 1)
+                src = "cd_nor_mine@2x";
+            else if (data.lotteryType == 2)
+                src = "dg_nor_mine@2x";
         }
         else if (data.statue == 3) {
             this._mZJ.textColor = 0xF72E52;
             this._mZJ.text = "中奖" + data.xjMoney + "元";
+            if (data.lotteryType == 1)
+                src = "cd_mine@2x";
+            else if (data.lotteryType == 2)
+                src = "dg_mine@2x";
         }
         this.addChild(this._mZJ);
+        if (this._typeImg == undefined)
+            this._typeImg = new egret.Bitmap();
+        if (data.type != 3 && data.type != 4) {
+            if (data.lotteryType == 2 || data.lotteryType == 1)
+                RES.getResByUrl("resource/assets/images/ui/" + src + ".png", this.setTypeImg, this, RES.ResourceItem.TYPE_IMAGE);
+        }
+        this.addChild(this._typeImg);
         if (this._mID == undefined)
             this._mID = ToolMrg.getText(325, 25, 20, 0x999999, 400);
         this._mID.textAlign = egret.HorizontalAlign.RIGHT;
-        this._mID.text = "订单编号:" + data.id;
+        // this._mID.text = "订单编号:" + data.id;
         this.addChild(this._mID);
         if (this._mTime == undefined)
             this._mTime = ToolMrg.getText(546, 66, 20, 0x999999, 200);
@@ -81,6 +101,14 @@ var MyLotteryObj = (function (_super) {
         // this._mTime.text = "19-02-06 15:24";
         this._mTime.text = ToolMrg.getTime11(data.time);
         this.addChild(this._mTime);
+    };
+    MyLotteryObj.prototype.setTypeImg = function (data, url) {
+        if (data != undefined && this._typeImg != undefined) {
+            this._typeImg.$setBitmapData(data);
+            this._typeImg.x = 664;
+            this._typeImg.y = 18;
+            this.addChild(this._typeImg);
+        }
     };
     MyLotteryObj.prototype.bgBack2 = function (data, url) {
         if (data != undefined && this._mIconBit != undefined) {
@@ -95,6 +123,7 @@ var MyLotteryObj = (function (_super) {
     MyLotteryObj.prototype.clean = function () {
         egret.Tween.removeTweens(this);
         this._mIconBit.$setBitmapData(undefined);
+        this._typeImg.$setBitmapData(undefined);
         this._mTitle.text = "";
         this._mXZMoney.text = "";
         this._mZJ.text = "";
@@ -105,11 +134,14 @@ var MyLotteryObj = (function (_super) {
     MyLotteryObj.prototype.touchDown = function (e) {
         if (this._mData.type == 1 || this._mData.type == 2 || this._mData.type == 5 || this._mData.type == 6) {
             // FofBDetail.getInstance.show(this._mData);
-            Order_ListO.getInstance.sendHttp(this._mData.id);
+            if (this._mData.lotteryType == undefined || this._mData.lotteryType == 0)
+                Order_ListO.getInstance.sendHttp(this._mData.id, this._mData.lotteryType);
+            else
+                Order_ListT.getInstance.sendHttp(this._mData.id, this._mData.lotteryType);
         }
         else if (this._mData.type == 3 || this._mData.type == 4) {
             // FathreeViewMrg.getInstance.show(this._mData);
-            Order_ListO.getInstance.sendHttp(this._mData.id);
+            Order_ListO.getInstance.sendHttp(this._mData.id, this._mData.lotteryType);
         }
     };
     MyLotteryObj.prototype.addEvent = function () {

@@ -94,6 +94,21 @@ class SPBtOnePass extends egret.DisplayObjectContainer{
         this.requestData(this._index+2);
     }
 
+    /**获取单场数据列表 */
+    public getDGList(id?:number):GHashMap<any> {
+         let mitem;
+        if(id==2){//胜平负
+            mitem = SPB2Wnd.getInstance.GetItem(); 
+        }else if(id==3){//进球数
+            mitem = SPB3Wnd.getInstance.GetItem(); 
+        }else if(id==4){//比分
+            mitem = SPB4Wnd.getInstance.GetItem(); 
+        }else if(id==5){//半全场
+            mitem = SPB5Wnd.getInstance.GetItem(); 
+        }
+        return mitem;
+    }
+
     private updata(e):void {
         if(e.data != undefined) {
             let mitem;

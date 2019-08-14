@@ -56,7 +56,7 @@ var selectDayBasketBall = (function (_super) {
     };
     /**初始化所有选者号码*/
     selectDayBasketBall.prototype.initAllRedBg = function () {
-        var len = 10;
+        var len = selectDayBasketBallData.selectDay.length;
         var obj;
         var ypoin = 0;
         for (var i = 1; i <= len; i++) {

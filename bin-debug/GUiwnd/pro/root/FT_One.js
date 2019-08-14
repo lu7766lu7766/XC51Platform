@@ -42,7 +42,8 @@ var FT_One = (function () {
         if (obj == undefined || obj.parent == undefined || (this._mIsSend[type] == 1 && FootballDataMrg.getInstance.getDGList(type).size > 0)) {
             return;
         }
-        LoadtoWaitWnd.getInstance.show(true);
+        if (OnePass.getInstance.getDGList(type).size <= 0)
+            LoadtoWaitWnd.getInstance.show(true);
         this._mIsSend[type] = 1;
         this._mParent.Gput(type, obj);
         if (bool == true) {
@@ -52,7 +53,7 @@ var FT_One = (function () {
             this.data.mValue = 0;
         }
         var url = HTTPRequest.getInstance.httpHeadUrl + "/ft_One.php";
-        var content = "t=" + type + "&v=" + GameValue.verPhp;
+        var content = "t=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     FT_One.prototype.backHTTP = function (res, httpObj, data) {
@@ -67,7 +68,7 @@ var FT_One = (function () {
             var type = 2;
             var cf = 0;
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var map = text["map"];

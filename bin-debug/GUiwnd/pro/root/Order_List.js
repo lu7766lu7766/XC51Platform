@@ -65,7 +65,7 @@ var Order_List = (function () {
      */
     Order_List.prototype.sendHttp = function () {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/order_List.php";
-        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     Order_List.prototype.backHTTP = function (res, httpObj, data) {
@@ -78,7 +78,7 @@ var Order_List = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 MyLotteryDataMrg.getInstance._mList.length = 0;
@@ -97,6 +97,7 @@ var Order_List = (function () {
             objData = new MyLotteryData();
             objData.id = arr[i]["order_id"];
             objData.type = arr[i]["itemid"];
+            objData.lotteryType = arr[i]["ifg"];
             objData.model = arr[i]["model"];
             if (objData.type == 1 || objData.type == 5) {
                 objData.passList = arr[i]["way"];

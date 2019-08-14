@@ -39,7 +39,7 @@ class GetBank_allLIst implements IProHandle {
             return;
         }
         let url: string = HTTPRequest.getInstance.httpHeadUrl + "/showCare.php";
-        let content = `id=${id}&v=${GameValue.verPhp}`;
+        let content = `id=${id}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     }
 
@@ -56,7 +56,7 @@ class GetBank_allLIst implements IProHandle {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
                 SelectDataMrg.getInstance.clearItem();
 

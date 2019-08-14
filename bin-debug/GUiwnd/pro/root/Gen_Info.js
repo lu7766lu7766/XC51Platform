@@ -51,9 +51,9 @@ var Gen_Info = (function () {
         enumerable: true,
         configurable: true
     });
-    Gen_Info.prototype.sendHttp = function (orderId, type) {
+    Gen_Info.prototype.sendHttp = function (orderId, type, t) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/gen_Info.php";
-        var content = "o=" + orderId + "&type=" + type + "&v=" + GameValue.verPhp;
+        var content = "o=" + orderId + "&type=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey + "&t=" + t;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     Gen_Info.prototype.backHTTP = function (res, httpObj, data) {
@@ -66,12 +66,13 @@ var Gen_Info = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var objData = new MyLotteryData();
                 objData.id = text["order_id"];
                 objData.type = text["itemid"];
+                objData.lotteryType = text["ifg"];
                 objData.model = text["model"];
                 if (objData.type == 1 || objData.type == 5) {
                     objData.passList = text["way"];
@@ -136,7 +137,10 @@ var Gen_Info = (function () {
                 objData.statue = Number(text["type"]) + 1;
                 objData.xjMoney = text["money"] / 100;
                 objData.time = text["time"];
-                FofBDetail.getInstance.show(objData);
+                if (objData.lotteryType == undefined || objData.lotteryType == 0)
+                    FofBDetail.getInstance.show(objData);
+                else
+                    fagxMrgView.getInstance.show(objData, objData.lotteryType);
             }
         }
     };

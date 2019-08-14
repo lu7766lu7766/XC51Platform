@@ -33,7 +33,7 @@ class SetGD_Buy implements IProHandle {
 
 	public sendHttp(id,type,o,b,m,mold): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/gen_Order.php";
-		let content = `id=${id}&type=${type}&o=${o}&b=${b}&m=${m}&mold=${mold}&rkey=${GameValue.orderKey}&v=${GameValue.verPhp}`;
+		let content = `id=${id}&type=${type}&o=${o}&b=${b}&m=${m}&mold=${mold}&rkey=${GameValue.orderKey}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
@@ -55,7 +55,7 @@ class SetGD_Buy implements IProHandle {
 				UserInfoPhp.getInstance.sendHttp();
 				Alertpaner.getInstance.show("跟单成功");
             } else {
-				Alertpaner.getInstance.show(text["res"]+":"+text["msg"]);
+				Alertpaner.getInstance.show(text["msg"]);
 				PaymentWnd.canPay = true;
 			}
         }

@@ -37,7 +37,7 @@ var LoadtoWaitWnd = (function (_super) {
             this.visible = false;
             GUIManager.getInstance.mostLay.addChild(this);
             egret.Tween.get(this).wait(500).call(function () {
-                _this.visible = false;
+                _this.visible = true;
             });
         }
     };

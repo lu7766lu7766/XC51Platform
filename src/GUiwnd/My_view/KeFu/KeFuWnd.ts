@@ -44,10 +44,10 @@ class KeFuWnd extends egret.DisplayObjectContainer{
         this.addChild(this._link1);
         this._link1.touchEnabled = true;
         this._link1.y = 634;
-        RES.getResByUrl("resource/assets/images/ui/kfbt2_mine@2x.png",(e)=>{
-            this._link1.$setBitmapData(e); 
-            this._link1.x = (GameMain.getInstance.StageWidth - this._link1.width)*0.5;
-        },this);
+        // RES.getResByUrl("resource/assets/images/ui/kfbt2_mine@2x.png",(e)=>{
+        //     this._link1.$setBitmapData(e); 
+        //     this._link1.x = (GameMain.getInstance.StageWidth - this._link1.width)*0.5;
+        // },this);
 
         this._link2 = new egret.Bitmap();
         this.addChild(this._link2);
@@ -109,7 +109,9 @@ class KeFuWnd extends egret.DisplayObjectContainer{
         this.setDB();
     }
 
+    private _mBool:boolean;
     public show(tool?):void{
+        this._mBool = tool;
         if(this.parent==undefined)
             GUIManager.getInstance.mostLay.addChild(this);
         this.addInterception();
@@ -127,6 +129,14 @@ class KeFuWnd extends egret.DisplayObjectContainer{
                 this._btn1.$setBitmapData(e); 
                 this._btn1.x = (GameMain.getInstance.StageWidth - this._btn1.width)*0.5;
             },this);
+
+            RES.getResByUrl("resource/assets/images/ui/qwzxkf_mine@2x.png",(e)=>{
+                this._link1.$setBitmapData(e); 
+                this._link1.x = (GameMain.getInstance.StageWidth - this._link1.width)*0.5;
+            },this);
+
+            this._text1.text = "";
+            this._img1.visible = false;
         }else{
             this._link2.visible=true;
             this._link3.visible=true;
@@ -140,8 +150,15 @@ class KeFuWnd extends egret.DisplayObjectContainer{
                 this._btn1.$setBitmapData(e); 
                 this._btn1.x = (GameMain.getInstance.StageWidth - this._btn1.width)*0.5;
             },this);
+
+            RES.getResByUrl("resource/assets/images/ui/kfbt2_mine@2x.png",(e)=>{
+                this._link1.$setBitmapData(e); 
+                this._link1.x = (GameMain.getInstance.StageWidth - this._link1.width)*0.5;
+            },this);
+
+            this._text1.text = "QQ："+this.QQ;
+            this._img1.visible = true;
         }
-        this._text1.text = "QQ："+this.QQ;
     }
 
     public hide():void{
@@ -159,17 +176,24 @@ class KeFuWnd extends egret.DisplayObjectContainer{
         if(e.target == this._return){
             this.hide();
         }else if(e.target == this._link1){//qq
-            //生成可复制input
-            var input = document.createElement("input");
-            //需复制内容
-            input.value = this.QQ;
-            document.body.appendChild(input);
-            input.select();
-            input.setSelectionRange(0, input.value.length),
-                document.execCommand('Copy');
-            document.body.removeChild(input);
+            if(this._mBool == undefined) {//跳转在线客服
+                if(window["go2Url"]) {
+                    window["go2Url"](GameValue.kfUrl);
+                }
+                // window.open("https://vm.providesupport.com/0o9t1ktmxghcq1oagixycxoww1");
+            } else {
+                //生成可复制input
+                var input = document.createElement("input");
+                //需复制内容
+                input.value = this.QQ;
+                document.body.appendChild(input);
+                input.select();
+                input.setSelectionRange(0, input.value.length),
+                    document.execCommand('Copy');
+                document.body.removeChild(input);
 
-            Alertpaner.getInstance.show("复制成功");
+                Alertpaner.getInstance.show("复制成功");
+            }
         }else if(e.target == this._link2){//Skype
             //生成可复制input
             var input = document.createElement("input");

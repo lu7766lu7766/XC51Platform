@@ -33,7 +33,7 @@ var PhonePhp = (function () {
      */
     PhonePhp.prototype.sendHttp = function (n) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/phone.php";
-        var content = "id=" + UserData.getInstance.userId + "&n=" + n + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&n=" + n + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     PhonePhp.prototype.backHTTP = function (res, httpObj, data) {

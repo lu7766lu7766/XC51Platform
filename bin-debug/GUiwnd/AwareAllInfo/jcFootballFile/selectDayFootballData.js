@@ -52,7 +52,7 @@ var selectDayFootballData = (function () {
     };
     selectDayFootballData.defaultselectNum = 1; //当前选者期数id
     selectDayFootballData.ifshow = false; //当前是否有显示选择列表
-    selectDayFootballData.selectDay = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //最近选择日期
+    selectDayFootballData.selectDay = []; //最近选择日期
     return selectDayFootballData;
 }());
 __reflect(selectDayFootballData.prototype, "selectDayFootballData");

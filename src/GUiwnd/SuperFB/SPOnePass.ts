@@ -190,6 +190,21 @@ class SPOnePass extends egret.DisplayObjectContainer{
         }
     }
 
+    /**获取单场数据列表 */
+    public getDGList(id?:number):GHashMap<any> {
+         let mitem;
+        if(id==2){//胜平负
+            mitem = SPG2Wnd.getInstance.GetItem(); 
+        }else if(id==3){//进球数
+            mitem = SPG3Wnd.getInstance.GetItem(); 
+        }else if(id==4){//比分
+            mitem = SPG4Wnd.getInstance.GetItem(); 
+        }else if(id==5){//半全场
+            mitem = SPG5Wnd.getInstance.GetItem(); 
+        }
+        return mitem;
+    }
+
     private updata(e):void {
         if(e.data != undefined) {
             let mitem;

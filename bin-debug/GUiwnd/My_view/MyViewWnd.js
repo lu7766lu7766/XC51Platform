@@ -294,7 +294,10 @@ var MyViewWnd = (function (_super) {
         }
         else if (e.target == this._setUp) {
             // SetUpWnd.getInstance.show();
-            KeFuWnd.getInstance.show();
+            // KeFuWnd.getInstance.show();
+            if (window["go2Url"]) {
+                window["go2Url"](GameValue.kfUrl);
+            }
         }
         else if (e.target == this._cenItem.Gget(0)) {
             if (UserData.getInstance.isLogin() == false)
@@ -520,7 +523,10 @@ var MyViewInfo = (function (_super) {
             PlanWnd.getInstance.show();
         }
         else if (this._id == 5) {
-            KeFuWnd.getInstance.show();
+            // KeFuWnd.getInstance.show();
+            if (window["go2Url"]) {
+                window["go2Url"](GameValue.kfUrl);
+            }
         }
         else if (this._id == 6) {
             AwareInfoMgr.getInstance.show();

@@ -28,7 +28,7 @@ var withdrawConf = (function () {
      */
     withdrawConf.prototype.sendHttp = function (money, numID, tyep) {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'withdraw.php';
-        var content = "id=" + UserData.getInstance.userId + "&m=" + money + "&c=" + numID + "&t=" + tyep + "&rkey=" + GameValue.orderKey + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&m=" + money + "&c=" + numID + "&t=" + tyep + "&rkey=" + GameValue.orderKey + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     withdrawConf.prototype.backHTTP = function (res, httpObj, data) {

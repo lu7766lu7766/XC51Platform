@@ -114,15 +114,15 @@ class FofB_Info extends egret.DisplayObjectContainer {
         //字符串拼接 最多显示3条
         // for()
 
-        this._contentText.text = "1:0(6.28)\n让球客胜(2.22)\n2:0(3.36)";
-        this._resultText.text = "2:3\n半场0:0";
+        // this._contentText.text = "1:0(6.28)\n让球客胜(2.22)\n2:0(3.36)";
+        // this._resultText.text = "2:3\n半场0:0";
     }
 
     /**设置day 和两队名字 */
     public setdayName(day: string, id: number, teama: string, teamb: string,_time:number): void {
         this._dateText.text = ToolMrg.nameMode2(5,day);
-        this._team1.text = teama;
-        this._team2.text = teamb;
+        this._team1.text = ToolMrg.nameMode2(8,teama);
+        this._team2.text = ToolMrg.nameMode2(8,teamb);
         this._time.text = ToolMrg.getTime5(_time);
     }
 
@@ -173,7 +173,7 @@ class FofB_Info extends egret.DisplayObjectContainer {
     public setBf(item:string[], type: number) {
         if (type == 1||type==5) {
             this._resultText.text = item[0] + "\n" + "半场" + item[1];
-        } else if (type == 2) {
+        } else if (type == 2 || type==6) {
             this._resultText.text = item[0];
         }
     }

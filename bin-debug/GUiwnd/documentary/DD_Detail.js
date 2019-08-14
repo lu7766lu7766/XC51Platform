@@ -11,9 +11,11 @@ r.prototype = e.prototype, t.prototype = new r();
 /**方案详情 */
 var DD_Detail = (function (_super) {
     __extends(DD_Detail, _super);
+    // private objList:GSlideObj;
     function DD_Detail() {
         var _this = _super.call(this) || this;
         _this.hide();
+        // this.objList = new GSlideObj();
         _this._item = new GHashMap();
         var text1 = ToolMrg.getText(160, 12, 24, 0x999999);
         _this.addChild(text1);

@@ -52,7 +52,7 @@ var selectDayBasketBallData = (function () {
     };
     selectDayBasketBallData.defaultselectNum = 1; //当前选者期数id
     selectDayBasketBallData.ifshow = false; //当前是否有显示选择列表
-    selectDayBasketBallData.selectDay = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //最近选择日期
+    selectDayBasketBallData.selectDay = []; //最近选择日期
     return selectDayBasketBallData;
 }());
 __reflect(selectDayBasketBallData.prototype, "selectDayBasketBallData");

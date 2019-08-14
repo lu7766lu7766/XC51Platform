@@ -24,7 +24,7 @@ var GetSC_Data = (function () {
      */
     GetSC_Data.prototype.sendHttp = function (id) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/Yj.php";
-        var content = "id=" + id + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     GetSC_Data.prototype.backHTTP = function (res, httpObj, data) {
@@ -37,7 +37,7 @@ var GetSC_Data = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 SCMrg.getInstance.clear();

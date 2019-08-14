@@ -540,13 +540,33 @@ class WorldActivity extends egret.DisplayObjectContainer {
     private touchDown(e: egret.TouchEvent): void {
         WorldWnd._worldState = 1;
         if (this._id == 0) {//足球串关
+            if(GameValue.isJ <= 0) {
+                // Alertpaner.getInstance.show("该时间段不可购买");
+                TsView.getInstance.show();
+                return;
+            }
             FbWnd.getInstance.show();
         } else if (this._id == 1) {//足球单关
+            if(GameValue.isJ <= 0) {
+                // Alertpaner.getInstance.show("该时间段不可购买");
+                 TsView.getInstance.show();
+                return;
+            }
             FbWnd.getInstance._index = 1;
             FbWnd.getInstance.show();
         } else if (this._id == 2) {//篮球串关
+            if(GameValue.isJ <= 0) {
+                // Alertpaner.getInstance.show("该时间段不可购买");
+                 TsView.getInstance.show();
+                return;
+            }
             BasketBallWnd.getInstance.show();
         } else if (this._id == 3) {//篮球单关
+            if(GameValue.isJ <= 0) {
+                // Alertpaner.getInstance.show("该时间段不可购买");
+                 TsView.getInstance.show();
+                return;
+            }
             BasketBallWnd.getInstance._index = 1;
             BasketBallWnd.getInstance.show();
         } else if (this._id == 4) {//超级足彩

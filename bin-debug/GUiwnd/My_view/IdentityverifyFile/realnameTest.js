@@ -106,13 +106,14 @@ var realnameTest = (function (_super) {
     realnameTest.prototype.onclick = function () {
         // if (realnameData.realName == "" || realnameData.identitNum == "") {
         // 	Alertpaner.getInstance.show("请填写身份证号码和姓名");
-        if (realnameData.realName == "") {
-            // Alertpaner.getInstance.show("请填写姓名");
-        }
-        else {
-            // realNameConf.getInstance.sendHttp(realnameData.identitNum.toString(), realnameData.realName);
-            realNameConf.getInstance.sendHttp("", realnameData.realName);
-        }
+        // if (realnameData.realName == "") {
+        // 	// Alertpaner.getInstance.show("请填写姓名");
+        // }
+        // // } 
+        // else {
+        // realNameConf.getInstance.sendHttp(realnameData.identitNum.toString(), realnameData.realName);
+        realNameConf.getInstance.sendHttp("", realnameData.realName);
+        // }
     };
     return realnameTest;
 }(egret.DisplayObjectContainer));
@@ -225,23 +226,23 @@ var bgxian1 = (function (_super) {
         }
         else {
             if (this.myid == 2) {
-                if (this.inputText.text.length > 8 || this.inputText.text.length < 2) {
-                    Alertpaner.getInstance.show("请输入2到8位姓名");
-                    this.inputText.text = bgxian.strList[this.myid - 1];
-                    realnameData.realName = "";
-                    this.inputText.textColor = 0xA9A9A9;
-                    return;
-                }
-                var namedecid = IdentityverifyObj.getInstance.checkName(this.inputText.text);
-                if (namedecid == true) {
-                    realnameData.realName = this.inputText.text;
-                }
-                else {
-                    Alertpaner.getInstance.show("请填写正确的姓名");
-                    this.inputText.text = bgxian.strList[this.myid - 1];
-                    realnameData.realName = "";
-                    this.inputText.textColor = 0xA9A9A9;
-                }
+                // if (this.inputText.text.length > 8 || this.inputText.text.length < 2) {
+                // 	Alertpaner.getInstance.show("请输入2到8位姓名");
+                // 	this.inputText.text = bgxian.strList[this.myid - 1];
+                // 	realnameData.realName = "";
+                // 	this.inputText.textColor = 0xA9A9A9;
+                // 	return;
+                // }
+                // let namedecid: boolean = IdentityverifyObj.getInstance.checkName(this.inputText.text);
+                // if (namedecid == true) {
+                // 	realnameData.realName = this.inputText.text;
+                // } else {
+                // 	Alertpaner.getInstance.show("请填写正确的姓名");
+                // 	this.inputText.text = bgxian.strList[this.myid - 1];
+                // 	realnameData.realName = "";
+                // 	this.inputText.textColor = 0xA9A9A9;
+                // }
+                realnameData.realName = this.inputText.text;
             }
             else if (this.myid == 3) {
                 var yx = IdentityverifyObj.getInstance.IdCardValidate(this.inputText.text);

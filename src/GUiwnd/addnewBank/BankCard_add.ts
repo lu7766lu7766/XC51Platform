@@ -31,7 +31,7 @@ class BankCard_add implements IProHandle {
 	 */
 	public sendHttp(id, c: string,n:string,r:string): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/care.php";
-		let content = `id=${id}&c=${c}&n=${n}&r=${r}&v=${GameValue.verPhp}`;
+		let content = `id=${id}&c=${c}&n=${n}&r=${r}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
@@ -45,7 +45,7 @@ class BankCard_add implements IProHandle {
 				return;
 			}
 			if (text["res"] != "0") {
-				Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+				Alertpaner.getInstance.show(text["msg"]);
 			} else {
 				text["id"];
 				text["name"];//开户行

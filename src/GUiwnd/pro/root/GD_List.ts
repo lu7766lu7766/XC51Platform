@@ -34,7 +34,7 @@ class GD_List implements IProHandle {
 				return;
 			}
             if(text["res"]!="0"){
-                Alertpaner.getInstance.show(text["res"]+":"+text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
                 DmC_infoMsg.getInstance.item.clear();
 				let arr:Array<GHashMap<any>> = text["data"];

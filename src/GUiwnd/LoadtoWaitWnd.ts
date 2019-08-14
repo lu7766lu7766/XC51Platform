@@ -26,7 +26,7 @@ class LoadtoWaitWnd extends egret.DisplayObjectContainer{
             this.visible = false;
             GUIManager.getInstance.mostLay.addChild(this);
             egret.Tween.get(this).wait(500).call(()=>{
-                this.visible = false;
+                this.visible = true;
             })
         }
 

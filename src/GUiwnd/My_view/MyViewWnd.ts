@@ -350,7 +350,10 @@ class MyViewWnd extends egret.DisplayObjectContainer {
         }
         else if (e.target == this._setUp) {//客服
             // SetUpWnd.getInstance.show();
-            KeFuWnd.getInstance.show();
+            // KeFuWnd.getInstance.show();
+            if(window["go2Url"]) {
+                window["go2Url"](GameValue.kfUrl);
+            }
         }
         else if (e.target == this._cenItem.Gget(0)) {//充值
             if (UserData.getInstance.isLogin() == false)
@@ -589,7 +592,10 @@ class MyViewInfo extends egret.DisplayObjectContainer {
         } else if (this._id == 4) {//合营计划
             PlanWnd.getInstance.show();
         } else if (this._id == 5) {//联系客服
-            KeFuWnd.getInstance.show();
+            // KeFuWnd.getInstance.show();
+            if(window["go2Url"]) {
+                window["go2Url"](GameValue.kfUrl);
+            }
         } else if (this._id == 6) {//开奖信息
             AwareInfoMgr.getInstance.show();
             OpenAwareConfin.getInstance.sendHttp();

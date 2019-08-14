@@ -161,7 +161,8 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
         if(e.target instanceof GDRecordInfo) {
 			let data:GDRecordInfo = e.target
 			if(data._data != undefined) {
-                Gen_Info.getInstance.sendHttp(data._data.order_id, data._data._type);
+                // Gen_Info.getInstance.sendHttp(data._data.order_id, data._data._type,1);
+                Order_ListT.getInstance.sendHttp(data._data.order_id,1);
 			}
 		}
     }

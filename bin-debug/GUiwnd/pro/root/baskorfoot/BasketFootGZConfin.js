@@ -24,7 +24,7 @@ var BasketFootGZConfin = (function () {
      */
     BasketFootGZConfin.prototype.sendHttp = function (uid, type) {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'appoint.php';
-        var content = "id=" + UserData.getInstance.userId + "&uid=" + uid + "&type=" + type + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&uid=" + uid + "&type=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
         console.log("关注id:" + uid + "类型==" + type);
     };

@@ -79,7 +79,10 @@ var PayTipWindow = (function (_super) {
             RechargeWnd.getInstance.hide();
         }
         else if (e.target == this._leftBtn) {
-            KeFuWnd.getInstance.show();
+            // KeFuWnd.getInstance.show();
+            if (window["go2Url"]) {
+                window["go2Url"](GameValue.kfUrl);
+            }
         }
         this.hide();
     };

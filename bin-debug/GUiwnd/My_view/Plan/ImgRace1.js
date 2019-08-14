@@ -71,7 +71,10 @@ var ImgRace1 = (function (_super) {
         this.addChildAt(this._mShareC, 0);
     };
     ImgRace1.prototype.onclick = function () {
-        KeFuWnd.getInstance.show(true);
+        // KeFuWnd.getInstance.show(true);
+        if (window["go2Url"]) {
+            window["go2Url"](GameValue.kfUrl);
+        }
     };
     // private _keepTime = 0;
     // /**更新   无限循环，一直执行，相当于17毫秒执行一次*/

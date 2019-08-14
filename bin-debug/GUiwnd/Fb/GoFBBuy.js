@@ -74,11 +74,15 @@ var GoFBBuy = (function (_super) {
     });
     /**保存串数 */
     GoFBBuy.prototype.saveLeftText = function (data) {
-        this._strandItem = [];
+        var itemx = [];
         for (var _i = 0, _a = data.keys; _i < _a.length; _i++) {
             var key = _a[_i];
-            this._strandItem = this._strandItem.concat(data.Gget(key));
+            itemx = itemx.concat(data.Gget(key));
         }
+        if (!this.isGoBeyond(itemx)) {
+            return;
+        }
+        this._strandItem = itemx;
         for (var i = 0; i < this._strandItem.length; i++) {
             for (var j = 0; j < this._strandItem.length - i - 1; j++) {
                 if (this._strandItem[j] > this._strandItem[j + 1]) {
@@ -110,16 +114,74 @@ var GoFBBuy = (function (_super) {
         this._downLeftText.text = ToolMrg.nameMode2(14, this._downLeftText.text);
         this.changeDownText();
     };
+    /**是否超出50W 单是否超20W 串是否超10W  false:return */
+    GoFBBuy.prototype.isGoBeyond = function (strandItem) {
+        var strandItem2 = [];
+        if (strandItem != undefined)
+            strandItem2 = strandItem;
+        else
+            strandItem2 = this._strandItem;
+        var num = GuessingFootballMrg.getInstance.getAllZSByList(this._data, strandItem2);
+        GuessingFootballMrg.getInstance.setGoldBS(this._data, Number(this._multipleText.text));
+        var numJJ = GuessingFootballMrg.getInstance.getGoldByList(this._data, strandItem2, this._comeType, this.isDanGuan);
+        var max = 0; //最高预测奖金 最高50W 
+        // let money = 0;//投注金额 串10W 单20W
+        this.isDanGuan; //当前 true：单关 false：串关
+        var nowMoney = num * 2 * Number(this._multipleText.text); //当前投注金额
+        if (!this.isDanGuan) {
+            if (nowMoney > 100000) {
+                Alertpaner.getInstance.show("串关下注上限为10万");
+                this._multipleText.text = this._multipleNum + "";
+                return false;
+            }
+        }
+        else {
+            if (nowMoney > 200000) {
+                Alertpaner.getInstance.show("单关下注上限为20万");
+                this._multipleText.text = this._multipleNum + "";
+                return false;
+            }
+        }
+        if (numJJ[1] > 500000) {
+            Alertpaner.getInstance.show("最高赔付上限为50万");
+            this._multipleText.text = this._multipleNum + "";
+            return false;
+        }
+        return true;
+    };
     /**所选数组 注数倍数改变时 */
     GoFBBuy.prototype.changeDownText = function () {
         var num = GuessingFootballMrg.getInstance.getAllZSByList(this._data, this._strandItem);
+        GuessingFootballMrg.getInstance.setGoldBS(this._data, Number(this._multipleText.text));
+        var numJJ = GuessingFootballMrg.getInstance.getGoldByList(this._data, this._strandItem, this._comeType, this.isDanGuan);
+        var max = 0; //最高预测奖金 最高50W 
+        // let money = 0;//投注金额 串10W 单20W
+        this.isDanGuan; //当前 true：单关 false：串关
+        var nowMoney = num * 2 * Number(this._multipleText.text); //当前投注金额
+        if (!this.isDanGuan) {
+            if (nowMoney > 100000) {
+                Alertpaner.getInstance.show("串关下注上限为10万");
+                this._multipleText.text = this._multipleNum + "";
+                return;
+            }
+        }
+        else {
+            if (nowMoney > 200000) {
+                Alertpaner.getInstance.show("单关下注上限为20万");
+                this._multipleText.text = this._multipleNum + "";
+                return;
+            }
+        }
+        if (numJJ[1] > 500000) {
+            Alertpaner.getInstance.show("最高赔付上限为50万");
+            this._multipleText.text = this._multipleNum + "";
+            return;
+        }
+        this._downContent.text = "\u9884\u6D4B\u5956\u91D1\uFF1A" + numJJ[0] + "\u5143\uFF5E" + numJJ[1] + "\u5143";
         this._XZNum = num;
         this._multipleNum = Number(this._multipleText.text);
         this._XZMNNum = num * 2 * this._multipleNum;
         this._downTitle.text = this._XZNum + "\u6CE8" + this._multipleNum + "\u500D" + this._XZMNNum + "\u5143";
-        GuessingFootballMrg.getInstance.setGoldBS(this._data, this._multipleNum);
-        var numJJ = GuessingFootballMrg.getInstance.getGoldByList(this._data, this._strandItem, this._comeType, this.isDanGuan);
-        this._downContent.text = "\u9884\u6D4B\u5956\u91D1\uFF1A" + numJJ[0] + "\u5143\uFF5E" + numJJ[1] + "\u5143";
     };
     /**点击删除 */
     GoFBBuy.prototype.clickRemove = function (id) {
@@ -296,7 +358,11 @@ var GoFBBuy = (function (_super) {
                 LoginWnd.getInstance.show();
                 return;
             }
-            if (UserData.getInstance.getLv() <= 4) {
+            if (UserData.getInstance.userName == ("彩友" + UserData.getInstance.userId)) {
+                Alertpaner.getInstance.show("修改昵称后方可发单");
+                return;
+            }
+            else if (UserData.getInstance.getLv() <= 4) {
                 Alertpaner.getInstance.show("vip5以上才能正常发单哦");
                 // if (UserData.getInstance.getused() == 0 || UserData.getInstance.userName == "51彩友") {//实名和改昵称后方可发单
                 //     Alertpaner.getInstance.show("实名和改昵称后方可发单");
@@ -507,13 +573,21 @@ var GoFBBuy = (function (_super) {
         }
     };
     GoFBBuy.prototype.show = function (data, dataItem, comeType) {
-        GUIManager.getInstance.tipLay.addChild(this);
+        LoadtoWaitWnd.getInstance.hide();
         this._comeType = comeType;
         this._data = data;
         this._dataItem = dataItem;
         this.showData();
         this.addInterception();
         this._multipleText.text = "" + this._multipleNum;
+        this.changeGX(false);
+        this.updata();
+        if (this.isGoBeyond()) {
+            GUIManager.getInstance.tipLay.addChild(this);
+        }
+        else {
+            return;
+        }
         if (this._comeType == 0) {
             this._topUI.changeTitle("竞彩足球投注");
             this._mGXK.visible = true;
@@ -534,8 +608,6 @@ var GoFBBuy = (function (_super) {
             this._mGXK.visible = false;
             this._mGXKText.visible = false;
         }
-        this.changeGX(false);
-        this.updata();
     };
     /**初始化 选中串几 以及 全部串几 */
     GoFBBuy.prototype.updata = function () {

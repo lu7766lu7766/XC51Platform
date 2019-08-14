@@ -93,6 +93,23 @@ var BtOnePass = (function (_super) {
         this.showWnd();
         this.requestData(this._index + 2);
     };
+    /**获取单场数据列表 */
+    BtOnePass.prototype.getDGList = function (id) {
+        var mitem;
+        if (id == 2) {
+            mitem = B2Wnd.getInstance.GetItem();
+        }
+        else if (id == 3) {
+            mitem = B3Wnd.getInstance.GetItem();
+        }
+        else if (id == 4) {
+            mitem = B4Wnd.getInstance.GetItem();
+        }
+        else if (id == 5) {
+            mitem = B5Wnd.getInstance.GetItem();
+        }
+        return mitem;
+    };
     BtOnePass.prototype.updata = function (e) {
         if (e.data != undefined) {
             var mitem = void 0;

@@ -54,7 +54,8 @@ var Super_Ft = (function () {
         if (obj == undefined || this._mParent.parent == undefined || (this._mIsSend == false && FootballDataMrg.getInstance._mZQLB.size > 0)) {
             return;
         }
-        LoadtoWaitWnd.getInstance.show(true);
+        if (FootballDataMrg.getInstance._mZQLB.size <= 0)
+            LoadtoWaitWnd.getInstance.show(true);
         if (bool == true) {
             this.data.mValue = 1;
         }
@@ -63,7 +64,7 @@ var Super_Ft = (function () {
         }
         this._mIsSend = false;
         var url = HTTPRequest.getInstance.httpHeadUrl + "/super_Ft.php";
-        var content = "t=" + 1 + "&v=" + GameValue.verPhp;
+        var content = "t=" + 1 + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     Super_Ft.prototype.backHTTP = function (res, httpObj, data) {
@@ -77,7 +78,7 @@ var Super_Ft = (function () {
             }
             var cf = 0;
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var map = text["map"];

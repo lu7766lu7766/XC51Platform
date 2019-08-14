@@ -27,7 +27,7 @@ var basketballBFConfin = (function () {
      */
     basketballBFConfin.prototype.sendHttp = function () {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'bk_Time.php';
-        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     basketballBFConfin.prototype.backHTTP = function (res, httpObj, data) {
@@ -75,16 +75,16 @@ var basketballBFConfin = (function () {
                 var a4 = objdata["team_a_4_score"];
                 if (a4 == "0")
                     a4 = "";
-                var b1 = objdata["team_a_1_score"];
+                var b1 = objdata["team_b_1_score"];
                 if (b1 == "0")
                     b1 = "";
-                var b2 = objdata["team_a_2_score"];
+                var b2 = objdata["team_b_2_score"];
                 if (b2 == "0")
                     b2 = "";
-                var b3 = objdata["team_a_3_score"];
+                var b3 = objdata["team_b_3_score"];
                 if (b3 == "0")
                     b3 = "";
-                var b4 = objdata["team_a_4_score"];
+                var b4 = objdata["team_b_4_score"];
                 if (b4 == "0")
                     b4 = "";
                 data1.id = id;

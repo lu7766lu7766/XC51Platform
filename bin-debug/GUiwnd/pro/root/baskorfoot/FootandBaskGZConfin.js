@@ -27,7 +27,7 @@ var FootandBaskGZConfin = (function () {
      */
     FootandBaskGZConfin.prototype.sendHttp = function (type) {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'self_Appoint.php';
-        var content = "id=" + UserData.getInstance.userId + "&type=" + type + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&type=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     FootandBaskGZConfin.prototype.backHTTP = function (res, httpObj, data) {

@@ -61,13 +61,13 @@ class SCInfo extends egret.DisplayObjectContainer{
 
         let str = "";
         if(data._type==1){
-            str = "jzcg_home@2x";
-            this._title.text = `竞足`;
-            this._chuanText.text = `单关`;
-        }else if(data._type==2){
             str = "jzdg_home@2x";
             this._title.text = `竞足`;
             this._chuanText.text = `串关`;
+        }else if(data._type==2){
+            str = "jzcg_home@2x";
+            this._title.text = `竞足`;
+            this._chuanText.text = `单关`;
         }else if(data._type==3){
             str = "jlcg_home@2x";
             this._title.text = `竞篮`;

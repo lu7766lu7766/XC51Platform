@@ -27,7 +27,7 @@ var FootballBFConfin = (function () {
      */
     FootballBFConfin.prototype.sendHttp = function () {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'ft_Time.php';
-        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     FootballBFConfin.prototype.backHTTP = function (res, httpObj, data) {

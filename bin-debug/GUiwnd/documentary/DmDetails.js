@@ -43,10 +43,16 @@ var DmDetails = (function (_super) {
         _this._LvText.height = 26;
         _this._LvText.verticalAlign = egret.VerticalAlign.MIDDLE;
         _this._LvText.text = "Lv 1";
-        _this._rate = ToolMrg.getText(378 + 128, 22, 48, 0xf72e52, 200);
+        // this._rate = ToolMrg.getText(378+128,22,48,0xf72e52,200);
+        // this._mContain.addChild(this._rate);
+        // this._rate.textAlign = egret.HorizontalAlign.RIGHT;
+        _this._rate = FontMgr.getText(FontMgr.FONT_3);
         _this._mContain.addChild(_this._rate);
+        _this._rate.x = 378 + 128;
+        _this._rate.y = 30;
+        _this._rate.width = 200;
         _this._rate.textAlign = egret.HorizontalAlign.RIGHT;
-        _this._rateA = ToolMrg.getText(706, 46, 20, 0xf72e52);
+        _this._rateA = ToolMrg.getText(708, 46, 20, 0xf72e52);
         _this._mContain.addChild(_this._rateA);
         _this._rateA.text = "%";
         _this._rateText = ToolMrg.getText(622, 78, 20, 0xF72E52);
@@ -279,6 +285,18 @@ var DmDetails = (function (_super) {
             if (!bankcardCheck.getInstance.checkAllNum(this._downRightText.text)) {
                 Alertpaner.getInstance.show("倍数必须为整数");
                 return;
+            }
+            if (this._data._typeStatic == 2 || this._data._typeStatic == 4) {
+                if ((this._money) * this._multiple > 200000) {
+                    Alertpaner.getInstance.show("单关下注上限为20万");
+                    return;
+                }
+            }
+            else {
+                if ((this._money) * this._multiple > 100000) {
+                    Alertpaner.getInstance.show("串关下注上限为10万");
+                    return;
+                }
             }
             this._multiple; //当前倍数
             this._money; //当前单倍跟单金额

@@ -39,7 +39,7 @@ var ResetPassPhp = (function () {
      */
     ResetPassPhp.prototype.sendHttp = function (passOld, passNew) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/resetPass.php";
-        var content = "id=" + UserData.getInstance.userId + "&o=" + passOld + "&n=" + passNew + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&o=" + passOld + "&n=" + passNew + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     ResetPassPhp.prototype.backHTTP = function (res, httpObj, data) {

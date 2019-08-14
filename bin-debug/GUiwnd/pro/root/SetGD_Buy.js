@@ -35,7 +35,7 @@ var SetGD_Buy = (function () {
     });
     SetGD_Buy.prototype.sendHttp = function (id, type, o, b, m, mold) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/gen_Order.php";
-        var content = "id=" + id + "&type=" + type + "&o=" + o + "&b=" + b + "&m=" + m + "&mold=" + mold + "&rkey=" + GameValue.orderKey + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&type=" + type + "&o=" + o + "&b=" + b + "&m=" + m + "&mold=" + mold + "&rkey=" + GameValue.orderKey + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     SetGD_Buy.prototype.backHTTP = function (res, httpObj, data) {
@@ -58,7 +58,7 @@ var SetGD_Buy = (function () {
                 Alertpaner.getInstance.show("跟单成功");
             }
             else {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
                 PaymentWnd.canPay = true;
             }
         }

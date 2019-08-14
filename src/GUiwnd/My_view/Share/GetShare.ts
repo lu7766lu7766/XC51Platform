@@ -27,7 +27,7 @@ class GetShare implements IProHandle {
 	 */
 	public sendHttp(id): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/shareImg.php";
-		let content = `id=${id}&v=${GameValue.verPhp}`;
+		let content = `id=${id}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
@@ -42,7 +42,7 @@ class GetShare implements IProHandle {
 				return;
 			}
             if(text["res"]!="0"){
-                Alertpaner.getInstance.show(text["res"]+":"+text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
                this.imgs = text["data"];
                	CodeWndphoto.getInstance.showCode();

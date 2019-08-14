@@ -96,10 +96,19 @@ class GoFBBuy extends egret.DisplayObjectContainer {
 
     /**保存串数 */
     public saveLeftText(data: GHashMap<number>): void {
-        this._strandItem = [];
+
+
+
+        let itemx = [];
         for (let key of data.keys) {
-            this._strandItem = this._strandItem.concat(data.Gget(key));
+            itemx = itemx.concat(data.Gget(key));
         }
+
+        if(!this.isGoBeyond(itemx)){
+            return;
+        }
+
+        this._strandItem = itemx;
 
         for (let i = 0; i < this._strandItem.length; i++) {//冒泡 从小到大
             for (let j = 0; j < this._strandItem.length - i - 1; j++) {
@@ -132,17 +141,82 @@ class GoFBBuy extends egret.DisplayObjectContainer {
         this.changeDownText();
     }
 
+    /**是否超出50W 单是否超20W 串是否超10W  false:return */
+    private isGoBeyond(strandItem?:number[]):boolean{
+        let strandItem2 = [];
+        if(strandItem!=undefined)
+            strandItem2 = strandItem;
+        else
+            strandItem2 = this._strandItem;
+
+        let num = GuessingFootballMrg.getInstance.getAllZSByList(this._data, strandItem2);
+        GuessingFootballMrg.getInstance.setGoldBS(this._data, Number(this._multipleText.text));
+        let numJJ: number[] = GuessingFootballMrg.getInstance.getGoldByList(this._data, strandItem2, this._comeType, this.isDanGuan);
+        
+        let max = 0;//最高预测奖金 最高50W 
+        // let money = 0;//投注金额 串10W 单20W
+        this.isDanGuan;//当前 true：单关 false：串关
+
+        let nowMoney = num * 2 * Number(this._multipleText.text);//当前投注金额
+        if(!this.isDanGuan){//串关
+            if(nowMoney>100000){
+                Alertpaner.getInstance.show("串关下注上限为10万");
+                this._multipleText.text = this._multipleNum+"";
+                return false;
+            }
+        }else{//单关
+            if(nowMoney>200000){
+                Alertpaner.getInstance.show("单关下注上限为20万");
+                this._multipleText.text = this._multipleNum+"";
+                return false;
+            }
+        }
+
+        if(numJJ[1]>500000){
+            Alertpaner.getInstance.show("最高赔付上限为50万");
+            this._multipleText.text = this._multipleNum+"";
+            return false;
+        }
+
+        return true;
+    }
+
     /**所选数组 注数倍数改变时 */
     private changeDownText(): void {
         let num = GuessingFootballMrg.getInstance.getAllZSByList(this._data, this._strandItem);
+        GuessingFootballMrg.getInstance.setGoldBS(this._data, Number(this._multipleText.text));
+        let numJJ: number[] = GuessingFootballMrg.getInstance.getGoldByList(this._data, this._strandItem, this._comeType, this.isDanGuan);
+        
+        let max = 0;//最高预测奖金 最高50W 
+        // let money = 0;//投注金额 串10W 单20W
+        this.isDanGuan;//当前 true：单关 false：串关
+
+        let nowMoney = num * 2 * Number(this._multipleText.text);//当前投注金额
+        if(!this.isDanGuan){//串关
+            if(nowMoney>100000){
+                Alertpaner.getInstance.show("串关下注上限为10万");
+                this._multipleText.text = this._multipleNum+"";
+                return;
+            }
+        }else{//单关
+            if(nowMoney>200000){
+                Alertpaner.getInstance.show("单关下注上限为20万");
+                this._multipleText.text = this._multipleNum+"";
+                return;
+            }
+        }
+
+        if(numJJ[1]>500000){
+            Alertpaner.getInstance.show("最高赔付上限为50万");
+            this._multipleText.text = this._multipleNum+"";
+            return;
+        }
+
+        this._downContent.text = `预测奖金：` + numJJ[0] + `元～` + numJJ[1] + `元`;
         this._XZNum = num;
         this._multipleNum = Number(this._multipleText.text);
         this._XZMNNum = num * 2 * this._multipleNum;
         this._downTitle.text = `${this._XZNum}注${this._multipleNum}倍${this._XZMNNum}元`;
-
-        GuessingFootballMrg.getInstance.setGoldBS(this._data, this._multipleNum);
-        let numJJ: number[] = GuessingFootballMrg.getInstance.getGoldByList(this._data, this._strandItem, this._comeType, this.isDanGuan);
-        this._downContent.text = `预测奖金：` + numJJ[0] + `元～` + numJJ[1] + `元`;
     }
     /**是否单关 */
     private isDanGuan: boolean = false;
@@ -305,7 +379,10 @@ class GoFBBuy extends egret.DisplayObjectContainer {
                 return;
             }
 
-            if (UserData.getInstance.getLv() <= 4) {//vip 未0不能晒单
+            if(UserData.getInstance.userName == ("彩友"+UserData.getInstance.userId)) {
+                Alertpaner.getInstance.show("修改昵称后方可发单");
+                return;
+            } else if (UserData.getInstance.getLv() <= 4) {//vip 未0不能晒单
                 Alertpaner.getInstance.show("vip5以上才能正常发单哦");
             // if (UserData.getInstance.getused() == 0 || UserData.getInstance.userName == "51彩友") {//实名和改昵称后方可发单
             //     Alertpaner.getInstance.show("实名和改昵称后方可发单");
@@ -502,14 +579,22 @@ class GoFBBuy extends egret.DisplayObjectContainer {
     /**所选显示数组 */
     private _data: Array<Strand>;
     public show(data: Array<Strand>, dataItem: Array<zqObjData>, comeType: number): void {
-        GUIManager.getInstance.tipLay.addChild(this);
+        LoadtoWaitWnd.getInstance.hide();
+
         this._comeType = comeType;
         this._data = data;
         this._dataItem = dataItem;
         this.showData();
         this.addInterception();
         this._multipleText.text = `${this._multipleNum}`;
+        this.changeGX(false);
+        this.updata();
 
+        if(this.isGoBeyond()){
+            GUIManager.getInstance.tipLay.addChild(this);
+        }else{
+            return;
+        }
 
         if (this._comeType == 0) {
             this._topUI.changeTitle("竞彩足球投注");
@@ -532,8 +617,6 @@ class GoFBBuy extends egret.DisplayObjectContainer {
             this._mGXK.visible = false;
             this._mGXKText.visible = false;
         }
-        this.changeGX(false);
-        this.updata();
     }
 
     /**初始化 选中串几 以及 全部串几 */

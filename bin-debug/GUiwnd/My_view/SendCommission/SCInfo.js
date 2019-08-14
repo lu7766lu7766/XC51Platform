@@ -49,14 +49,14 @@ var SCInfo = (function (_super) {
         this._data = data;
         var str = "";
         if (data._type == 1) {
-            str = "jzcg_home@2x";
-            this._title.text = "\u7ADE\u8DB3";
-            this._chuanText.text = "\u5355\u5173";
-        }
-        else if (data._type == 2) {
             str = "jzdg_home@2x";
             this._title.text = "\u7ADE\u8DB3";
             this._chuanText.text = "\u4E32\u5173";
+        }
+        else if (data._type == 2) {
+            str = "jzcg_home@2x";
+            this._title.text = "\u7ADE\u8DB3";
+            this._chuanText.text = "\u5355\u5173";
         }
         else if (data._type == 3) {
             str = "jlcg_home@2x";

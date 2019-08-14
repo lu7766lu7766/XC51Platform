@@ -169,6 +169,11 @@ class ShareWnd extends egret.DisplayObjectContainer{
         this._mContain.addChild(img1);
         RES.getResByUrl("resource/assets/images/ui/hphy1.png",(e)=>{img1.$setBitmapData(e); },this);
 
+        let img1_2 = new egret.Bitmap();
+        this._mContain.addChild(img1_2);
+        img1_2.y = 540;
+        RES.getResByUrl("resource/assets/images/ui/hphy1_2.png",(e)=>{img1_2.$setBitmapData(e); },this);
+
         // let img2 = new egret.Bitmap();
         // this._mContain.addChild(img2);
         // img2.y = 436;
@@ -257,52 +262,52 @@ class ShareWnd extends egret.DisplayObjectContainer{
         downText1.textFlow = <Array<egret.ITextElement>>[
             {"text":"点击此页面上方","style":{"textColor":0x333333}},
             {"text":"【用户推荐链接】","style":{"textColor":0xf72e52}},
-            {"text":"，新用户成功注册并进行存款\n后，系统将即刻添加对应推荐彩金至您的会员账户内无需人工申\n请。","style":{"textColor":0x333333}}
+            {"text":"，新用户成功注册并进行存款\n后，联系在线客服申请即可。","style":{"textColor":0x333333}}
         ];
 
         let downImg2 = new egret.Bitmap();
         this._downContain.addChild(downImg2);
-        downImg2.y = 280;
+        downImg2.y = 240;
         RES.getResByUrl("resource/assets/images/ui/hdnr_mine@2x.png",(e)=>{
             downImg2.$setBitmapData(e); 
             downImg2.x = (GameMain.getInstance.StageWidth - downImg2.width)*0.5;
         },this);
 
-        let downText2 = ToolMrg.getText(40,340+6,28,0xf72e52);
+        let downText2 = ToolMrg.getText(40,340+6-40,28,0xf72e52);
         this._downContain.addChild(downText2);
         downText2.text = "1.";
 
-        let downText3 = ToolMrg.getText(40,472+6,28,0xf72e52);
+        let downText3 = ToolMrg.getText(40,472+6-40,28,0xf72e52);
         this._downContain.addChild(downText3);
         downText3.text = "2.";
 
-        let downText4 = ToolMrg.getText(40,568+6,28,0xf72e52);
+        let downText4 = ToolMrg.getText(40,568+6-40,28,0xf72e52);
         this._downContain.addChild(downText4);
         downText4.text = "3.";
 
-        let downText5 = ToolMrg.getText(40,628+6,28,0xf72e52);
+        let downText5 = ToolMrg.getText(40,628+6-40,28,0xf72e52);
         this._downContain.addChild(downText5);
         downText5.text = "4.";
 
-        let downText6 = ToolMrg.getText(40,792+6,28,0xf72e52);
+        let downText6 = ToolMrg.getText(40,792+6-40,28,0xf72e52);
         this._downContain.addChild(downText6);
         downText6.text = "5.";
 
-        let down2Text = ToolMrg.getText(70,344,24,0x333333);
+        let down2Text = ToolMrg.getText(70,344-40,24,0x333333);
         this._downContain.addChild(down2Text);
         down2Text.lineSpacing = 10;
         down2Text.height = 104;
         down2Text.verticalAlign = egret.VerticalAlign.MIDDLE;
         down2Text.text = "本活动51彩站全体用户皆可参与，用户点击推荐链接分享给\n新用户注册并进行存款后即可获得对应推荐彩金，被推荐用\n户无需填写推荐码。";
             
-        let down3Text = ToolMrg.getText(70,476,24,0x333333);
+        let down3Text = ToolMrg.getText(70,476-40,24,0x333333);
         this._downContain.addChild(down3Text);
         down3Text.lineSpacing = 10;
         down3Text.height = 68;
         down3Text.verticalAlign = egret.VerticalAlign.MIDDLE;
         down3Text.text = "每推荐一个新用户注册并存款皆可获得一次对应用户首存金\n额的推荐彩金。";
         
-        let down4Text = ToolMrg.getText(70,577,24,0x333333);
+        let down4Text = ToolMrg.getText(70,577-40,24,0x333333);
         this._downContain.addChild(down4Text);
         down4Text.verticalAlign = egret.VerticalAlign.MIDDLE;
         down4Text.textFlow = <Array<egret.ITextElement>>[
@@ -311,14 +316,14 @@ class ShareWnd extends egret.DisplayObjectContainer{
             {"text":"共享，不与其它任何优惠共享。","style":{"textColor":0x333333}}
         ];
     
-        let down5Text = ToolMrg.getText(70,632,24,0x333333);
+        let down5Text = ToolMrg.getText(70,632-40,24,0x333333);
         this._downContain.addChild(down5Text);
         down5Text.lineSpacing = 10;
         down5Text.height = 136;
         down5Text.verticalAlign = egret.VerticalAlign.MIDDLE;
         down5Text.text = "每位被推荐用户需满足：每一个手机号码、电子邮箱、IP地\n址、相同银行卡、同一台电脑仅可注册一个51彩站会员账号，\n如发现有违规用户，我们将保留无限期审核扣回红利及所有\n产生利润的权利。";
     
-        let down6Text = ToolMrg.getText(70,796,24,0x333333);
+        let down6Text = ToolMrg.getText(70,796-40,24,0x333333);
         this._downContain.addChild(down6Text);
         down6Text.lineSpacing = 10;
         down6Text.height = 34;

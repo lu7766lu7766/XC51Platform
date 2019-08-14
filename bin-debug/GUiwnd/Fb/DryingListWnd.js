@@ -19,7 +19,7 @@ var DryingListWnd = (function (_super) {
         // private _mFAXYText:egret.TextField;
         // /**方案宣言提示 */
         // private _mFNSTBKKKK:XYBKKKK;
-        _this._mGKList = ["公开", "保密"];
+        _this._mGKList = ["免费公开", "保密"];
         /**当前选中下标 */
         _this._mIndex = 1;
         _this.ylz = 0;

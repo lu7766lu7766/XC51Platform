@@ -54,7 +54,8 @@ var FT_List = (function () {
         if (obj == undefined || this._mParent.parent == undefined || (this._mIsSend == false && FootballDataMrg.getInstance._mZQLB.size > 0)) {
             return;
         }
-        LoadtoWaitWnd.getInstance.show(true);
+        if (FootballDataMrg.getInstance._mZQLB.size <= 0)
+            LoadtoWaitWnd.getInstance.show(true);
         if (bool == true) {
             this.data.mValue = 1;
         }
@@ -77,7 +78,7 @@ var FT_List = (function () {
             }
             var cf = 0;
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var map = text["map"];

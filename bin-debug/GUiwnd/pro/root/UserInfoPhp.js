@@ -36,7 +36,7 @@ var UserInfoPhp = (function () {
      */
     UserInfoPhp.prototype.sendHttp = function () {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/userInfo.php";
-        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     UserInfoPhp.prototype.backHTTP = function (res, httpObj, data) {

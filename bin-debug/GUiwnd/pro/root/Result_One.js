@@ -84,7 +84,7 @@ var Result_One = (function () {
      */
     Result_One.prototype.sendHttp = function (type) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/result_One.php";
-        var content = "t=" + type + "&v=" + GameValue.verPhp;
+        var content = "t=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     Result_One.prototype.backHTTP = function (res, httpObj, data) {
@@ -97,7 +97,7 @@ var Result_One = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var list = text["list"];

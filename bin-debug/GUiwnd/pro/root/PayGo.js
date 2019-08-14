@@ -48,7 +48,7 @@ var PayGo = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 if (text["purl"] && window["go2Url"]) {

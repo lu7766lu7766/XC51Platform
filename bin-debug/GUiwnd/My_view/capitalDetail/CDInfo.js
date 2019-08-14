@@ -127,7 +127,7 @@ __reflect(CDData.prototype, "CDData");
 var CDDataSub = (function () {
     function CDDataSub() {
         this.status = -1; //类型(提款 特有类型  提款  0:待审核 1:审核通过 2:审核不通过)
-        this.type = 0; //名字类型(4 1:佣金 2:中奖金额  5 1:发单奖励  3:佣金  )
+        this.type = 0; //名字类型(4 1:佣金 2:中奖金额  5 1:发单奖励  3:佣金  6: "type": 10001  //10012=>返水  10001=>新用户注册即送18元 10002=>首存5888元等你 10003=>VIP成长礼包送不停 10004=>助力中超，每周彩金大放送 10005=>呼朋唤友一起来战斗)
     }
     /**提取特有审核状态 */
     CDDataSub.prototype.gettatle = function () {
@@ -180,6 +180,24 @@ var CDDataSub = (function () {
         }
         else if (this.typemax == 6) {
             str = "返水收入";
+            if (this.type == 10012) {
+                str = "返水";
+            }
+            else if (this.type == 10001) {
+                str = "新用户注册即送18元";
+            }
+            else if (this.type == 10002) {
+                str = "首存5888元等你";
+            }
+            else if (this.type == 10003) {
+                str = "VIP成长礼包送不停";
+            }
+            else if (this.type == 10004) {
+                str = "助力中超，每周彩金大放送";
+            }
+            else if (this.type == 10005) {
+                str = "呼朋唤友一起来战斗";
+            }
         }
         else if (this.typemax == 7) {
             str = "奖励收入";

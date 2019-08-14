@@ -53,6 +53,21 @@ class OnePass extends egret.DisplayObjectContainer{
         return this._arr;
     }
 
+    /**获取单场数据列表 */
+    public getDGList(id?:number):GHashMap<any> {
+         let mitem;
+        if(id==2){//胜平负
+            mitem = G2Wnd.getInstance.GetItem(); 
+        }else if(id==3){//进球数
+            mitem = G3Wnd.getInstance.GetItem(); 
+        }else if(id==4){//比分
+            mitem = G4Wnd.getInstance.GetItem(); 
+        }else if(id==5){//半全场
+            mitem = G5Wnd.getInstance.GetItem(); 
+        }
+        return mitem;
+    }
+
     public ClickRemove(id?:number){
         if(id!=undefined){
             let mitem;
@@ -235,7 +250,6 @@ class OnePass extends egret.DisplayObjectContainer{
             G4Wnd.getInstance.hide();
             G5Wnd.getInstance.hide();
         }
-        LoadtoWaitWnd.getInstance.hide();
         CustEventMrg.getInstance.removeEventListener(CustEventType.EventType_FTDG_List, this.updata, this);
     }
 

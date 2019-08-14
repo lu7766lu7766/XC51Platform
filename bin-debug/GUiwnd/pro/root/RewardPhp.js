@@ -45,7 +45,7 @@ var RewardPhp = (function () {
      */
     RewardPhp.prototype.sendHttp = function (oid, type) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/reward.php";
-        var content = "o=" + oid + "&t=" + type + "&v=" + GameValue.verPhp;
+        var content = "o=" + oid + "&t=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     RewardPhp.prototype.backHTTP = function (res, httpObj, data) {
@@ -62,7 +62,7 @@ var RewardPhp = (function () {
                 Alertpaner.getInstance.show("超过100注无法查看方案详情");
             }
             else if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else if (text["res"] == "0") {
                 var arr = text["data"];

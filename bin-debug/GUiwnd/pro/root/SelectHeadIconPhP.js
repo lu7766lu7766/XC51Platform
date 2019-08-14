@@ -32,7 +32,7 @@ var SelectHeadIconPhP = (function () {
      */
     SelectHeadIconPhP.prototype.sendHttp = function (ntype) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/resetIcon.php";
-        var content = "id=" + UserData.getInstance.userId + "&t=" + ntype + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&t=" + ntype + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     SelectHeadIconPhP.prototype.backHTTP = function (res, httpObj, data) {

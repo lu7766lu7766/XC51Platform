@@ -37,7 +37,7 @@ var GD_RecordList = (function () {
     });
     GD_RecordList.prototype.sendHttp = function (id, index) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/gen.php";
-        var content = "id=" + id + "&type=" + index + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&type=" + index + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     GD_RecordList.prototype.backHTTP = function (res, httpObj, data) {
@@ -50,7 +50,7 @@ var GD_RecordList = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 GDRecordMrg.getInstance.GDRItem.clear();

@@ -8,7 +8,7 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-/**跟 documentary */
+/**跟 documentary 现在用DmWnd_2类 */
 var DmWnd = (function (_super) {
     __extends(DmWnd, _super);
     function DmWnd() {

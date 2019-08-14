@@ -36,6 +36,7 @@ var HTTPRequest = (function () {
     };
     /**协议注册 */
     HTTPRequest.prototype.initData = function () {
+        this._mProHandleMap.Gput("TimePhp", TimePhp.getInstance);
         this._mProHandleMap.Gput("PhonePhp", PhonePhp.getInstance);
         this._mProHandleMap.Gput("RewardPhp", RewardPhp.getInstance);
         this._mProHandleMap.Gput("ResetName", ResetName.getInstance);
@@ -58,6 +59,7 @@ var HTTPRequest = (function () {
         this._mProHandleMap.Gput("BK_Order", BK_Order.getInstance);
         this._mProHandleMap.Gput("Order_List", Order_List.getInstance);
         this._mProHandleMap.Gput("Order_ListO", Order_ListO.getInstance);
+        this._mProHandleMap.Gput("Order_ListT", Order_ListT.getInstance);
         this._mProHandleMap.Gput("Result_One", Result_One.getInstance);
         this._mProHandleMap.Gput("BK_Order_One", BK_Order_One.getInstance);
         this._mProHandleMap.Gput("FT_Order_One", FT_Order_One.getInstance);

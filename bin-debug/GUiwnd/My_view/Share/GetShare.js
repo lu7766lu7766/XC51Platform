@@ -30,7 +30,7 @@ var GetShare = (function () {
      */
     GetShare.prototype.sendHttp = function (id) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/shareImg.php";
-        var content = "id=" + id + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     GetShare.prototype.backHTTP = function (res, httpObj, data) {
@@ -43,7 +43,7 @@ var GetShare = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 this.imgs = text["data"];

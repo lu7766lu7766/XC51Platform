@@ -34,7 +34,7 @@ class GD_RecordList implements IProHandle {
 
 	public sendHttp(id,index): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/gen.php";
-		let content = `id=${id}&type=${index}&v=${GameValue.verPhp}`;
+		let content = `id=${id}&type=${index}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
@@ -47,7 +47,7 @@ class GD_RecordList implements IProHandle {
 				return;
 			}
             if(text["res"]!="0"){
-                Alertpaner.getInstance.show(text["res"]+":"+text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
                 GDRecordMrg.getInstance.GDRItem.clear();
                 let objItem:Array<GHashMap<any>> = text["data"];

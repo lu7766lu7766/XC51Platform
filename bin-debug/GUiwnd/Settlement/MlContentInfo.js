@@ -53,7 +53,7 @@ var MlContentInfo = (function (_super) {
         control.x = 394;
         control.y = 52;
         RES.getResByUrl("resource/assets/images/ui/bsjj_home@2x.png", function (e) { control.$setBitmapData(e); }, _this);
-        _this._MultiplierText = ToolMrg.getText(394, 52, 32, 0x333333, 180);
+        _this._MultiplierText = ToolMrg.getText(434, 52, 32, 0x333333, 100);
         _this.addChild(_this._MultiplierText);
         _this._MultiplierText.height = 60;
         _this._MultiplierText.verticalAlign = egret.VerticalAlign.MIDDLE;

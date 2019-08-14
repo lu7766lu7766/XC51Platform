@@ -24,7 +24,7 @@ var CD_List = (function () {
      */
     CD_List.prototype.sendHttp = function (id) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/money.php";
-        var content = "id=" + id + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     CD_List.prototype.backHTTP = function (res, httpObj, data) {
@@ -37,7 +37,7 @@ var CD_List = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var obj = new CDData();
@@ -47,7 +47,7 @@ var CD_List = (function () {
                 obj.t = text["t"]["total"];
                 obj.w = text["w"]["total"];
                 obj.f = text["f"]["total"];
-                obj.o = text["o"]["total"];
+                // obj.o = text["o"]["total"];
                 var bitem = text["b"]["list"];
                 if (bitem != undefined && bitem.length > 0) {
                     for (var i = 0; i < bitem.length; i++) {
@@ -120,21 +120,22 @@ var CD_List = (function () {
                         sub.typemax = 6;
                         sub._money = aaa["money"];
                         sub._dateTime = aaa["time"];
+                        sub.type = aaa["type"];
                         obj.fItem.Gput(sub.id, sub);
                     }
                 }
-                var oitem = text["o"]["list"];
-                if (oitem != undefined && oitem.length > 0) {
-                    for (var i = 0; i < oitem.length; i++) {
-                        var sub = new CDDataSub();
-                        var aaa = oitem[i];
-                        sub.id = i;
-                        sub.typemax = 7;
-                        sub._money = aaa["money"];
-                        sub._dateTime = aaa["time"];
-                        obj.oItem.Gput(sub.id, sub);
-                    }
-                }
+                // let oitem: Array<GHashMap<any>> = text["o"]["list"];
+                // if (oitem != undefined && oitem.length > 0) {
+                //     for (let i = 0; i < oitem.length; i++) {
+                //         let sub = new CDDataSub();
+                //         let aaa = oitem[i];
+                //         sub.id = i;
+                //         sub.typemax = 7;
+                //         sub._money = aaa["money"];
+                //         sub._dateTime = aaa["time"];
+                //         obj.oItem.Gput(sub.id, sub);
+                //     }
+                // }
                 CDMrg.getInstance._AllZJ = obj;
                 if (CapitalWnd.getInstance != undefined && CapitalWnd.getInstance.parent != undefined)
                     CapitalWnd.getInstance.upData();

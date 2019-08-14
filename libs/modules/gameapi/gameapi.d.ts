@@ -740,23 +740,25 @@ declare class MD5 {
     private static _mInstance;
     static readonly getInstance: MD5;
     constructor();
-    safe_add(x: any, y: any): number;
-    rol(num: any, cnt: any): number;
-    cmn(q: any, a: any, b: any, x: any, s: any, t: any): number;
-    ff(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
-    gg(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
-    hh(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
-    ii(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
-    coreMD5(x: any): number[];
-    binl2hex(binarray: any): string;
-    binl2b64(binarray: any): string;
-    str2binl(str: any): any[];
-    strw2binl(str: any): any[];
-    hexMD5(str: any): string;
-    hexMD5w(str: any): string;
-    b64MD5(str: any): string;
-    b64MD5w(str: any): string;
-    calcMD5(str: any): string;
+    private hexcase;
+    private b64pad;
+    private chrsz;
+    /**MD5加密 */
+    hex_md5(s: string): string;
+    private md5_vm_test();
+    private core_md5(x, len);
+    private md5_cmn(q, a, b, x, s, t);
+    private md5_ff(a, b, c, d, x, s, t);
+    private md5_gg(a, b, c, d, x, s, t);
+    private md5_hh(a, b, c, d, x, s, t);
+    private md5_ii(a, b, c, d, x, s, t);
+    private core_hmac_md5(key, data);
+    private safe_add(x, y);
+    private bit_rol(num, cnt);
+    private str2binl(str);
+    private binl2str(bin);
+    private binl2hex(binarray);
+    private binl2b64(binarray);
 }
 declare namespace MUtils {
     class MTimerTask implements GIObjPool {

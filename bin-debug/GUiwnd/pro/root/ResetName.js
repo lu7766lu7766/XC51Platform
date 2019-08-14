@@ -32,7 +32,7 @@ var ResetName = (function () {
      */
     ResetName.prototype.sendHttp = function (nnn) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/resetName.php";
-        var content = "id=" + UserData.getInstance.userId + "&n=" + nnn + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&n=" + nnn + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     ResetName.prototype.backHTTP = function (res, httpObj, data) {

@@ -39,7 +39,7 @@ var identitycardConf = (function () {
      */
     identitycardConf.prototype.sendHttp = function (sfz, name) {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'okami_auth.php';
-        var content = "id=" + UserData.getInstance.userId + "&identity=" + sfz + "&realName=" + name + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&identity=" + sfz + "&realName=" + name + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     identitycardConf.prototype.backHTTP = function (res, httpObj, data) {

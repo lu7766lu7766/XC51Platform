@@ -62,7 +62,7 @@ class MlContentInfo extends egret.DisplayObjectContainer{
         control.y = 52;
         RES.getResByUrl("resource/assets/images/ui/bsjj_home@2x.png",(e)=>{control.$setBitmapData(e); },this)
 
-        this._MultiplierText = ToolMrg.getText(394,52,32,0x333333,180);
+        this._MultiplierText = ToolMrg.getText(434,52,32,0x333333,100);
         this.addChild(this._MultiplierText);
         this._MultiplierText.height = 60;
         this._MultiplierText.verticalAlign = egret.VerticalAlign.MIDDLE;

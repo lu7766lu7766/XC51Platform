@@ -31,7 +31,7 @@ var TenConfon = (function () {
      */
     TenConfon.prototype.sendHttp = function (type) {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'jqs.php';
-        var content = "type=" + type + "&v=" + GameValue.verPhp;
+        var content = "type=" + type + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     TenConfon.prototype.backHTTP = function (res, httpObj, data) {
@@ -49,6 +49,7 @@ var TenConfon = (function () {
             if (result == 0) {
                 if (typenum == 1) {
                     if (listlistArray != undefined) {
+                        selectDayFootballData.selectDay = [];
                         for (var i = 0; i < listlistArray.length; i++) {
                             selectDayFootballData.selectDay[i] = listlistArray[i];
                         }
@@ -56,6 +57,7 @@ var TenConfon = (function () {
                 }
                 else if (typenum == 2) {
                     if (listlistArray != undefined) {
+                        selectDayBasketBallData.selectDay = [];
                         for (var i = 0; i < listlistArray.length; i++) {
                             selectDayBasketBallData.selectDay[i] = listlistArray[i];
                         }

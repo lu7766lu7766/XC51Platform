@@ -44,7 +44,7 @@ var LoginPhp = (function () {
      */
     LoginPhp.prototype.sendHttp = function (username, pass) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/login.php";
-        var content = "username=" + username + "&pass=" + pass + "&v=" + GameValue.verPhp;
+        var content = "username=" + username + "&pass=" + pass + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     LoginPhp.prototype.backHTTP = function (res, httpObj, data) {
@@ -63,7 +63,7 @@ var LoginPhp = (function () {
             }
             else if (text["res"] != "0") {
                 UserData.getInstance.setYJTime("0", "0", "0");
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else if (text["res"] == "0") {
                 LoginWnd.getInstance.hide();

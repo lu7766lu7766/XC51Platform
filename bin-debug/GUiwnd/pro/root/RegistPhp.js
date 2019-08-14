@@ -38,7 +38,7 @@ var RegistPhp = (function () {
      */
     RegistPhp.prototype.sendHttp = function (username, pass, p) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/regist.php";
-        var content = "username=" + username + "&pass=" + pass + "&p=" + p + "&v=" + GameValue.verPhp;
+        var content = "username=" + username + "&pass=" + pass + "&p=" + p + "&v=" + GameValue.verPhp + "&r=1&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     RegistPhp.prototype.backHTTP = function (res, httpObj, data) {

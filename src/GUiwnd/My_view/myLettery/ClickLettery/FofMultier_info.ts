@@ -114,9 +114,13 @@ class FofMultier_info extends egret.DisplayObjectContainer {
     /**设置投注内容颜色*/
     private setclore(): void {
         if (this._data.awareType == 1) {
-             this._centerText.textColor =0xf72e52;
+            this._centerText.textColor = 0xf72e52;
+            this._MultiplierText.textColor = 0xf72e52;
+            this._moneyText.textColor=0xf72e52;
         } else {
             this._centerText.textColor = 0x333333;
+            this._MultiplierText.textColor = 0x333333;
+              this._moneyText.textColor=0x333333;
         }
 
     }

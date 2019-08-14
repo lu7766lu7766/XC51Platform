@@ -13,7 +13,7 @@ class CapitalWnd extends egret.DisplayObjectContainer{
     private _scroView:egret.ScrollView;
     private _topContain:egret.DisplayObjectContainer;
 
-    private str = ["购彩","充值","派奖","提取","佣金","返水","奖励"];
+    private str = ["购彩","充值","派奖","提取","佣金","红利"];
     private _item:GHashMap<egret.TextField>;
     private _index = 0;
     private _tipText:egret.Bitmap;

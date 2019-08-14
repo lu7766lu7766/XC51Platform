@@ -5,6 +5,7 @@ var GStatus;
 (function (GStatus) {
     var GameStatus = (function () {
         function GameStatus() {
+            this._mTime = 0;
         }
         Object.defineProperty(GameStatus, "getInstance", {
             get: function () {
@@ -28,6 +29,15 @@ var GStatus;
         GameStatus.prototype.update = function (it) {
             FiveBox.getInstance.EndOfTime();
             ThreeBox.getInstance.EndOfTime();
+            this._mTime += it;
+            if (this._mTime > 1000 && GameValue.isJ > 0) {
+                this._mTime = 0;
+                GameValue.isJ -= 1;
+            }
+            else if (this._mTime > 10000) {
+                this._mTime = 0;
+                TimePhp.getInstance.sendHttp();
+            }
         };
         GameStatus.prototype.exitStatus = function () {
             DownWnd.getInstance.hide();

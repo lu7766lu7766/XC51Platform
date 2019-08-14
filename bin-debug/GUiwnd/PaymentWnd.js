@@ -278,8 +278,8 @@ var PaymentWnd = (function (_super) {
             obj111.init(this._LsrcItem4[i], i, this.getMoneyById(i));
             obj111.y = 414 - 40 - 96 + 140 * i;
             this.addChild(obj111);
-            obj111.touchEnabled = true;
-            obj111.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+            // obj111.touchEnabled = true;
+            // obj111.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         }
         this.changeType(0);
         this.freshPay();

@@ -42,7 +42,7 @@ var GetBank_allLIst = (function () {
             return;
         }
         var url = HTTPRequest.getInstance.httpHeadUrl + "/showCare.php";
-        var content = "id=" + id + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     GetBank_allLIst.prototype.backHTTP = function (res, httpObj, data) {
@@ -55,7 +55,7 @@ var GetBank_allLIst = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 SelectDataMrg.getInstance.clearItem();

@@ -21,7 +21,7 @@ class CD_List implements IProHandle {
 	 */
     public sendHttp(id): void {
         let url: string = HTTPRequest.getInstance.httpHeadUrl + "/money.php";
-        let content = `id=${id}&v=${GameValue.verPhp}`;
+        let content = `id=${id}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     }
 
@@ -34,7 +34,7 @@ class CD_List implements IProHandle {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
                 let obj = new CDData();
 
@@ -44,7 +44,7 @@ class CD_List implements IProHandle {
                 obj.t = text["t"]["total"];
                 obj.w = text["w"]["total"];
                 obj.f = text["f"]["total"];
-                obj.o = text["o"]["total"];
+                // obj.o = text["o"]["total"];
 
 
                 let bitem: Array<GHashMap<any>> = text["b"]["list"];
@@ -124,22 +124,23 @@ class CD_List implements IProHandle {
                         sub.typemax = 6;
                         sub._money = aaa["money"];
                         sub._dateTime = aaa["time"];
+                        sub.type = aaa["type"];
                         obj.fItem.Gput(sub.id, sub);
                     }
                 }
 
-                let oitem: Array<GHashMap<any>> = text["o"]["list"];
-                if (oitem != undefined && oitem.length > 0) {
-                    for (let i = 0; i < oitem.length; i++) {
-                        let sub = new CDDataSub();
-                        let aaa = oitem[i];
-                        sub.id = i;
-                        sub.typemax = 7;
-                        sub._money = aaa["money"];
-                        sub._dateTime = aaa["time"];
-                        obj.oItem.Gput(sub.id, sub);
-                    }
-                }
+                // let oitem: Array<GHashMap<any>> = text["o"]["list"];
+                // if (oitem != undefined && oitem.length > 0) {
+                //     for (let i = 0; i < oitem.length; i++) {
+                //         let sub = new CDDataSub();
+                //         let aaa = oitem[i];
+                //         sub.id = i;
+                //         sub.typemax = 7;
+                //         sub._money = aaa["money"];
+                //         sub._dateTime = aaa["time"];
+                //         obj.oItem.Gput(sub.id, sub);
+                //     }
+                // }
 
                 CDMrg.getInstance._AllZJ = obj;
 

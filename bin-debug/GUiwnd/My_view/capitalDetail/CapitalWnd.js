@@ -13,7 +13,7 @@ var CapitalWnd = (function (_super) {
     __extends(CapitalWnd, _super);
     function CapitalWnd() {
         var _this = _super.call(this) || this;
-        _this.str = ["购彩", "充值", "派奖", "提取", "佣金", "返水", "奖励"];
+        _this.str = ["购彩", "充值", "派奖", "提取", "佣金", "红利"];
         _this._index = 0;
         _this.touchEnabled = true;
         _this._item = new GHashMap();

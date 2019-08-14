@@ -3,7 +3,7 @@ class DmC_info extends egret.DisplayObjectContainer {
     private _txName: egret.TextField;
 
     private _time: egret.TextField;
-    private _multiple: egret.TextField;
+    private _multiple: egret.BitmapText;
     private _multipleText: egret.TextField;
     /** % */
     private _lll: egret.TextField;
@@ -87,16 +87,16 @@ class DmC_info extends egret.DisplayObjectContainer {
         this._time = ToolMrg.getText(28, 292, 24, 0x999999);
         this.addChild(this._time);
 
-        this._multiple = new egret.TextField();
+        this._multiple = FontMgr.getText(FontMgr.FONT_3);
         this.addChild(this._multiple);
         this._multiple.x = 548;
-        this._multiple.y = 22;
+        this._multiple.y = 30;
         this._multiple.width = 158;
         this._multiple.textAlign = egret.HorizontalAlign.RIGHT;
-        this._multiple.textColor = 0xf72e52;
-        this._multiple.size = 48;
+        // this._multiple.textColor = 0xf72e52;
+        // this._multiple.size = 48;
 
-        this._lll = ToolMrg.getText(706, 48, 18, 0xf72e52);
+        this._lll = ToolMrg.getText(708, 48, 18, 0xf72e52);
         this.addChild(this._lll);
         this._lll.text = "%";
 

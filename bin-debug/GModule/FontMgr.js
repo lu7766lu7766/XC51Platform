@@ -6,6 +6,7 @@ var FontMgr = (function () {
     }
     FontMgr.preloadRes = function (loadMod) {
         loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_1 + '.fnt');
+        loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_3 + '.fnt');
     };
     FontMgr.getText = function (font) {
         var text = new egret.BitmapText();
@@ -19,6 +20,8 @@ var FontMgr = (function () {
     FontMgr.FONT_1 = 'Din400x999999';
     /**Din 32 0xffffff */
     FontMgr.FONT_2 = 'Din320xffffff';
+    /**0xf72e52 */
+    FontMgr.FONT_3 = '0xf72e52';
     return FontMgr;
 }());
 __reflect(FontMgr.prototype, "FontMgr");

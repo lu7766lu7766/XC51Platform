@@ -78,7 +78,7 @@ var FT_Order_One = (function () {
             }
             if (text["res"] != "0") {
                 if (text["res"] == "1000") {
-                    Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                    Alertpaner.getInstance.show(text["msg"]);
                 }
                 else if (text["res"] == "1001") {
                     Alertpaner.getInstance.show(text["msg"]);

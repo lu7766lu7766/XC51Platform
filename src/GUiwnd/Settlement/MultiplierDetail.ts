@@ -186,6 +186,23 @@ class MultiplierDetail extends egret.DisplayObjectContainer{
                 LoginWnd.getInstance.show();
                 return;
             }
+
+            if(this.isDanGuan==false){//串关
+                if(this.getBS()*2>100000){
+                    Alertpaner.getInstance.show("串关下注上限为10万");
+                    return;
+                }
+            }else{//单关
+                if(this.getBS()*2>200000){
+                    Alertpaner.getInstance.show("单关下注上限为20万");
+                    return;
+                }
+            }
+
+            if(this.getJJ()>500000){
+                Alertpaner.getInstance.show("最高赔付上限为50万");
+                return;
+            }
             
             this._mPayData.xzM = this.getBS() * 2;
             PaymentWnd.getInstance.show(this._mPayData);

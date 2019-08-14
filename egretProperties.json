@@ -22,8 +22,8 @@
       "name": "socket"
     },
     {
-      "name": "gameapi",
-      "path": "E:/gameAPI/gameapi"
+      "name": "gameAPI",
+      "path": "D:/api/gameapi"
     }
   ]
 }

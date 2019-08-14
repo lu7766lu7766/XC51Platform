@@ -52,7 +52,8 @@ var BK_List = (function () {
         if (obj == undefined || this._mParent.parent == undefined || (this._mIsSend == false && BasketballDataMrg.getInstance._mLQLB.size > 0)) {
             return;
         }
-        LoadtoWaitWnd.getInstance.show(true);
+        if (BasketballDataMrg.getInstance._mLQLB.size <= 0)
+            LoadtoWaitWnd.getInstance.show(true);
         if (bool == true) {
             this.data.mValue = 1;
         }
@@ -75,7 +76,7 @@ var BK_List = (function () {
             }
             var cf = 0;
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var map = text["map"];

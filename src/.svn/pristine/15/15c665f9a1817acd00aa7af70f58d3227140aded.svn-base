@@ -1,0 +1,90 @@
+/**半全场 */
+class G5Wnd extends egret.DisplayObjectContainer{
+    private static _mInstance: G5Wnd;
+	public static get getInstance(): G5Wnd {
+		if (G5Wnd._mInstance == undefined)
+			G5Wnd._mInstance = new G5Wnd();
+		return G5Wnd._mInstance;
+	}
+
+    private _mContain:egret.DisplayObjectContainer;
+    private _scroView:egret.ScrollView;
+	private _item:GHashMap<G5infoTop>;
+
+    constructor(){
+        super();
+		this.touchEnabled = true;
+        this._mContain = new egret.DisplayObjectContainer();
+		this._item = new GHashMap<G5infoTop>();
+
+        this.addScoll();
+        this.setDB();
+    }
+
+    public GetItem():GHashMap<G5infoTop>{
+        return this._item;
+    }
+
+	public updata():void{
+        let item = FootballDataMrg.getInstance._mZQLBDG;
+        let objHeight=0;
+        for(let key of item.keys){
+            let obj:G5infoTop;
+            if(this._item.GhasKey(key)){
+                obj = this._item.Gget(key);
+            }else{
+                obj = new G5infoTop();
+                this._item.Gput(key,obj);
+            }
+            obj.aa(item.Gget(key),key);
+            obj.y = objHeight;
+            objHeight = objHeight + obj.height;
+            if(obj.parent==undefined)
+                this._mContain.addChild(obj);
+        }
+        ToolMrg.upItemofGHashMap(this._item,item);
+    }
+
+    public show():void{
+        GUIManager.getInstance.topLay.addChild(this);
+		this.updata();
+    }
+
+    public hide():void{
+        if(this.parent!=undefined){
+            this.parent.removeChild(this);
+            this._scroView.setScrollTop(0);
+
+            for(let key of this._item.keys){
+                for(let akey of this._item.Gget(key).getSubItem().keys){
+                    this._item.Gget(key).getSubItem().Gget(akey).removeInterception();
+                }
+            }
+        }
+    }
+
+    private addScoll(): void {
+		this._scroView = new egret.ScrollView();
+		this._scroView.x = 0;
+		this._scroView.y = 136+80;
+		this._scroView.scrollSpeed = 0.4;
+		//设置滚动内容
+		this._scroView.setContent(this._mContain);
+		this._scroView.bounces = false;
+		this._scroView.verticalScrollPolicy = 'on';
+		this._scroView.horizontalScrollPolicy = 'off';
+		//设置滚动区域宽高
+		this._scroView.width = GameMain.getInstance.StageWidth;
+		this._scroView.height = GameMain.getInstance.StageHeight - this.y - 100 - this._scroView.y;
+		this.addChild(this._scroView);
+	}
+
+    private _mShareC: egret.Shape;
+	/**适配处理 */
+	private setDB(): void {
+		this._mShareC = new egret.Shape();
+		this._mShareC.graphics.beginFill(0xffffff, 1);
+		this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth,GameMain.getInstance.StageHeight - this.y - 100 - this._scroView.y);
+		this._mContain.addChildAt(this._mShareC, 0);
+    }
+}

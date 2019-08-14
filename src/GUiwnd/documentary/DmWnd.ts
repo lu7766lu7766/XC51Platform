@@ -1,4 +1,4 @@
-/**跟 documentary */
+/**跟 documentary 现在用DmWnd_2类 */
 class DmWnd extends egret.DisplayObjectContainer{
     private static _mInstance: DmWnd;
 	public static get getInstance(): DmWnd {

@@ -97,6 +97,23 @@ var SPBtOnePass = (function (_super) {
         this.showWnd();
         this.requestData(this._index + 2);
     };
+    /**获取单场数据列表 */
+    SPBtOnePass.prototype.getDGList = function (id) {
+        var mitem;
+        if (id == 2) {
+            mitem = SPB2Wnd.getInstance.GetItem();
+        }
+        else if (id == 3) {
+            mitem = SPB3Wnd.getInstance.GetItem();
+        }
+        else if (id == 4) {
+            mitem = SPB4Wnd.getInstance.GetItem();
+        }
+        else if (id == 5) {
+            mitem = SPB5Wnd.getInstance.GetItem();
+        }
+        return mitem;
+    };
     SPBtOnePass.prototype.updata = function (e) {
         if (e.data != undefined) {
             var mitem = void 0;

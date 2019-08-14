@@ -23,7 +23,7 @@ var SPBK_List_More = (function () {
      */
     SPBK_List_More.prototype.sendHttp = function (id) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/bk_List_More.php";
-        var content = "id=" + id + "&v=" + GameValue.verPhp;
+        var content = "id=" + id + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     SPBK_List_More.prototype.backHTTP = function (res, httpObj, data) {
@@ -36,7 +36,7 @@ var SPBK_List_More = (function () {
                 return;
             }
             if (text["res"] != "0") {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
             else {
                 var id = text["id"];

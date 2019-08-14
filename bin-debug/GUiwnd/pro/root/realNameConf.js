@@ -30,7 +30,7 @@ var realNameConf = (function () {
      */
     realNameConf.prototype.sendHttp = function (sfz, name) {
         var url = HTTPRequest.getInstance.httpHeadUrl + 'true_Info.php';
-        var content = "id=" + UserData.getInstance.userId + "&c=" + sfz + "&n=" + name + "&v=" + GameValue.verPhp;
+        var content = "id=" + UserData.getInstance.userId + "&c=" + sfz + "&n=" + name + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     realNameConf.prototype.backHTTP = function (res, httpObj, data) {
@@ -56,7 +56,7 @@ var realNameConf = (function () {
                 PSWnd.getInstance.setgvfBtn1();
             }
             else {
-                Alertpaner.getInstance.show(text["res"] + ":" + text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             }
         }
     };

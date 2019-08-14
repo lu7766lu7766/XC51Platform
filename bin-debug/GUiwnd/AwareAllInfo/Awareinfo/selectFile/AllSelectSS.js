@@ -15,6 +15,7 @@ var AllSelectSS = (function (_super) {
         var _this = _super.call(this) || this;
         _this.y = 150;
         _this._mListObj = new GHashMap();
+        _this._spriteList = new GHashMap();
         _this._mContainQB = new egret.DisplayObjectContainer();
         _this._scroViewQB = new egret.ScrollView();
         _this.addChild(_this._scroViewQB);
@@ -76,6 +77,7 @@ var AllSelectSS = (function (_super) {
                 this._mZWSJTip.parent.removeChild(this._mZWSJTip);
             }
         }
+        // this.initallbg(len);
         this.hideData();
         var dataObj;
         var dataInfo;
@@ -107,6 +109,34 @@ var AllSelectSS = (function (_super) {
         }
         this.setDB(this._mContainQB.height);
     };
+    AllSelectSS.prototype.initallbg = function (l) {
+        var lenn = Math.ceil(l / 3);
+        var _loop_1 = function (i) {
+            var speite = this_1._spriteList.Gget(i);
+            if (speite == undefined) {
+                speite = new egret.Bitmap();
+                RES.getResByUrl("resource/assets/images/ui/bai.png", function (e) {
+                    speite.$setBitmapData(e);
+                    speite.width = 750;
+                    speite.height = 100;
+                }, this_1);
+                this_1._spriteList.Gput(i, speite);
+            }
+            speite.x = 0;
+            speite.y = 28 + i * 100;
+            speite.alpha = 0.1;
+            if (i == lenn - 1) {
+                speite.height = 120;
+            }
+            if (speite.parent == undefined) {
+                this_1._mContainQB.addChild(speite);
+            }
+        };
+        var this_1 = this;
+        for (var i = 0; i < lenn + 1; i++) {
+            _loop_1(i);
+        }
+    };
     AllSelectSS.prototype.show = function () {
         if (this.parent == undefined) {
             SelectMrg.getInstance.addChild(this);
@@ -118,6 +148,7 @@ var AllSelectSS = (function (_super) {
         if (this.parent != undefined) {
             this.parent.removeChild(this);
         }
+        this._mContainQB.removeChildren();
     };
     /**暂时无数据 */
     AllSelectSS.prototype.xianshi = function () {
@@ -144,11 +175,24 @@ var AllSelectSS = (function (_super) {
     };
     /**适配处理 */
     AllSelectSS.prototype.setDB = function (heighr) {
-        this._mShareC.graphics.clear();
-        this._mShareC.graphics.beginFill(0xF5F5F7, 1);
-        this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, heighr + 80);
-        this._mShareC.graphics.endFill();
-        this._mContainQB.addChildAt(this._mShareC, 0);
+        var _this = this;
+        if (this.bgdian == undefined) {
+            this.bgdian = new egret.Bitmap();
+            RES.getResByUrl("resource/assets/images/ui/bai.png", function (e) {
+                _this.bgdian.$setBitmapData(e);
+            }, this);
+        }
+        this.bgdian.width = 750;
+        this.bgdian.alpha = 0.1;
+        this.bgdian.height = heighr + 50;
+        if (this.bgdian.parent == undefined) {
+            this._mContainQB.addChildAt(this.bgdian, 0);
+        }
+        // this._mShareC.graphics.clear();
+        // this._mShareC.graphics.beginFill(0xF5F5F7, 1);
+        // this._mShareC.graphics.drawRect(0, 0, GameMain.getInstance.StageWidth, heighr + 80);
+        // this._mShareC.graphics.endFill();
+        // this._mContainQB.addChildAt(this._mShareC, 0);
     };
     return AllSelectSS;
 }(egret.DisplayObjectContainer));

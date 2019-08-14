@@ -54,6 +54,23 @@ var OnePass = (function (_super) {
     OnePass.prototype.getArrSize = function () {
         return this._arr;
     };
+    /**获取单场数据列表 */
+    OnePass.prototype.getDGList = function (id) {
+        var mitem;
+        if (id == 2) {
+            mitem = G2Wnd.getInstance.GetItem();
+        }
+        else if (id == 3) {
+            mitem = G3Wnd.getInstance.GetItem();
+        }
+        else if (id == 4) {
+            mitem = G4Wnd.getInstance.GetItem();
+        }
+        else if (id == 5) {
+            mitem = G5Wnd.getInstance.GetItem();
+        }
+        return mitem;
+    };
     OnePass.prototype.ClickRemove = function (id) {
         if (id != undefined) {
             var mitem = void 0;
@@ -250,7 +267,6 @@ var OnePass = (function (_super) {
             G4Wnd.getInstance.hide();
             G5Wnd.getInstance.hide();
         }
-        LoadtoWaitWnd.getInstance.hide();
         CustEventMrg.getInstance.removeEventListener(CustEventType.EventType_FTDG_List, this.updata, this);
     };
     OnePass.prototype.requestData = function (type) {

@@ -43,7 +43,7 @@ var SelectBFconPhP = (function () {
      */
     SelectBFconPhP.prototype.sendHttp = function (ntype) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/resetIcon.php";
-        var content = "&type=" + ntype + "&v=" + GameValue.verPhp;
+        var content = "&type=" + ntype + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     SelectBFconPhP.prototype.backHTTP = function (res, httpObj, data) {

@@ -29,6 +29,12 @@ var FofBDetail = (function (_super) {
         _this.addChild(_this._tipText);
         _this._tipText.lineSpacing = 8;
         _this._tipText.text = "注：全场90分钟(含伤停补时，不含加时赛及点球大战)，页面奖金仅\n供参考，实际奖金以投注成功为准。";
+        _this._share = new egret.Bitmap();
+        _this.addChild(_this._share);
+        _this._share.y = 28 + GameValue.adaptationScreen;
+        _this._share.x = 670;
+        RES.getResByUrl("resource/assets/images/ui/share_nav@2x.png", function (e) { _this._share.$setBitmapData(e); }, _this);
+        _this._share.touchEnabled = true;
         _this.setDB();
         return _this;
     }
@@ -51,12 +57,18 @@ var FofBDetail = (function (_super) {
         RES.getResByUrl("resource/assets/images/ui/bai.png", function (e) { shape1.$setBitmapData(e); }, this);
         this._dataInfoContain = new egret.DisplayObjectContainer();
         this._mContain.addChild(this._dataInfoContain);
-        this._dataInfoContain.y = 540;
+        this._dataInfoContain.y = 540 + 50;
         this.addScoll();
         this._jiaBtn = new egret.Bitmap();
         this._mContain.addChild(this._jiaBtn);
         this._jiaBtn.x = 594;
         this._jiaBtn.y = 268;
+        this._jiaj2 = new egret.Bitmap();
+        this._mContain.addChild(this._jiaj2);
+        this._jiaj2.x = 590;
+        this._jiaj2.y = 26;
+        this._jiaj2.visible = false;
+        RES.getResByUrl("resource/assets/images/ui/hdjjbq_mine@2x.png", function (e) { _this._jiaj2.$setBitmapData(e); }, this);
         this._typeImg = new egret.Bitmap();
         this._mContain.addChild(this._typeImg);
         this._typeImg.width = 96;
@@ -93,8 +105,17 @@ var FofBDetail = (function (_super) {
         this._mContain.addChild(mtext5);
         mtext5.height = 50;
         mtext5.verticalAlign = egret.VerticalAlign.MIDDLE;
-        mtext5.text = "订单状态：";
-        this._codeType = ToolMrg.getText(158 + mtext1.textWidth, 338, 24, 0x333333);
+        mtext5.text = "返水金额：";
+        this._fsText = ToolMrg.getText(158 + mtext1.textWidth, 338, 24, 0x333333);
+        this._mContain.addChild(this._fsText);
+        this._fsText.height = 50;
+        this._fsText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        var ddText = ToolMrg.getText(158, 338 + 50, 24, 0x333333);
+        this._mContain.addChild(ddText);
+        ddText.height = 50;
+        ddText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        ddText.text = "订单状态：";
+        this._codeType = ToolMrg.getText(158 + mtext1.textWidth, 338 + 50, 24, 0x333333);
         this._mContain.addChild(this._codeType);
         this._codeType.height = 50;
         this._codeType.verticalAlign = egret.VerticalAlign.MIDDLE;
@@ -118,7 +139,7 @@ var FofBDetail = (function (_super) {
         this._mContain.addChild(this._jiaMoney);
         var texta = ToolMrg.getText(0, 144, 28, 0x333333, 118);
         this._mContain.addChild(texta);
-        texta.height = 264;
+        texta.height = 264 + 50;
         texta.verticalAlign = egret.VerticalAlign.MIDDLE;
         texta.textAlign = egret.HorizontalAlign.CENTER;
         texta.text = "投\n注\n详\n情";
@@ -133,20 +154,20 @@ var FofBDetail = (function (_super) {
         this._mContain.addChild(link2);
         link2.x = 118;
         link2.y = 164;
-        link2.height = 220;
+        link2.height = 220 + 50;
         link2.width = 2;
         RES.getResByUrl("resource/assets/images/ui/hui.png", function (e) { link2.$setBitmapData(e); }, this);
         var link3 = new egret.Bitmap();
         this._mContain.addChild(link3);
         link3.x = 0;
-        link3.y = 408;
+        link3.y = 408 + 50;
         link3.height = 10;
         link3.width = GameMain.getInstance.StageWidth;
         RES.getResByUrl("resource/assets/images/ui/hui.png", function (e) { link3.$setBitmapData(e); }, this);
         var link4 = new egret.Bitmap();
         this._mContain.addChild(link4);
         link4.x = 0;
-        link4.y = 530;
+        link4.y = 530 + 50;
         link4.height = 10;
         link4.width = GameMain.getInstance.StageWidth;
         RES.getResByUrl("resource/assets/images/ui/hui.png", function (e) { link4.$setBitmapData(e); }, this);
@@ -189,14 +210,14 @@ var FofBDetail = (function (_super) {
         RES.getResByUrl("resource/assets/images/ui/checkDetail.png", function (e) {
             _this._checkBtn.$setBitmapData(e);
             _this._checkBtn.x = 584;
-            _this._checkBtn.y = 442;
+            _this._checkBtn.y = 442 + 50;
         }, this);
-        var mtext6 = ToolMrg.getText(28, 436, 24, 0x333333);
+        var mtext6 = ToolMrg.getText(28, 436 + 50, 24, 0x333333);
         this._mContain.addChild(mtext6);
         mtext6.height = 34;
         mtext6.verticalAlign = egret.VerticalAlign.MIDDLE;
         mtext6.text = "投注信息：";
-        var mtext7 = ToolMrg.getText(28, 474, 24, 0x333333);
+        var mtext7 = ToolMrg.getText(28, 474 + 50, 24, 0x333333);
         this._mContain.addChild(mtext7);
         mtext7.height = 34;
         mtext7.verticalAlign = egret.VerticalAlign.MIDDLE;
@@ -204,18 +225,18 @@ var FofBDetail = (function (_super) {
         this.mtext7Img = new egret.Bitmap();
         this._mContain.addChild(this.mtext7Img);
         this.mtext7Img.x = 152;
-        this.mtext7Img.y = 442;
+        this.mtext7Img.y = 442 + 50;
         var rect = new egret.Rectangle(20, 0, 30, 0);
         this.mtext7Img.scale9Grid = rect;
         RES.getResByUrl("resource/assets/images/ui/fshi_mine@2x.png", function (e) {
             _this.mtext7Img.$setBitmapData(e);
         }, this);
-        this._wayText = ToolMrg.getText(152 + 14, 442, 20, 0xFF7000);
+        this._wayText = ToolMrg.getText(152 + 14, 442 + 50, 20, 0xFF7000);
         this._mContain.addChild(this._wayText);
         this._wayText.height = 24;
         this._wayText.verticalAlign = egret.VerticalAlign.MIDDLE;
         // this._wayText.textAlign = egret.HorizontalAlign.CENTER;
-        this._typeState = ToolMrg.getText(28 + mtext7.textWidth, 474, 24, 0x999999);
+        this._typeState = ToolMrg.getText(28 + mtext7.textWidth, 474 + 50, 24, 0x999999);
         this._mContain.addChild(this._typeState);
         this._typeState.height = 34;
         this._typeState.verticalAlign = egret.VerticalAlign.MIDDLE;
@@ -224,12 +245,16 @@ var FofBDetail = (function (_super) {
         var _this = this;
         this._typeName.text = this._data.title;
         RES.getResByUrl("resource/assets/images/ui/" + this._data.url, function (e) { _this._typeImg.$setBitmapData(e); }, this);
+        if (this._data.isjia == 1)
+            this._jiaj2.visible = true;
+        else
+            this._jiaj2.visible = false;
         var src = "";
         this._jiaMoney.text = "";
         if (this._data.statue == 1) {
             src = "dkj_mine@2x";
             this._codeType.text = "待开奖";
-            this._zjMoney.text = "---";
+            this._zjMoney.text = "待开奖";
         }
         else if (this._data.statue == 2) {
             src = "wzj_mine@2x";
@@ -260,6 +285,8 @@ var FofBDetail = (function (_super) {
                 this._typeState.text = ToolMrg.getDecimal(priceList[0] / 100, 2) + "~" + ToolMrg.getDecimal(priceList[1] / 100, 2) + "\u5143(\u4EE5\u5B9E\u9645\u7ED3\u679C\u4E3A\u51C6)";
             }
         }
+        this._data._fs = this._data._fs == undefined ? 0 : this._data._fs;
+        this._fsText.text = "\uFFE5" + ToolMrg.getDecimal(this._data._fs, 2);
         this._tzMoney.text = "\uFFE5" + this._data.xzMoney + "\u5143";
         this._codeNum.text = "" + this._data.id;
         this._dateText.text = ToolMrg.getTime11(this._data.time);
@@ -296,9 +323,10 @@ var FofBDetail = (function (_super) {
             }
             obj.y = objheight;
             objheight = objheight + obj.height;
-            if (obj.parent == undefined)
-                this._dataInfoContain.addChild(obj);
+            // if (obj.parent == undefined)
+            //     this._dataInfoContain.addChild(obj);
         }
+        this.isadd();
         this.setPass(this._data.passList);
         this.mtext7Img.width = this._wayText.textWidth + 14 * 2;
     };
@@ -337,6 +365,12 @@ var FofBDetail = (function (_super) {
         this._dateText.text = "";
         this._wayText.text = "";
         this._scroView.setScrollTop(0);
+        for (var _i = 0, _a = this._infoItem.keys; _i < _a.length; _i++) {
+            var key = _a[_i];
+            if (this._infoItem.Gget(key).parent != undefined)
+                this._infoItem.Gget(key).parent.removeChild(this._infoItem.Gget(key));
+        }
+        this._infoItem.clear();
     };
     /**设置过关方式*/
     FofBDetail.prototype.setPass = function (str) {
@@ -381,16 +415,42 @@ var FofBDetail = (function (_super) {
             // FofMultier.getInstance.show(null);
             RewardPhp.getInstance.sendHttp(this._data.id, this._data.type);
         }
+        else if (e.target == this._share) {
+        }
+    };
+    FofBDetail.prototype.isadd = function () {
+        var svTop = this._scroView.scrollTop;
+        if (this._infoItem != undefined && this._infoItem.size > 0) {
+            for (var _i = 0, _a = this._infoItem.keys; _i < _a.length; _i++) {
+                var key = _a[_i];
+                this._infoItem.Gget(key);
+                var obj = this._infoItem.Gget(key);
+                var objNum = (this._dataInfoContain.y + obj.y) - this._scroView.scrollTop;
+                if (objNum > -200 && objNum < GameMain.getInstance.StageHeight + 200) {
+                    if (obj.parent == undefined) {
+                        this._dataInfoContain.addChild(obj);
+                    }
+                }
+                else {
+                    if (obj.parent != undefined)
+                        obj.parent.removeChild(obj);
+                }
+            }
+        }
     };
     FofBDetail.prototype.addEvent = function () {
         this._return.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._fzhiBnt.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._checkBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._share.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._scroView.addEventListener(egret.TouchEvent.CHANGE, this.isadd, this);
     };
     FofBDetail.prototype.removeEvent = function () {
         this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._fzhiBnt.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._checkBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._share.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._scroView.removeEventListener(egret.TouchEvent.CHANGE, this.isadd, this);
     };
     /**适配处理 */
     FofBDetail.prototype.setDB = function () {

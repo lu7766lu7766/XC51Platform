@@ -21,7 +21,7 @@ class GD_detail implements IProHandle {
 	 */
 	public sendHttp(o,m): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/tie_two.php";
-		let content = `o=${o}&m=${m}&v=${GameValue.verPhp}`;
+		let content = `o=${o}&m=${m}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}`;
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
@@ -34,7 +34,7 @@ class GD_detail implements IProHandle {
 				return;
 			}
             if(text["res"]!="0"){
-                Alertpaner.getInstance.show(text["res"]+":"+text["msg"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
 				let obj = new GD_DetailData();
                 let aaa = text["data"];
