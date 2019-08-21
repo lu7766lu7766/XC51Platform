@@ -60,14 +60,14 @@ var LoginWnd = (function (_super) {
         this._mQRZF.textAlign = egret.HorizontalAlign.CENTER;
         this._mQRZF.text = "登陆";
         this.addChild(this._mQRZF);
-        if (this._mZC == undefined)
-            this._mZC = ToolMrg.getText(250, 992 - this.y, 28, 0xF72E52, 250);
-        this._mZC.height = 80;
-        this._mZC.textAlign = egret.HorizontalAlign.CENTER;
-        this._mZC.verticalAlign = egret.VerticalAlign.MIDDLE;
-        this._mZC.text = "注册新账号";
-        this._mZC.touchEnabled = true;
-        this.addChild(this._mZC);
+        // if (this._mZC == undefined)
+        //     this._mZC = ToolMrg.getText(250, 992 - this.y, 28, 0xF72E52, 250);
+        // this._mZC.height = 80;
+        // this._mZC.textAlign = egret.HorizontalAlign.CENTER;
+        // this._mZC.verticalAlign = egret.VerticalAlign.MIDDLE;
+        // this._mZC.text = "注册新账号";
+        // this._mZC.touchEnabled = true;
+        // this.addChild(this._mZC);
         if (this._mDLSR == undefined)
             this._mDLSR = ToolMrg.getText(140, 486 - this.y, 28, 0xA9A9A9, 500);
         this._mDLSR.height = 80;
