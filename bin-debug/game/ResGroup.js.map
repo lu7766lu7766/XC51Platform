@@ -1,1 +1,0 @@
-{"version":3,"file":"ResGroup.js","sourceRoot":"","sources":["../../src/game/ResGroup.ts"],"names":[],"mappings":";;;AAAA;IAAA;IAcA,CAAC;IAbc,uBAAc,GAC3B;QACA,cAAc,EAAE;YACd,QAAQ,EAAE;gBACR,QAAQ;gBACR,qBAAqB;gBACrB,sBAAsB;gBACtB,uBAAuB;gBACvB,qBAAqB;aACtB;YACD,MAAM,EAAE,4BAA4B;SACrC;KACF,CAAC;IACF,eAAC;CAAA,AAdD,IAcC;AAdK,UAAA,QAAQ,uBAcb,CAAA"}
