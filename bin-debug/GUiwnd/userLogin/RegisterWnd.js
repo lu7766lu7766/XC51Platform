@@ -109,7 +109,7 @@ var RegisterWnd = (function (_super) {
         this.freshYZM();
         this._mMMSR1 = this.setTxt(this._mMMSR1, 140, 726 - this.y, "输入新密码");
         this._mMMSR1.alpha = 0.01;
-        this._mMMSR1.inputType = egret.TextFieldInputType.TEL;
+        this._mMMSR1.inputType = egret.TextFieldInputType.PASSWORD;
         this._mMMSR1.displayAsPassword = true;
         this._mMMSR1.type = egret.TextFieldType.INPUT;
         this._mTipMMSR1 = this.setTxt(this._mTipMMSR1, 140, 726 - this.y, "输入新密码");

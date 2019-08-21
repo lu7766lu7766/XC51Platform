@@ -70,7 +70,7 @@ class SPBK_One implements IProHandle {
                 Alertpaner.getInstance.show(text["msg"]);
             } else {
 				let map:Array<any> = text["map"];
-				cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLBDG, map);
+				// cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLBDG, map);
 				BasketballDataMrg.getInstance._mCJLQLBDG.clear();
 
 				let fb:GHashMap<BasketballData>;

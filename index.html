@@ -101,31 +101,15 @@
     xhr.send(null);
 </script>
 <script language="javascript">
-    function getVer(){
-        return "1.1";
-    }
-
     function getSUrl(){
-        // 内网测试地址
         return "http://129.204.53.154/other/test/";
         // return "http://192.168.20.23/ticket/api/";
-        // 外网地址
-        // return "http://103.229.66.146/test/";
         // return "http://api.51caiz.com/test/";
     }
 
     function go2Url(url){
-        // luck_m.go2Url(url); 
+        luck_m.go2Url(url);	
     }
-
-    function copyCode(event, value) {
-        if(event.clipboardData){
-            return event.clipboardData.setData("text/plain", value);
-        }else if(window.clipboardData){
-            return window.clipboardData.setData("text", value);
-        }
-    }
-    
 </script>
 </body>
 

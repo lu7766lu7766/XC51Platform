@@ -65,7 +65,7 @@ class Arrangement_Five implements IProHandle {
 				return;
 			}
             if(text["res"]!="0"){
-                Alertpaner.getInstance.show(text["res"]);
+                Alertpaner.getInstance.show(text["msg"]);
             } else {
 				Alertpaner.getInstance.show("下注成功");
 				fiveWnd.getInstance.zfBack();

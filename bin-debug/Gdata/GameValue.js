@@ -16,7 +16,7 @@ var GameValue = (function () {
     /**服务器是否为调试模式 true:测试服 false:正式服 ===重点===*/
     GameValue.isDebug = false;
     /**游戏版本 */
-    GameValue.gameVer = "9.4";
+    GameValue.gameVer = "10.3";
     /**php版本 */
     GameValue.verPhp = "1.1";
     /**socket地址 */

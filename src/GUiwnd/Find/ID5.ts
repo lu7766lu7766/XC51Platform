@@ -56,7 +56,7 @@ class ID5 extends egret.DisplayObjectContainer {
             this.hide();
         } else if (e.target == this._btn) {
             // KeFuWnd.getInstance.show();
-            if(window["go2Url"]) {
+            if (window["go2Url"]) {
                 window["go2Url"](GameValue.kfUrl);
             }
         }
@@ -95,10 +95,10 @@ class ID5 extends egret.DisplayObjectContainer {
             { "text": "活动对象:  51彩站首存会员" + "\n", style: { "textColor": 0x333333, size: 24 } },
             { "text": "活动开始时间:  2019-03-31 00:00:00开始" + "\n", style: { "textColor": 0x333333, size: 24 } },
             { "text": "活动结束时间:  2022-03-31 00:00:00" + "\n" + "\n", style: { "textColor": 0x333333, size: 24 } },
-            { "text": "注册成功后绑定姓名和手机号，即可申请18元体验彩金，账号" + "\n", style: { "textColor": 0x333333, size: 24 } },
-            { "text": "余额盈利达到100即可提款。" + "\n" + "\n" + "\n", style: { "textColor": 0x333333, size: 24 } },
+            { "text": "注册成功后完成实名认证并绑定银行卡，即可申请18元体验彩" + "\n", style: { "textColor": 0x333333, size: 24 } },
+            { "text": "金，账号余额盈利达到100即可提款。" + "\n" + "\n" + "\n", style: { "textColor": 0x333333, size: 24 } },
             { "text": "申请方式:" + "\n" + "\n", style: { "textColor": 0x000000, size: 24, bold: true } },
-            { "text": "点击 【申请活动优惠】, 系统收到您的请求后，会于5分钟之" + "\n", style: { "textColor": 0x333333, size: 24 } },
+            { "text": "点击 【申请活动优惠】， 系统收到您的请求后，会于5分钟之" + "\n", style: { "textColor": 0x333333, size: 24 } },
             { "text": "内审核并添加完毕。", style: { "textColor": 0x333333, size: 24 } },
         ];
         activeText1.lineSpacing = 15;
@@ -109,7 +109,7 @@ class ID5 extends egret.DisplayObjectContainer {
 
         let activeText2 = ToolMrg.getText(44, 430 + activeText1.height + 60, 28, 0x333333);
         activeText2.textFlow = <Array<egret.ITextElement>>[
-            { "text": "活动细则:" + "\n" + "\n", style: { "textColor": 0x000000, size: 24, bold:true } },
+            { "text": "活动细则:" + "\n" + "\n", style: { "textColor": 0x000000, size: 24, bold: true } },
             { "text": "1.本活动为首次新注册用户所享受的迎新优惠。", style: { "textColor": 0x333333, size: 24 } },
         ];
         activeText2.lineSpacing = 25;
@@ -122,7 +122,7 @@ class ID5 extends egret.DisplayObjectContainer {
         let activeText3 = ToolMrg.getText(44, 430 + allheight, 28, 0x333333);
         activeText3.textFlow = <Array<egret.ITextElement>>[
             {
-                "text": "" , style: { "textColor": 0x333333, size: 24 }
+                "text": "", style: { "textColor": 0x333333, size: 24 }
             },
         ];
         activeText3.lineSpacing = 14;
@@ -171,7 +171,7 @@ class ID5 extends egret.DisplayObjectContainer {
 
         let activeText7 = ToolMrg.getText(44, 430 + allheight, 28, 0x333333);
         activeText7.textFlow = <Array<egret.ITextElement>>[
-            { "text": "5.此活动遵循51彩站一般规则与条款。"+"\n", style: { "textColor": 0x333333, size: 24 } },
+            { "text": "5.此活动遵循51彩站一般规则与条款。" + "\n", style: { "textColor": 0x333333, size: 24 } },
         ];
         activeText7.lineSpacing = 15;
         activeText7.fontFamily = "微软雅黑";

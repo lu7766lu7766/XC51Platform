@@ -80,8 +80,7 @@ class FindInfo extends egret.DisplayObjectContainer {
             ID2.getInstance.show();
         } else if (this._data.id == 5) {//呼朋唤友一起来战斗
             ShareWnd.getInstance.show();
-        }
-        else if (this._data.id == 6) {//银行卡转账
+        } else if (this._data.id == 6) {//银行卡转账
             ID7.getInstance.show();
         }
     }
@@ -122,7 +121,7 @@ class FindMrg {
 
     public _findItem: GHashMap<FindData>;
     //手动添加
-    private _imgSrc = ["xyh658.png", "dnn658.png", "vip658.png", "jiaj658px.png", "zhuli658.png", "hphy658.png", "zhuanzhangact.png"];
+    private _imgSrc = ["xyh750.png", "dnn750.png", "vip750.png", "jiaj750px.png", "zhuli658.png", "hphy658.png", "rkjf658.png"];
 
     private _titleStr = ["新用户注册即送18元", "首存5888元等你拿！", "VIP成长礼包送不停", "竞彩串关加奖来袭，加奖10%无上限", "助力中超，周周彩金大放送",
         "呼朋唤友一起来战斗", "银行卡转账送1%"];

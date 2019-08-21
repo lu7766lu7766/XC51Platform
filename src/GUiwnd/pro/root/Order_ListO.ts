@@ -102,7 +102,6 @@ class Order_ListO implements IProHandle {
 
 				if(objData.statue!=1){//已有结果
 					objData.isjia = 0;
-					
 				}else{//待开奖
 					objData.isjia = listTTTT[0]["isJa"];
 				}

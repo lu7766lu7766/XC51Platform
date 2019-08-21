@@ -17,6 +17,16 @@ class FathreeItemLow extends egret.DisplayObjectContainer {
 		this.addChild(this._scroViewQB)
 		this.addScoll(this._mContainQB, this._scroViewQB);
 
+		let _mBg = new egret.Bitmap();
+		_mBg.x = 0;
+		_mBg.y = 0;
+		_mBg.width = 750;
+		_mBg.height =80;
+		this.addChild(_mBg);
+		RES.getResByUrl("resource/assets/images/ui/bai.png",((e)=>{
+         _mBg.$setBitmapData(e);
+		}), this, RES.ResourceItem.TYPE_IMAGE);
+
 		this.Icon = new egret.Bitmap();
 		this.Icon.x = 28;
 		this.Icon.y = 22;
@@ -34,7 +44,6 @@ class FathreeItemLow extends egret.DisplayObjectContainer {
 		link1.graphics.beginFill(0xDEDEDE);
 		link1.graphics.drawRect(0, 76, 750, 2);
 		link1.graphics.endFill();
-
 
 	}
 	private GSlideOb: GSlideObj;
@@ -110,7 +119,7 @@ class FathreeItemLow extends egret.DisplayObjectContainer {
 				this._mListObj.Gput(i, dataObj);
 			}
 			if (datalist[i] != undefined) {
-				dataObj.setNum(datalist[i][0],datalist[i][1]);
+				dataObj.setNum(datalist[i][0], datalist[i][1]);
 			}
 			dataObj.setID(i);
 			dataObj.setPoint(0, 0 + (i) * 80);
@@ -162,7 +171,7 @@ class tzItem extends egret.DisplayObjectContainer implements GIObjPool {
 		this.addChild(this._bglowxian);
 		RES.getResByUrl("resource/assets/images/ui/hui.png", this.bgBackhui, this, RES.ResourceItem.TYPE_IMAGE);
 
-		this._NumText = ToolMrg.getText(62, 0,28, 0x333333);
+		this._NumText = ToolMrg.getText(62, 0, 28, 0x333333);
 		this._NumText.text = "7 , 2 , 1 (标准复式)";
 		this._NumText.height = 80;
 		this._NumText.verticalAlign = egret.VerticalAlign.MIDDLE;
@@ -176,11 +185,11 @@ class tzItem extends egret.DisplayObjectContainer implements GIObjPool {
 	private _NumText: egret.TextField;//中奖号码
 	private myid: number = 0;
 
-	public setNum(num: string,num1:string): void {
+	public setNum(num: string, num1: string): void {
 		// this._NumText.text = num;
 		this._NumText.textFlow = <Array<egret.ITextElement>>[
-			{ text: num+" ", style: { "textColor": 0xff004c } },
-			{ text:num1+"", style: { "textColor": 0x333333 } }
+			{ text: num + " ", style: { "textColor": 0xff004c } },
+			{ text: num1 + "", style: { "textColor": 0x333333 } }
 		];
 	}
 

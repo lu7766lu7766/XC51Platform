@@ -36,7 +36,7 @@ class TopUIWhite extends egret.DisplayObjectContainer {
 		if (isleft == undefined) {
 			this._Img = new egret.Bitmap();
 			this.addChild(this._Img);
-			RES.getResByUrl("resource/assets/images/ui/7a055fd10cf2ce95e422ca6841fae00.png", (e) => {
+			RES.getResByUrl("resource/assets/images/ui/returnWhite.png", (e) => {
 				this._Img.$setBitmapData(e);
 				this._Img.x = 26;
 				this._Img.y = 28 + num;

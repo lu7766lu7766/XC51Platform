@@ -89,7 +89,7 @@ var Order_ListT = (function () {
      */
     Order_ListT.prototype.sendHttp = function (o, t) {
         var url = HTTPRequest.getInstance.httpHeadUrl + "/order_ListT.php";
-        var content = "o=" + o + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey + "&t=" + t;
+        var content = "o=" + o + "&v=" + GameValue.verPhp + "&rkey=" + GameValue.orderKey + "&t=" + t + "&id=" + UserData.getInstance.userId;
         HTTPRequest.getInstance.proSend(url, content, this.data);
     };
     Order_ListT.prototype.backHTTP = function (res, httpObj, data) {
@@ -107,6 +107,7 @@ var Order_ListT = (function () {
             else {
                 var objData = new MyLotteryData();
                 var listTTTT = text["list"];
+                objData.rate = text["slv"];
                 objData.id = listTTTT[0]["order_id"];
                 objData.type = listTTTT[0]["itemid"];
                 objData.lotteryType = listTTTT[0]["ifg"];
@@ -161,10 +162,10 @@ var Order_ListT = (function () {
                         objData.title = "竞足单关";
                         objData.url = "jzdg_home@2x.png";
                     }
-                    if (objData.lotteryType == undefined || objData.lotteryType == 0)
-                        FofBDetail.getInstance.show(objData);
-                    else
-                        fagxMrgView.getInstance.show(objData, objData.lotteryType);
+                    // if(objData.lotteryType==undefined||objData.lotteryType==0)//order_listO 进入
+                    // 	FofBDetail.getInstance.show(objData);
+                    // else //order_listT进入
+                    fagxMrgView.getInstance.show(objData, objData.lotteryType);
                 }
                 else if (objData.type == 2 || objData.type == 6) {
                     objData.passList = listTTTT[0]["way"];
@@ -194,10 +195,10 @@ var Order_ListT = (function () {
                         objData.title = "竞篮单关";
                         objData.url = "jldg_home@2x.png";
                     }
-                    if (objData.lotteryType == undefined || objData.lotteryType == 0)
-                        FofBDetail.getInstance.show(objData);
-                    else
-                        fagxMrgView.getInstance.show(objData, objData.lotteryType);
+                    // if(objData.lotteryType==undefined || objData.lotteryType==0)
+                    // 	FofBDetail.getInstance.show(objData);
+                    // else
+                    fagxMrgView.getInstance.show(objData, objData.lotteryType);
                 }
             }
         }

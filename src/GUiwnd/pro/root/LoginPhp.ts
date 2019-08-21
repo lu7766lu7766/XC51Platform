@@ -89,6 +89,7 @@ class LoginPhp implements IProHandle {
 				SetUpWnd.getInstance.hide();
 				CustEventMrg.getInstance.dispatch(CustEventType.EventType_GoldFresh);
 				Order_List.getInstance.sendHttp();
+				GetBank_allLIst.getInstance.sendHttp(UserData.getInstance.userId);
 			}
 
 		}

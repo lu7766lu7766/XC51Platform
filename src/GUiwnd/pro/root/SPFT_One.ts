@@ -69,7 +69,7 @@ class SPFT_One implements IProHandle {
                 Alertpaner.getInstance.show(text["msg"]);
             } else {
 				let map:Array<any> = text["map"];
-				cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLBDG, map);
+				// cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLBDG, map);
 				FootballDataMrg.getInstance._mCJZQLBDG.clear();
 
 				let fb:GHashMap<FootballData>;

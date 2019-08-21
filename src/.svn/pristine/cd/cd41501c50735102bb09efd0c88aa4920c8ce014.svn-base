@@ -1,5 +1,0 @@
-/**发单人 */
-class TwofaView {
-	public constructor() {
-	}
-}

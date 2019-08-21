@@ -118,7 +118,7 @@ var DmC_info = (function (_super) {
         }
         this._txName.text = data.txName;
         this._vipContain.x = this._txName.x + this._txName.textWidth + 8;
-        this._LvText.text = "Lv " + data.vip;
+        this._LvText.text = "vip " + data.vip;
         this._content.text = ToolMrg.nameMode2(53, data.content);
         this._jzText.text = "\u8FD17\u65E5 " + data.ticke + "\u4E2D" + data.z;
         this._redBox.width = this._jzText.textWidth + 20;

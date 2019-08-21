@@ -81,7 +81,7 @@ class FofBDetail extends egret.DisplayObjectContainer {
         this._tipText.text = "注：全场90分钟(含伤停补时，不含加时赛及点球大战)，页面奖金仅\n供参考，实际奖金以投注成功为准。";
 
         this._share = new egret.Bitmap();
-        this.addChild(this._share); 
+        // this.addChild(this._share); 
         this._share.y = 28+GameValue.adaptationScreen;
        	this._share.x = 670;
         RES.getResByUrl("resource/assets/images/ui/share_nav@2x.png", (e) => { this._share.$setBitmapData(e); }, this);
@@ -508,7 +508,7 @@ class FofBDetail extends egret.DisplayObjectContainer {
             // FofMultier.getInstance.show(null);
             RewardPhp.getInstance.sendHttp(this._data.id, this._data.type);
         } else if(e.target == this._share) {//分享晒单
-
+            // LotteryShare.getInstance.show();
         }
     }
 

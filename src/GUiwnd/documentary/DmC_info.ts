@@ -160,7 +160,7 @@ class DmC_info extends egret.DisplayObjectContainer {
         this._txName.text = data.txName;
         this._vipContain.x = this._txName.x + this._txName.textWidth + 8;
 
-        this._LvText.text = `Lv ${data.vip}`;
+        this._LvText.text = `vip ${data.vip}`;
         this._content.text = ToolMrg.nameMode2(53, data.content);
         this._jzText.text = `近7日 ${data.ticke}中${data.z}`;
 

@@ -1,5 +1,0 @@
-/**修改昵称 */
-class AmendName {
-	public constructor() {
-	}
-}

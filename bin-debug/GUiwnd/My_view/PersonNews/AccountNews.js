@@ -105,9 +105,9 @@ var AccountNews = (function (_super) {
     //     if (type == 0) {
     //         RES.getResByUrl("resource/assets/images/ui/ljrz_home@2x.png", this.bgBack2, this, RES.ResourceItem.TYPE_IMAGE);
     //     } else if (type == 1) {
-    //         RES.getResByUrl("resource/assets/images/ui/0d5ed8874d9aca.png", this.bgBack2, this, RES.ResourceItem.TYPE_IMAGE);
+    //         RES.getResByUrl("resource/assets/images/ui/renz.png", this.bgBack2, this, RES.ResourceItem.TYPE_IMAGE);
     //     } else {
-    //         RES.getResByUrl("resource/assets/images/ui/1031e5cfe5ae0d0ce9ef53ed59.png", this.bgBack2, this, RES.ResourceItem.TYPE_IMAGE);
+    //         RES.getResByUrl("resource/assets/images/ui/shenHe.png", this.bgBack2, this, RES.ResourceItem.TYPE_IMAGE);
     //     }
     // }
     /**设置实名认证图片*/
@@ -117,7 +117,7 @@ var AccountNews = (function (_super) {
             RES.getResByUrl("resource/assets/images/ui/ljrz_home@2x.png", this.bgBack3, this, RES.ResourceItem.TYPE_IMAGE);
         }
         else {
-            RES.getResByUrl("resource/assets/images/ui/0d5ed8874d9aca.png", this.bgBack3, this, RES.ResourceItem.TYPE_IMAGE);
+            RES.getResByUrl("resource/assets/images/ui/renz.png", this.bgBack3, this, RES.ResourceItem.TYPE_IMAGE);
         }
     };
     // private bgBack2(data: any, url: string): void {

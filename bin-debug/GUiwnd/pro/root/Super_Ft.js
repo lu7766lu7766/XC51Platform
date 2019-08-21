@@ -82,7 +82,7 @@ var Super_Ft = (function () {
             }
             else {
                 var map = text["map"];
-                cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLB, map);
+                // cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLB, map);
                 //先抽取数组里的listSX保存,再清除数组
                 this.listSX.clear();
                 for (var _i = 0, _a = FootballDataMrg.getInstance._mCJZQLB.keys; _i < _a.length; _i++) {

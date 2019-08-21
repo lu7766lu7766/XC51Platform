@@ -10,7 +10,7 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
     private _topUI:TopUI;
     private _return:egret.Shape;
 
-    private _str = ["全部","未中奖","已中奖"];
+    private _str = ["全部","待开奖","未中奖","已中奖"];
     private _textItem:GHashMap<egret.TextField>;
     private _topShape:egret.Shape;
     /** 0全部 1未中奖 2已中奖 */
@@ -21,6 +21,7 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
     private _item:GHashMap<GDRecordInfo>;
 
     private _unText:egret.Bitmap;
+    private num:number;
 
     constructor(){
         super();
@@ -39,9 +40,9 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
         shape.graphics.drawRect(0,96+GameValue.adaptationScreen,GameMain.getInstance.StageWidth,80);
         shape.graphics.endFill();
 
-        let num = GameMain.getInstance.StageWidth/3;
+        this.num = GameMain.getInstance.StageWidth/this._str.length;
         for(let i=0;i<this._str.length;i++){
-            let objText = ToolMrg.getText(i*num,96+GameValue.adaptationScreen+0,28,0x333333,num);
+            let objText = ToolMrg.getText(i*this.num,96+GameValue.adaptationScreen+0,28,0x333333,this.num);
             this.addChild(objText);
             objText.height = 80;
             objText.textAlign = egret.HorizontalAlign.CENTER;
@@ -54,7 +55,7 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
         this._topShape = new egret.Shape();
         this.addChild(this._topShape);
         this._topShape.graphics.beginFill(0xf96d67);
-        this._topShape.graphics.drawRect(101,96+GameValue.adaptationScreen+78.5-4,48,4);
+        this._topShape.graphics.drawRect((this.num - 48)/2,96+GameValue.adaptationScreen+78.5-4,48,4);
         this._topShape.graphics.endFill();
 
         let link = new egret.Shape();
@@ -82,14 +83,19 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
         let item = GDRecordMrg.getInstance.GDRItem;
 
         let selectItem = new GHashMap<GDRecordData>();
-        if(this._index==0){
+        if(this._index==0){//全部
             selectItem = item;
-        }else if(this._index==1){
+        }else if(this._index==1){//待开奖
+            for(let key of item.keys){
+                if(item.Gget(key)._isWin==1)
+                    selectItem.Gput(key,item.Gget(key));
+            }
+        }else if(this._index==2){//未中奖
             for(let key of item.keys){
                 if(item.Gget(key)._isWin==2)
                     selectItem.Gput(key,item.Gget(key));
             }
-        }else if(this._index==2){
+        }else if(this._index==3){//已中奖
             for(let key of item.keys){
                 if(item.Gget(key)._isWin==3)
                     selectItem.Gput(key,item.Gget(key));
@@ -130,7 +136,7 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
             else
                 this._textItem.Gget(key).textColor = 0x333333;
         }
-        egret.Tween.get(this._topShape).to({"x":this._index*250},200,egret.Ease.circOut);
+        egret.Tween.get(this._topShape).to({"x":this._index*this.num},200,egret.Ease.circOut);
         this.updata(bool);
     }
 
@@ -183,6 +189,9 @@ class GDRecordWnd extends egret.DisplayObjectContainer{
         }else if(e.target == this._textItem.Gget(2)){
             if(this._index==2)return;
             this._index=2;
+        }else if(e.target == this._textItem.Gget(3)){
+            if(this._index==3)return;
+            this._index=3;
         }
         this.changeText();
     }

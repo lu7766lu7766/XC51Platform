@@ -20,6 +20,15 @@ var FathreeItemLow = (function (_super) {
         _this._scroViewQB = new egret.ScrollView();
         _this.addChild(_this._scroViewQB);
         _this.addScoll(_this._mContainQB, _this._scroViewQB);
+        var _mBg = new egret.Bitmap();
+        _mBg.x = 0;
+        _mBg.y = 0;
+        _mBg.width = 750;
+        _mBg.height = 80;
+        _this.addChild(_mBg);
+        RES.getResByUrl("resource/assets/images/ui/bai.png", (function (e) {
+            _mBg.$setBitmapData(e);
+        }), _this, RES.ResourceItem.TYPE_IMAGE);
         _this.Icon = new egret.Bitmap();
         _this.Icon.x = 28;
         _this.Icon.y = 22;

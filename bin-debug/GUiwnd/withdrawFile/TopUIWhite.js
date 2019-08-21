@@ -38,7 +38,7 @@ var TopUIWhite = (function (_super) {
         if (isleft == undefined) {
             _this._Img = new egret.Bitmap();
             _this.addChild(_this._Img);
-            RES.getResByUrl("resource/assets/images/ui/7a055fd10cf2ce95e422ca6841fae00.png", function (e) {
+            RES.getResByUrl("resource/assets/images/ui/returnWhite.png", function (e) {
                 _this._Img.$setBitmapData(e);
                 _this._Img.x = 26;
                 _this._Img.y = 28 + num;

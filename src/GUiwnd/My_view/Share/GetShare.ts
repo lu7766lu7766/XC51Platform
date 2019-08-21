@@ -44,8 +44,11 @@ class GetShare implements IProHandle {
             if(text["res"]!="0"){
                 Alertpaner.getInstance.show(text["msg"]);
             } else {
-               this.imgs = text["data"];
-               	CodeWndphoto.getInstance.showCode();
+               	this.imgs = text["data"];
+				if(CodeWndphoto.getInstance!=undefined && CodeWndphoto.getInstance.parent!=undefined)
+            		CodeWndphoto.getInstance.showCode();
+				if(ShareImg.getInstance!=undefined && ShareImg.getInstance.parent!=undefined)
+            		ShareImg.getInstance.showCode();
 			}
         }
     }

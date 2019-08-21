@@ -88,7 +88,7 @@ class Order_ListT implements IProHandle {
 	 */
 	public sendHttp(o:any,t): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/order_ListT.php";
-		let content = `o=${o}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}&t=${t}`;
+		let content = `o=${o}&v=${GameValue.verPhp}&rkey=${GameValue.orderKey}&t=${t}&id=${UserData.getInstance.userId}`;
 
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
@@ -106,6 +106,9 @@ class Order_ListT implements IProHandle {
             } else {
                 let objData: MyLotteryData = new MyLotteryData();
 				let listTTTT: any = text["list"]
+
+				objData.rate = text["slv"];
+
 				objData.id = listTTTT[0]["order_id"];
 				objData.type = listTTTT[0]["itemid"];
 				objData.lotteryType = listTTTT[0]["ifg"]
@@ -163,9 +166,9 @@ class Order_ListT implements IProHandle {
 						objData.title = "竞足单关";
 						objData.url = "jzdg_home@2x.png";
 					}
-					if(objData.lotteryType==undefined||objData.lotteryType==0)
-						FofBDetail.getInstance.show(objData);
-					else
+					// if(objData.lotteryType==undefined||objData.lotteryType==0)//order_listO 进入
+					// 	FofBDetail.getInstance.show(objData);
+					// else //order_listT进入
 						fagxMrgView.getInstance.show(objData,objData.lotteryType);
 				} else if (objData.type == 2 || objData.type == 6) {
 					objData.passList = listTTTT[0]["way"];
@@ -194,9 +197,9 @@ class Order_ListT implements IProHandle {
 						objData.title = "竞篮单关";
 						objData.url = "jldg_home@2x.png";
 					}
-					if(objData.lotteryType==undefined || objData.lotteryType==0)
-						FofBDetail.getInstance.show(objData);
-					else
+					// if(objData.lotteryType==undefined || objData.lotteryType==0)
+					// 	FofBDetail.getInstance.show(objData);
+					// else
 						fagxMrgView.getInstance.show(objData,objData.lotteryType);
 				} 
 

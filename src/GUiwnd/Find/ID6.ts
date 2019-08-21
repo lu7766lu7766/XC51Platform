@@ -114,7 +114,7 @@ class ID6 extends egret.DisplayObjectContainer {
         activeText22.textFlow = <Array<egret.ITextElement>>[
             {
                 "text": "1.晋升标准：会员注册当日起的累计存款以及累计有效流水达" +
-                "\n" + "到相应级别的要求，即可在次日24点前晋级相应星级等级。", style: { "textColor": 0x333333, size: 24 }
+                "\n" + "到相应级别的要求，即可立即晋级。", style: { "textColor": 0x333333, size: 24 }
             },
         ];
         activeText22.lineSpacing = 15;

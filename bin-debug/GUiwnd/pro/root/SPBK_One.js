@@ -72,7 +72,7 @@ var SPBK_One = (function () {
             }
             else {
                 var map = text["map"];
-                cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLBDG, map);
+                // cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLBDG, map);
                 BasketballDataMrg.getInstance._mCJLQLBDG.clear();
                 var fb = void 0;
                 var dd = void 0;

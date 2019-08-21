@@ -12,7 +12,7 @@ class GameValue {
 	public static isDebug: boolean = false;
 
 	/**游戏版本 */
-	public static gameVer:string = "9.4";
+	public static gameVer:string = "10.3";
 	/**php版本 */
 	public static verPhp:string = "1.1";
 

@@ -30,7 +30,7 @@ var FofBDetail = (function (_super) {
         _this._tipText.lineSpacing = 8;
         _this._tipText.text = "注：全场90分钟(含伤停补时，不含加时赛及点球大战)，页面奖金仅\n供参考，实际奖金以投注成功为准。";
         _this._share = new egret.Bitmap();
-        _this.addChild(_this._share);
+        // this.addChild(this._share); 
         _this._share.y = 28 + GameValue.adaptationScreen;
         _this._share.x = 670;
         RES.getResByUrl("resource/assets/images/ui/share_nav@2x.png", function (e) { _this._share.$setBitmapData(e); }, _this);
@@ -416,6 +416,7 @@ var FofBDetail = (function (_super) {
             RewardPhp.getInstance.sendHttp(this._data.id, this._data.type);
         }
         else if (e.target == this._share) {
+            // LotteryShare.getInstance.show();
         }
     };
     FofBDetail.prototype.isadd = function () {

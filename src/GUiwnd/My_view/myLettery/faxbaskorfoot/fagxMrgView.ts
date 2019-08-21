@@ -502,8 +502,6 @@ class fagxMrgView extends egret.DisplayObjectContainer {
 		}
 	}
 
-	/**状态 1=>跟单订单 2=>发单订单 */
-	private _type:number;
 	private _data: MyLotteryData;
 	public show(data: MyLotteryData,type:number): void {
 		GUIManager.getInstance.tipLay.addChild(this);
@@ -511,14 +509,16 @@ class fagxMrgView extends egret.DisplayObjectContainer {
 		this._data = data;
 		this.updata();
 
-		if(type==1){
+		if(type==1){//跟单
 			this.mtext3.text = "跟投金额：";
 			this.downObj.show(this,data,GameMain.getInstance.StageHeight - 260);
 			this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 260;
-		}else {
+			this._share.visible = false;
+		}else {//发单
 			this.mtext3.text = "自购金额：";
 			this.downObj.show(this,data,GameMain.getInstance.StageHeight - 340);
 			this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 340;
+			this._share.visible = true;
 		}
 
 	}
@@ -592,7 +592,7 @@ class fagxMrgView extends egret.DisplayObjectContainer {
 
 			Alertpaner.getInstance.show("复制成功");
 		} else if(e.target == this._share){//分享晒单
-
+			LotteryShare.getInstance.show(this._data.rate=="0"?"0.00":this._data.rate);
 		}
 	}
 

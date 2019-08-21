@@ -22,7 +22,7 @@ var ShareWnd = (function (_super) {
         _this._mContain = new egret.DisplayObjectContainer();
         _this._downContain = new egret.DisplayObjectContainer();
         _this._mContain.addChild(_this._downContain);
-        _this._downContain.y = 1400; //1500+400
+        _this._downContain.y = 1500 + 500; //1400
         _this.addScoll();
         _this.joinContent();
         _this.joinDown();
@@ -52,6 +52,12 @@ var ShareWnd = (function (_super) {
         _this._linkText.lineSpacing = 8;
         _this._linkText.verticalAlign = egret.VerticalAlign.MIDDLE;
         _this._linkText.text = "";
+        _this._share = new egret.Bitmap();
+        _this.addChild(_this._share);
+        _this._share.y = 28 + GameValue.adaptationScreen;
+        _this._share.x = 670;
+        RES.getResByUrl("resource/assets/images/ui/share_nav@2x.png", function (e) { _this._share.$setBitmapData(e); }, _this);
+        _this._share.touchEnabled = true;
         _this.setDB();
         return _this;
     }
@@ -69,6 +75,7 @@ var ShareWnd = (function (_super) {
     };
     ShareWnd.prototype.show = function () {
         GUIManager.getInstance.topLay.addChild(this);
+        //链接
         Share_Link.getInstance.sendHttp(UserData.getInstance.userId);
         this.addInterception();
     };
@@ -77,6 +84,7 @@ var ShareWnd = (function (_super) {
             this.parent.removeChild(this);
             this.removeInterception();
             CodeWndphoto.getInstance.hide();
+            this._scroView.setScrollTop(0);
             if (WorldWnd._worldState == 1) {
                 WorldWnd.getInstance.show();
             }
@@ -85,10 +93,6 @@ var ShareWnd = (function (_super) {
     ShareWnd.prototype.touchDown = function (e) {
         if (e.target == this._return) {
             this.hide();
-        }
-        else if (e.target == this._downBtn) {
-            GetShare.getInstance.sendHttp(UserData.getInstance.userId);
-            CodeWndphoto.getInstance.show();
         }
         else if (e.target == this._btn) {
             //生成可复制input
@@ -102,6 +106,9 @@ var ShareWnd = (function (_super) {
             document.body.removeChild(input);
             Alertpaner.getInstance.show("复制成功");
         }
+        else if (e.target == this._share || e.target == this._downBtn) {
+            shareView.getInstance.show();
+        }
     };
     ShareWnd.prototype.change = function (e) {
         // if(CodeWndphoto.getInstance!=undefined && CodeWndphoto.getInstance.parent!=undefined){
@@ -111,14 +118,16 @@ var ShareWnd = (function (_super) {
     };
     ShareWnd.prototype.addInterception = function () {
         this._return.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
-        // this._downBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._share.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._downBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         // this._scroView.addEventListener(egret.TouchEvent.CHANGE,this.change,this);
     };
     ShareWnd.prototype.removeInterception = function () {
         this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
-        // this._downBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+        this._share.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._btn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._downBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         // this._scroView.removeEventListener(egret.TouchEvent.CHANGE,this.change,this);
     };
     ShareWnd.prototype.addScoll = function () {
@@ -180,7 +189,7 @@ var ShareWnd = (function (_super) {
             img4.$setBitmapData(e);
         }, this);
         var img5 = new egret.Bitmap();
-        // this._mContain.addChild(img5);
+        this._mContain.addChild(img5);
         img5.y = 978 + 400;
         RES.getResByUrl("resource/assets/images/ui/ewmbg_mine@2x.png", function (e) {
             img5.$setBitmapData(e);
@@ -190,20 +199,20 @@ var ShareWnd = (function (_super) {
         // this._mContain.addChild(text2);
         text2.textAlign = egret.HorizontalAlign.CENTER;
         text2.text = "活动推广素材";
-        // this._downBtn = new egret.Shape();
-        // this._mContain.addChild(this._downBtn);
-        // this._downBtn.graphics.beginFill(0xed5e7a);
-        // this._downBtn.graphics.drawRect(0,0,480,72);
-        // this._downBtn.graphics.endFill();
-        // this._downBtn.y = 1592+400;
-        // this._downBtn.touchEnabled = true;
-        // this._downBtn.x = (GameMain.getInstance.StageWidth - this._downBtn.width)*0.5;
-        var text3 = ToolMrg.getText(0, 1592 + 400, 28, 0xffffff, GameMain.getInstance.StageWidth);
-        // this._mContain.addChild(text3);
+        this._downBtn = new egret.Shape();
+        this._mContain.addChild(this._downBtn);
+        this._downBtn.graphics.beginFill(0xF73554);
+        this._downBtn.graphics.drawRect(0, 0, 480, 72);
+        this._downBtn.graphics.endFill();
+        this._downBtn.y = 1592 + 300;
+        this._downBtn.touchEnabled = true;
+        this._downBtn.x = (GameMain.getInstance.StageWidth - this._downBtn.width) * 0.5;
+        var text3 = ToolMrg.getText(0, 1592 + 300, 28, 0xffffff, GameMain.getInstance.StageWidth);
+        this._mContain.addChild(text3);
         text3.height = 72;
         text3.textAlign = egret.HorizontalAlign.CENTER;
         text3.verticalAlign = egret.VerticalAlign.MIDDLE;
-        text3.text = "生成二维码";
+        text3.text = "点击分享图片";
         var mZZ = new egret.Shape();
         this._mContain.addChildAt(mZZ, 0);
         mZZ.graphics.beginFill(0xF8F8F8);

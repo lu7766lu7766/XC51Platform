@@ -72,7 +72,6 @@ var LoginWnd = (function (_super) {
             this._mDLSR = ToolMrg.getText(140, 486 - this.y, 28, 0xA9A9A9, 500);
         this._mDLSR.height = 80;
         this._mDLSR.type = egret.TextFieldType.INPUT;
-        this._mDLSR.inputType = "TEL";
         this._mDLSR.verticalAlign = egret.VerticalAlign.MIDDLE;
         this._mDLSR.text = "输入账号";
         this.addChild(this._mDLSR);
@@ -80,10 +79,9 @@ var LoginWnd = (function (_super) {
         if (this._mMMSR == undefined)
             this._mMMSR = ToolMrg.getText(140, 606 - this.y, 28, 0xA9A9A9, 500);
         this._mMMSR.height = 80;
-        this._mMMSR.inputType = egret.TextFieldInputType.TEL;
+        this._mMMSR.inputType = egret.TextFieldInputType.PASSWORD;
         this._mMMSR.displayAsPassword = true;
         this._mMMSR.type = egret.TextFieldType.INPUT;
-        this._mDLSR.inputType = "TEL";
         this._mMMSR.verticalAlign = egret.VerticalAlign.MIDDLE;
         this._mMMSR.text = "输入密码";
         this._mMMSR.alpha = 0.01;
@@ -157,7 +155,6 @@ var LoginWnd = (function (_super) {
         this._mTipMMSR.text = "输入密码";
     };
     LoginWnd.prototype.textInput2 = function () {
-        this._mDLSR.inputType = egret.TextFieldInputType.TEL;
         if (this._mDLSR != undefined && this._mDLSR.text == "输入账号") {
             this._mDLSR.text = "";
             this._mDLSR.textColor = 0x000000;
@@ -168,7 +165,6 @@ var LoginWnd = (function (_super) {
         }
     };
     LoginWnd.prototype.textInput = function () {
-        this._mMMSR.inputType = egret.TextFieldInputType.PASSWORD;
         if (this._mMMSR != undefined && this._mMMSR.text == "输入密码") {
             this._mMMSR.text = "";
             this._mMMSR.textColor = 0x000000;

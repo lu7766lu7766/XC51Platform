@@ -13,7 +13,7 @@ var GDRecordWnd = (function (_super) {
     __extends(GDRecordWnd, _super);
     function GDRecordWnd() {
         var _this = _super.call(this) || this;
-        _this._str = ["全部", "未中奖", "已中奖"];
+        _this._str = ["全部", "待开奖", "未中奖", "已中奖"];
         /** 0全部 1未中奖 2已中奖 */
         _this._index = 0;
         _this.touchEnabled = true;
@@ -27,9 +27,9 @@ var GDRecordWnd = (function (_super) {
         shape.graphics.beginFill(0xffffff);
         shape.graphics.drawRect(0, 96 + GameValue.adaptationScreen, GameMain.getInstance.StageWidth, 80);
         shape.graphics.endFill();
-        var num = GameMain.getInstance.StageWidth / 3;
+        _this.num = GameMain.getInstance.StageWidth / _this._str.length;
         for (var i = 0; i < _this._str.length; i++) {
-            var objText = ToolMrg.getText(i * num, 96 + GameValue.adaptationScreen + 0, 28, 0x333333, num);
+            var objText = ToolMrg.getText(i * _this.num, 96 + GameValue.adaptationScreen + 0, 28, 0x333333, _this.num);
             _this.addChild(objText);
             objText.height = 80;
             objText.textAlign = egret.HorizontalAlign.CENTER;
@@ -41,7 +41,7 @@ var GDRecordWnd = (function (_super) {
         _this._topShape = new egret.Shape();
         _this.addChild(_this._topShape);
         _this._topShape.graphics.beginFill(0xf96d67);
-        _this._topShape.graphics.drawRect(101, 96 + GameValue.adaptationScreen + 78.5 - 4, 48, 4);
+        _this._topShape.graphics.drawRect((_this.num - 48) / 2, 96 + GameValue.adaptationScreen + 78.5 - 4, 48, 4);
         _this._topShape.graphics.endFill();
         var link = new egret.Shape();
         _this.addChild(link);
@@ -79,20 +79,27 @@ var GDRecordWnd = (function (_super) {
         else if (this._index == 1) {
             for (var _i = 0, _a = item.keys; _i < _a.length; _i++) {
                 var key = _a[_i];
-                if (item.Gget(key)._isWin == 2)
+                if (item.Gget(key)._isWin == 1)
                     selectItem.Gput(key, item.Gget(key));
             }
         }
         else if (this._index == 2) {
             for (var _b = 0, _c = item.keys; _b < _c.length; _b++) {
                 var key = _c[_b];
+                if (item.Gget(key)._isWin == 2)
+                    selectItem.Gput(key, item.Gget(key));
+            }
+        }
+        else if (this._index == 3) {
+            for (var _d = 0, _e = item.keys; _d < _e.length; _d++) {
+                var key = _e[_d];
                 if (item.Gget(key)._isWin == 3)
                     selectItem.Gput(key, item.Gget(key));
             }
         }
         var objHeight = 0;
-        for (var _d = 0, _e = selectItem.keys; _d < _e.length; _d++) {
-            var key = _e[_d];
+        for (var _f = 0, _g = selectItem.keys; _f < _g.length; _f++) {
+            var key = _g[_f];
             var obj = void 0;
             if (this._item.GhasKey(key)) {
                 obj = this._item.Gget(key);
@@ -126,7 +133,7 @@ var GDRecordWnd = (function (_super) {
             else
                 this._textItem.Gget(key).textColor = 0x333333;
         }
-        egret.Tween.get(this._topShape).to({ "x": this._index * 250 }, 200, egret.Ease.circOut);
+        egret.Tween.get(this._topShape).to({ "x": this._index * this.num }, 200, egret.Ease.circOut);
         this.updata(bool);
     };
     GDRecordWnd.prototype.show = function () {
@@ -180,6 +187,11 @@ var GDRecordWnd = (function (_super) {
             if (this._index == 2)
                 return;
             this._index = 2;
+        }
+        else if (e.target == this._textItem.Gget(3)) {
+            if (this._index == 3)
+                return;
+            this._index = 3;
         }
         this.changeText();
     };

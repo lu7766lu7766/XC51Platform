@@ -5,8 +5,8 @@ var FontMgr = (function () {
     function FontMgr() {
     }
     FontMgr.preloadRes = function (loadMod) {
-        loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_1 + '.fnt');
-        loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_3 + '.fnt');
+        // loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_1 + '.fnt');
+        // loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_3 + '.fnt');
     };
     FontMgr.getText = function (font) {
         var text = new egret.BitmapText();

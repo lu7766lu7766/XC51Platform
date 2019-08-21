@@ -7,8 +7,8 @@ class FontMgr {
 	public static FONT_3: string = '0xf72e52';
 
 	public static preloadRes(loadMod: GLoadModule): void {
-		loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_1 + '.fnt');
-		loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_3 + '.fnt');
+		// loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_1 + '.fnt');
+		// loadMod.GaddItem('resource/assets/font/' + FontMgr.FONT_3 + '.fnt');
 	}
 
 	public static getText(font: string): egret.BitmapText {

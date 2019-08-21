@@ -56,6 +56,8 @@ class DmDetails extends egret.DisplayObjectContainer{
 
     /**0方案详情 1跟单用户 */
     private _index = 0;
+    /**分享 */
+    private _share:egret.Bitmap;
 
     constructor(){
         super();
@@ -91,7 +93,7 @@ class DmDetails extends egret.DisplayObjectContainer{
 
         this._LvText = ToolMrg.getText(150, 30, 16, 0xffffff);
         this._mContain.addChild(this._LvText);
-        this._LvText.height = 26;
+        this._LvText.height = 24;
         this._LvText.verticalAlign = egret.VerticalAlign.MIDDLE;
         this._LvText.text = "Lv 1";
 
@@ -207,6 +209,14 @@ class DmDetails extends egret.DisplayObjectContainer{
 
         this.joinCenter();
         this.joinDown();
+
+        this._share = new egret.Bitmap();
+        this.addChild(this._share); 
+        this._share.y = 28+GameValue.adaptationScreen;
+       	this._share.x = 670;
+        RES.getResByUrl("resource/assets/images/ui/share_nav@2x.png", (e) => { this._share.$setBitmapData(e); }, this);
+        this._share.touchEnabled = true;
+
         this.setDB();
     }
 
@@ -226,7 +236,7 @@ class DmDetails extends egret.DisplayObjectContainer{
         this._txName.text = data.txName;
         this._vipBtn.x = this._txName.x + this._txName.textWidth+8;
         this._LvText.x = this._txName.x + this._txName.textWidth+8+30;
-        this._LvText.text = `Lv ${data.vip}`;
+        this._LvText.text = `vip ${data.vip}`;
         this._endTime.text = `截止 ${ToolMrg.getTime7(data.endTime)}`;
 
         let str = "";
@@ -325,12 +335,14 @@ class DmDetails extends egret.DisplayObjectContainer{
             this._downContain.visible = false;
             this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y;
         }else{
-            if(psId == UserData.getInstance.userId){
+            if(psId == UserData.getInstance.userId){//发单人是自己
                 this._downContain.visible = false;
                 this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y;
-            }else{
+                this._share.visible = true;
+            }else{//发单人不是自己
                 this._downContain.visible = true;
                 this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 218;
+                this._share.visible = false;
             }
         }
     }
@@ -351,6 +363,9 @@ class DmDetails extends egret.DisplayObjectContainer{
             DmDetailTip.getInstance.show();
         }else if(e.target == this._return){
             this.hide();
+        }else if(e.target == this._share){//分享
+            let toF = Number(this._data.lv);
+            LotteryShare.getInstance.show(toF==0?"0.00":ToolMrg.getDecimal(toF,2).toFixed(2));
         }else if(e.target == this._tx){//打开个人详情
             // if(DmC_infoMsg.phID!=undefined && this._data.id!=DmC_infoMsg.phID){
             //     this.hide();
@@ -439,7 +454,8 @@ class DmDetails extends egret.DisplayObjectContainer{
         this._return.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
         this._tx.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
         this._downClick.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
-        
+        this._share.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+
         // this._downRightText.addEventListener(egret.TouchEvent.CHANGE,this.changeText,this);
         this._downRightText.addEventListener(egret.TouchEvent.TOUCH_TAP,this.textClick,this);
         // this._downRightText.addEventListener(egret.Event.FOCUS_OUT, this.textInput2, this);
@@ -454,7 +470,7 @@ class DmDetails extends egret.DisplayObjectContainer{
         this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
         this._tx.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
         this._downClick.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
-
+        this._share.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
         // this._downRightText.removeEventListener(egret.TouchEvent.CHANGE,this.changeText,this);
         this._downRightText.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.textClick,this);
         // this._downRightText.removeEventListener(egret.Event.FOCUS_OUT, this.textInput2, this);

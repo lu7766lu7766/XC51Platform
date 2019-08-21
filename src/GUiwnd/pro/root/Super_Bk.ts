@@ -79,7 +79,7 @@ class Super_Bk implements IProHandle {
                 Alertpaner.getInstance.show(text["msg"]);
             } else {
 				let map:Array<any> = text["map"];
-				cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLB, map);
+				// cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLB, map);
 				
 				for(let key of BasketballDataMrg.getInstance._mCJLQLB.keys){
 					let obj = BasketballDataMrg.getInstance._mCJLQLB.Gget(key);

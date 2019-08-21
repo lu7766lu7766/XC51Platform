@@ -14,12 +14,12 @@ namespace GStatus {
 		public enterStatus(): void {
 			if (UserData.getInstance.isLogin() == true) {
 				LoginPhp.getInstance.sendHttp(UserData.getInstance.account, UserData.getInstance.password);
-				GetBank_allLIst.getInstance.sendHttp(UserData.getInstance.userId);
 			}
 			TenConfon.getInstance.sentConnt();
 			DownWnd.getInstance.show();
 			QsPhp.getInstance.sendHttp();
 			GD_List.getInstance.sendHttp();
+			TimePhp.getInstance.sendHttp();
 		}
 
 		private _mTime:number = 0;

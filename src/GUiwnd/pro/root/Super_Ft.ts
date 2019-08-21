@@ -80,7 +80,7 @@ class Super_Ft implements IProHandle {
                 Alertpaner.getInstance.show(text["msg"]);
             } else {
 				let map:Array<any> = text["map"];
-				cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLB, map);
+				// cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLB, map);
 
 				//先抽取数组里的listSX保存,再清除数组
 				this.listSX.clear();

@@ -409,11 +409,13 @@ var fagxMrgView = (function (_super) {
             this.mtext3.text = "跟投金额：";
             this.downObj.show(this, data, GameMain.getInstance.StageHeight - 260);
             this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 260;
+            this._share.visible = false;
         }
         else {
             this.mtext3.text = "自购金额：";
             this.downObj.show(this, data, GameMain.getInstance.StageHeight - 340);
             this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 340;
+            this._share.visible = true;
         }
     };
     fagxMrgView.prototype.hide = function () {
@@ -482,6 +484,7 @@ var fagxMrgView = (function (_super) {
             Alertpaner.getInstance.show("复制成功");
         }
         else if (e.target == this._share) {
+            LotteryShare.getInstance.show(this._data.rate == "0" ? "0.00" : this._data.rate);
         }
     };
     fagxMrgView.prototype.isadd = function () {

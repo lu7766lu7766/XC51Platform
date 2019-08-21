@@ -23,6 +23,8 @@ class MyLotteryData {
 	public _reward:number;
 	/**购买时间 */
 	public x:number;
+	/**命中率 */
+	public rate:string;
 
 
 	/**单子状态  0=>普通订单 1=>跟单订单 2=>发单订单 -----新添加*/

@@ -79,7 +79,7 @@ var Super_Bk = (function () {
             }
             else {
                 var map = text["map"];
-                cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLB, map);
+                // cf = FT_List.isSame(BasketballDataMrg.getInstance._mCJLQLB, map);
                 for (var _i = 0, _a = BasketballDataMrg.getInstance._mCJLQLB.keys; _i < _a.length; _i++) {
                     var key = _a[_i];
                     var obj = BasketballDataMrg.getInstance._mCJLQLB.Gget(key);

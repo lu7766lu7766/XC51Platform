@@ -63,19 +63,21 @@ var MyViewWnd = (function (_super) {
         _this._txName = ToolMrg.getText(162, 100, 36, 0xffffff);
         _this._mContain.addChild(_this._txName);
         _this._txName.touchEnabled = true;
-        var lvShape = new egret.Shape();
-        _this._mContain.addChild(lvShape);
-        lvShape.graphics.beginFill(0xffffff);
-        lvShape.graphics.drawRoundRect(162, 154, 74, 24, 30);
-        lvShape.graphics.endFill();
+        // let lvShape = new egret.Shape();
+        // this._mContain.addChild(lvShape);
+        // lvShape.graphics.beginFill(0xffffff);
+        // lvShape.graphics.drawRoundRect(162, 154, 74, 24, 30);
+        // lvShape.graphics.endFill();
         _this._LvImg = new egret.Bitmap();
         _this._mContain.addChild(_this._LvImg);
-        _this._LvImg.y = 158;
-        _this._LvImg.x = 170;
+        _this._LvImg.y = 155;
+        _this._LvImg.x = 162;
         RES.getResByUrl("resource/assets/images/ui/level_mine@2x.png", function (e) { _this._LvImg.$setBitmapData(e); }, _this);
-        _this._LvText = ToolMrg.getText(190, 158, 18, 0xFF8D33);
+        _this._LvText = ToolMrg.getText(190, 155, 18, 0xFF8D33);
         _this._mContain.addChild(_this._LvText);
         _this._LvText.text = "Lv 0";
+        _this._LvText.height = 24;
+        _this._LvText.verticalAlign = egret.VerticalAlign.MIDDLE;
         _this._userIdText = ToolMrg.getText(250, 158, 18, 0xffffff);
         _this._mContain.addChild(_this._userIdText);
         var yeText = ToolMrg.getText(0, 268, 20, 0xffffff, 250);
@@ -150,7 +152,7 @@ var MyViewWnd = (function (_super) {
             this._userIdText.text = "id:" + UserData.getInstance.userId;
         }
         this._txName.text = UserData.getInstance.userName;
-        this._LvText.text = "Lv " + UserData.getInstance.getLv(); //vip等级
+        this._LvText.text = "vip " + UserData.getInstance.getLv(); //vip等级
     };
     MyViewWnd.prototype.addCenter = function () {
         this._centerContain = new egret.DisplayObjectContainer();

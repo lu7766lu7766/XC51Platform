@@ -72,7 +72,7 @@ var SPFT_One = (function () {
             }
             else {
                 var map = text["map"];
-                cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLBDG, map);
+                // cf = FT_List.isSame(FootballDataMrg.getInstance._mCJZQLBDG, map);
                 FootballDataMrg.getInstance._mCJZQLBDG.clear();
                 var fb = void 0;
                 var dd = void 0;

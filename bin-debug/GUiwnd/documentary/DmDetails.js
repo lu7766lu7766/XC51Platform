@@ -40,7 +40,7 @@ var DmDetails = (function (_super) {
         RES.getResByUrl("resource/assets/images/ui/hydj_expert@2x.png", function (e) { _this._vipBtn.$setBitmapData(e); }, _this);
         _this._LvText = ToolMrg.getText(150, 30, 16, 0xffffff);
         _this._mContain.addChild(_this._LvText);
-        _this._LvText.height = 26;
+        _this._LvText.height = 24;
         _this._LvText.verticalAlign = egret.VerticalAlign.MIDDLE;
         _this._LvText.text = "Lv 1";
         // this._rate = ToolMrg.getText(378+128,22,48,0xf72e52,200);
@@ -136,6 +136,12 @@ var DmDetails = (function (_super) {
         _this._staticText.skewX = -23.5;
         _this.joinCenter();
         _this.joinDown();
+        _this._share = new egret.Bitmap();
+        _this.addChild(_this._share);
+        _this._share.y = 28 + GameValue.adaptationScreen;
+        _this._share.x = 670;
+        RES.getResByUrl("resource/assets/images/ui/share_nav@2x.png", function (e) { _this._share.$setBitmapData(e); }, _this);
+        _this._share.touchEnabled = true;
         _this.setDB();
         return _this;
     }
@@ -153,7 +159,7 @@ var DmDetails = (function (_super) {
         this._txName.text = data.txName;
         this._vipBtn.x = this._txName.x + this._txName.textWidth + 8;
         this._LvText.x = this._txName.x + this._txName.textWidth + 8 + 30;
-        this._LvText.text = "Lv " + data.vip;
+        this._LvText.text = "vip " + data.vip;
         this._endTime.text = "\u622A\u6B62 " + ToolMrg.getTime7(data.endTime);
         var str = "";
         if (data._type == 1) {
@@ -246,10 +252,12 @@ var DmDetails = (function (_super) {
             if (psId == UserData.getInstance.userId) {
                 this._downContain.visible = false;
                 this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y;
+                this._share.visible = true;
             }
             else {
                 this._downContain.visible = true;
                 this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 218;
+                this._share.visible = false;
             }
         }
     };
@@ -268,6 +276,10 @@ var DmDetails = (function (_super) {
         }
         else if (e.target == this._return) {
             this.hide();
+        }
+        else if (e.target == this._share) {
+            var toF = Number(this._data.lv);
+            LotteryShare.getInstance.show(toF == 0 ? "0.00" : ToolMrg.getDecimal(toF, 2).toFixed(2));
         }
         else if (e.target == this._tx) {
             // if(DmC_infoMsg.phID!=undefined && this._data.id!=DmC_infoMsg.phID){
@@ -355,6 +367,7 @@ var DmDetails = (function (_super) {
         this._return.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._tx.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._downClick.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._share.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         // this._downRightText.addEventListener(egret.TouchEvent.CHANGE,this.changeText,this);
         this._downRightText.addEventListener(egret.TouchEvent.TOUCH_TAP, this.textClick, this);
         // this._downRightText.addEventListener(egret.Event.FOCUS_OUT, this.textInput2, this);
@@ -367,6 +380,7 @@ var DmDetails = (function (_super) {
         this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._tx.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._downClick.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._share.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         // this._downRightText.removeEventListener(egret.TouchEvent.CHANGE,this.changeText,this);
         this._downRightText.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.textClick, this);
         // this._downRightText.removeEventListener(egret.Event.FOCUS_OUT, this.textInput2, this);

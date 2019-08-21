@@ -13,13 +13,17 @@ class CodeWndphoto extends egret.DisplayObjectContainer{
 	}
 
 	public show():void{
-		GUIManager.getInstance.tipLay.addChild(this);
-		this._mShareC.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+		if(this.parent==undefined){
+			GUIManager.getInstance.mostLay.addChild(this);
+			this._mShareC.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
+			Alertpaner.getInstance.show("请截图保存，并分享给好友");
+		}
 	}
 	
 	private touchDown(e:egret.TouchEvent):void{
 		if(e.target == this._mShareC){
 			this.hide();
+			this._mShareC.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.touchDown,this);
 		}
 	}
 
@@ -40,7 +44,7 @@ class CodeWndphoto extends egret.DisplayObjectContainer{
 	private _codeRect2: egret.Rectangle;
 	public showCode():void{
 		if(this._codeRect2 == undefined){
-			this._codeRect2 = new egret.Rectangle((GameMain.getInstance.StageWidth-200)*0.5,(GameMain.getInstance.StageHeight - 200)*0.5, 200, 200);
+			this._codeRect2 = new egret.Rectangle(570,395+382+160, 170, 170);
 		}
 		if(this._codeImg2 == undefined){
 			let gameDiv = document.getElementById("gameDiv");
@@ -85,6 +89,6 @@ class CodeWndphoto extends egret.DisplayObjectContainer{
 		this._mShareC.graphics.drawRect(0, -this.y, GameMain.getInstance.StageWidth, GameMain.getInstance.StageHeight);
 		this._mShareC.graphics.endFill();
 		this._mShareC.touchEnabled = true;
-	    this.addChildAt(this._mShareC, 0);
+	    // this.addChildAt(this._mShareC, 0);
 	}
 }

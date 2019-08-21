@@ -302,7 +302,7 @@ var PSWnd = (function (_super) {
             RES.getResByUrl("resource/assets/images/ui/ljrz_home@2x.png", this.bgBack3, this, RES.ResourceItem.TYPE_IMAGE);
         }
         else {
-            RES.getResByUrl("resource/assets/images/ui/0d5ed8874d9aca.png", this.bgBack3, this, RES.ResourceItem.TYPE_IMAGE);
+            RES.getResByUrl("resource/assets/images/ui/renz.png", this.bgBack3, this, RES.ResourceItem.TYPE_IMAGE);
         }
     };
     PSWnd.prototype.bgBack3 = function (data, url) {

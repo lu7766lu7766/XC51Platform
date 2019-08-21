@@ -342,7 +342,7 @@ class footballitem1 extends egret.DisplayObjectContainer implements GIObjPool {
 		this.jqleft.width = 14;
 		this.jqleft.height = 14;
 		this.addChild(this.jqleft);
-		RES.getResByUrl("resource/assets/images/ui/69dc86101d53e4c7d564faa90fb.png", (e) => { this.jqleft.$setBitmapData(e); }, this);
+		RES.getResByUrl("resource/assets/images/ui/borld.png", (e) => { this.jqleft.$setBitmapData(e); }, this);
 
 		this.jqright = new egret.Bitmap();
 		this.jqright.x = 462;
@@ -350,7 +350,7 @@ class footballitem1 extends egret.DisplayObjectContainer implements GIObjPool {
 		this.jqright.width = 14;
 		this.jqright.height = 14;
 		this.addChild(this.jqright);
-		RES.getResByUrl("resource/assets/images/ui/69dc86101d53e4c7d564faa90fb.png", (e) => { this.jqright.$setBitmapData(e); }, this);
+		RES.getResByUrl("resource/assets/images/ui/borld.png", (e) => { this.jqright.$setBitmapData(e); }, this);
 
 		this.jqleftText = ToolMrg.getText(278, 16, 20, 0xA9A9A9, 200);
 		this.jqleftText.text = "15";

@@ -102,21 +102,23 @@ class MyViewWnd extends egret.DisplayObjectContainer {
         this._mContain.addChild(this._txName);
         this._txName.touchEnabled = true;
 
-        let lvShape = new egret.Shape();
-        this._mContain.addChild(lvShape);
-        lvShape.graphics.beginFill(0xffffff);
-        lvShape.graphics.drawRoundRect(162, 154, 74, 24, 30);
-        lvShape.graphics.endFill();
+        // let lvShape = new egret.Shape();
+        // this._mContain.addChild(lvShape);
+        // lvShape.graphics.beginFill(0xffffff);
+        // lvShape.graphics.drawRoundRect(162, 154, 74, 24, 30);
+        // lvShape.graphics.endFill();
 
         this._LvImg = new egret.Bitmap();
         this._mContain.addChild(this._LvImg);
-        this._LvImg.y = 158;
-        this._LvImg.x = 170;
+        this._LvImg.y = 155;
+        this._LvImg.x = 162;
         RES.getResByUrl("resource/assets/images/ui/level_mine@2x.png", (e) => { this._LvImg.$setBitmapData(e); }, this);
 
-        this._LvText = ToolMrg.getText(190, 158, 18, 0xFF8D33);
+        this._LvText = ToolMrg.getText(190, 155, 18, 0xFF8D33);
         this._mContain.addChild(this._LvText);
         this._LvText.text = "Lv 0";
+        this._LvText.height = 24;
+        this._LvText.verticalAlign = egret.VerticalAlign.MIDDLE;
 
         this._userIdText = ToolMrg.getText(250, 158, 18, 0xffffff);
         this._mContain.addChild(this._userIdText);
@@ -191,7 +193,7 @@ class MyViewWnd extends egret.DisplayObjectContainer {
             this._userIdText.text = "id:" + UserData.getInstance.userId;
         }
         this._txName.text = UserData.getInstance.userName;
-        this._LvText.text = `Lv ${UserData.getInstance.getLv()}`;//vip等级
+        this._LvText.text = `vip ${UserData.getInstance.getLv()}`;//vip等级
     }
 
     /**票 */

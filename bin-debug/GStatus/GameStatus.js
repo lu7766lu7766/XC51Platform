@@ -19,12 +19,12 @@ var GStatus;
         GameStatus.prototype.enterStatus = function () {
             if (UserData.getInstance.isLogin() == true) {
                 LoginPhp.getInstance.sendHttp(UserData.getInstance.account, UserData.getInstance.password);
-                GetBank_allLIst.getInstance.sendHttp(UserData.getInstance.userId);
             }
             TenConfon.getInstance.sentConnt();
             DownWnd.getInstance.show();
             QsPhp.getInstance.sendHttp();
             GD_List.getInstance.sendHttp();
+            TimePhp.getInstance.sendHttp();
         };
         GameStatus.prototype.update = function (it) {
             FiveBox.getInstance.EndOfTime();

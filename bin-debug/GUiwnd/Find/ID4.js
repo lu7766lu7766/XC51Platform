@@ -30,13 +30,25 @@ var ID4 = (function (_super) {
         _this._mContain.addChild(activeText1);
         var btn1 = new egret.Bitmap();
         _this._mContain.addChild(btn1);
-        btn1.y = 80;
+        btn1.y = 0;
         RES.getResByUrl("resource/assets/images/ui/sc5888_find1.png", function (e) { btn1.$setBitmapData(e); }, _this);
         var btn2 = new egret.Bitmap();
         _this._mContain.addChild(btn2);
         btn2.y = 567;
         RES.getResByUrl("resource/assets/images/ui/sc5888_find2.png", function (e) { btn2.$setBitmapData(e); }, _this);
         _this.initText();
+        _this._btn = new egret.Bitmap();
+        _this.addChild(_this._btn);
+        _this._btn.y = GameMain.getInstance.StageHeight - 120;
+        _this._btn.touchEnabled = true;
+        RES.getResByUrl("resource/assets/images/ui/bg_button@2x.png", function (e) {
+            _this._btn.$setBitmapData(e);
+            _this._btn.x = (GameMain.getInstance.StageWidth - _this._btn.width) * 0.5;
+        }, _this);
+        var text = ToolMrg.getText(0, GameMain.getInstance.StageHeight - 120 + 30, 34, 0xffffff, GameMain.getInstance.StageWidth);
+        _this.addChild(text);
+        text.textAlign = egret.HorizontalAlign.CENTER;
+        text.text = "申请活动优惠";
         _this.setDB();
         return _this;
     }
@@ -53,15 +65,22 @@ var ID4 = (function (_super) {
         if (e.target == this._return) {
             this.hide();
         }
+        else if (e.target == this._btn) {
+            if (window["go2Url"]) {
+                window["go2Url"](GameValue.kfUrl);
+            }
+        }
     };
     ID4.prototype.show = function () {
         GUIManager.getInstance.tipLay.addChild(this);
         this._return.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        this._btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
     };
     ID4.prototype.hide = function () {
         if (this.parent != undefined) {
             this.parent.removeChild(this);
             this._return.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+            this._btn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
             this._scroView.setScrollTop(0);
             if (WorldWnd._worldState == 1) {
                 WorldWnd.getInstance.show();
@@ -80,7 +99,7 @@ var ID4 = (function (_super) {
         this._scroView.horizontalScrollPolicy = 'off';
         //设置滚动区域宽高
         this._scroView.width = GameMain.getInstance.StageWidth;
-        this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y;
+        this._scroView.height = GameMain.getInstance.StageHeight - this.y - this._scroView.y - 150;
         this.addChild(this._scroView);
     };
     /**适配处理 */
@@ -101,7 +120,7 @@ var ID4 = (function (_super) {
         var activeText1 = ToolMrg.getText(44, 1080, 28, 0x333333);
         activeText1.textFlow = [
             { "text": "申请方式:" + "\n" + "\n", style: { "textColor": 0x000000, size: 24, bold: true } },
-            { "text": "存款后为投注前，点击 【申请活动优惠】, 系统收到您的请求" + "\n", style: { "textColor": 0x333333, size: 24 } },
+            { "text": "存款后未投注前，点击 【申请活动优惠】, 系统收到您的请求" + "\n", style: { "textColor": 0x333333, size: 24 } },
             { "text": "后，会于5分钟之内审核并添加完毕", style: { "textColor": 0x333333, size: 24 } },
         ];
         activeText1.lineSpacing = 15;
@@ -141,16 +160,16 @@ var ID4 = (function (_super) {
         allheight += activeText3.height + 39;
         var activeText4 = ToolMrg.getText(44, 1080 + allheight, 28, 0x333333);
         activeText4.textFlow = [
-            { "text": "3.本活动仅计算竞猜足球与篮球投注。", style: { "textColor": 0x333333, size: 24 } },
+            { "text": "3.本活动仅计算竞彩足球与篮球投注。", style: { "textColor": 0x333333, size: 24 } },
         ];
         activeText4.lineSpacing = 15;
         activeText4.fontFamily = "微软雅黑";
-        this._mContain.addChild(activeText4);
-        allheight += activeText4.height + 39;
+        // this._mContain.addChild(activeText4);
+        // allheight += activeText4.height + 39;
         var activeText5 = ToolMrg.getText(44, 1080 + allheight, 28, 0x333333);
         activeText5.textFlow = [
             {
-                "text": "4.若发现有套利客户，对赌或不诚实获取盈利之行为，将取消" +
+                "text": "3.若发现有套利客户，对赌或不诚实获取盈利之行为，将取消" +
                     "\n" + "其优惠资格。", style: { "textColor": 0x333333, size: 24 }
             },
         ];
@@ -161,7 +180,7 @@ var ID4 = (function (_super) {
         var activeText6 = ToolMrg.getText(44, 1080 + allheight, 28, 0x333333);
         activeText6.textFlow = [
             {
-                "text": "5.每位有效玩家、每一个手机号码、电子邮箱、IP地址、相同" +
+                "text": "4.每位有效玩家、每一个手机号码、电子邮箱、IP地址、相同" +
                     "\n" + "银行卡、同一台电脑只能享受一次优惠，如发现违规用户，" +
                     "\n" + "我们将保留无限期审核扣回红利及所产生利润的权利。", style: { "textColor": 0x333333, size: 24 }
             },
@@ -172,7 +191,7 @@ var ID4 = (function (_super) {
         allheight += activeText6.height + 39;
         var activeText7 = ToolMrg.getText(44, 1080 + allheight, 28, 0x333333);
         activeText7.textFlow = [
-            { "text": "6.此活动遵循51彩站一般规则与条款。" + "\n", style: { "textColor": 0x333333, size: 24 } },
+            { "text": "5.此活动遵循51彩站一般规则与条款。" + "\n", style: { "textColor": 0x333333, size: 24 } },
         ];
         activeText7.lineSpacing = 15;
         activeText7.fontFamily = "微软雅黑";

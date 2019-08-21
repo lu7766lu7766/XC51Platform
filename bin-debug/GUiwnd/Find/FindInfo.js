@@ -115,7 +115,7 @@ __reflect(FindInfo.prototype, "FindInfo");
 var FindMrg = (function () {
     function FindMrg() {
         //手动添加
-        this._imgSrc = ["xyh658.png", "dnn658.png", "vip658.png", "jiaj658px.png", "zhuli658.png", "hphy658.png", "zhuanzhangact.png"];
+        this._imgSrc = ["xyh750.png", "dnn750.png", "vip750.png", "jiaj750px.png", "zhuli658.png", "hphy658.png", "rkjf658.png"];
         this._titleStr = ["新用户注册即送18元", "首存5888元等你拿！", "VIP成长礼包送不停", "竞彩串关加奖来袭，加奖10%无上限", "助力中超，周周彩金大放送",
             "呼朋唤友一起来战斗", "银行卡转账送1%"];
         this._findItem = new GHashMap();

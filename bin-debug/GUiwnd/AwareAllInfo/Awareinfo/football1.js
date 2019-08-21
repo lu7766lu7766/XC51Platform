@@ -317,14 +317,14 @@ var footballitem1 = (function (_super) {
         _this.jqleft.width = 14;
         _this.jqleft.height = 14;
         _this.addChild(_this.jqleft);
-        RES.getResByUrl("resource/assets/images/ui/69dc86101d53e4c7d564faa90fb.png", function (e) { _this.jqleft.$setBitmapData(e); }, _this);
+        RES.getResByUrl("resource/assets/images/ui/borld.png", function (e) { _this.jqleft.$setBitmapData(e); }, _this);
         _this.jqright = new egret.Bitmap();
         _this.jqright.x = 462;
         _this.jqright.y = 22;
         _this.jqright.width = 14;
         _this.jqright.height = 14;
         _this.addChild(_this.jqright);
-        RES.getResByUrl("resource/assets/images/ui/69dc86101d53e4c7d564faa90fb.png", function (e) { _this.jqright.$setBitmapData(e); }, _this);
+        RES.getResByUrl("resource/assets/images/ui/borld.png", function (e) { _this.jqright.$setBitmapData(e); }, _this);
         _this.jqleftText = ToolMrg.getText(278, 16, 20, 0xA9A9A9, 200);
         _this.jqleftText.text = "15";
         _this.jqleftText.fontFamily = "微软雅黑";
