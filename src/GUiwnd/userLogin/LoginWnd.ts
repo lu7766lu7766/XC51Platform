@@ -166,7 +166,7 @@ class LoginWnd extends egret.DisplayObjectContainer {
         GUIManager.getInstance.tipLay.addChild(this);
 
         this._mDLIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
-        this._mZC.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        // this._mZC.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._mDLSR.addEventListener(egret.Event.FOCUS_IN, this.textInput2, this);
         this._mDLSR.addEventListener(egret.Event.FOCUS_OUT, this.textInput2, this);
 
@@ -210,7 +210,7 @@ class LoginWnd extends egret.DisplayObjectContainer {
         }
 
         this._mDLIcon.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
-        this._mZC.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
+        // this._mZC.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this);
         this._mDLSR.removeEventListener(egret.Event.FOCUS_IN, this.textInput2, this);
         this._mDLSR.removeEventListener(egret.Event.FOCUS_OUT, this.textInput2, this);
 
