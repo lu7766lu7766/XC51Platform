@@ -7,7 +7,8 @@ class HTTPRequest {
 	}
 
 	/**域名路径前缀 129.204.53.154 */
-	public httpHeadUrl: string = 'http://129.204.53.154/other/test/';
+	public httpHeadUrl: string = 'http://api.51caiz.com/test/';
+	//public httpHeadUrl: string = 'http://129.204.53.154/other/test/';
 	// public httpHeadUrl: string = 'http://192.168.20.23/ticket/api/';
 
 	/**登陆协议对象列表 */
