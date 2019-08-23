@@ -12,9 +12,9 @@ class MyViewWnd extends egret.DisplayObjectContainer {
     private _centerContain: egret.DisplayObjectContainer;
     private _downContain: egret.DisplayObjectContainer;
     private _downInfo: GHashMap<MyViewInfo>;
-    private _downContent = ["个人详细信息", "查看资金流向", "查看跟单记录", "分享赚彩金", "代理加盟计划", "在线问题反馈", "查询开奖信息", "建议反馈"];
-    private _downSrc = ["个人信息", "资金明细", "跟单记录", "分享赚钱", "合营计划", "联系客服", "开奖信息", "更多选项"];
-    private _downImgsrc = ["zhxx_mine@2x", "yjmx_mine@2x", "gdjl_mine@2x", "laxin_mine@2x", "hyjh_mine@2x", "kefu_mine@2x", "kjxx_mine@2x", "gdxx_mine@2x"];
+    private _downContent = ["个人详细信息", "查看资金流向", "查看跟单记录", "分享赚彩金", "在线问题反馈", "查询开奖信息", "建议反馈"];
+    private _downSrc = ["个人信息", "资金明细", "跟单记录", "分享赚钱", "联系客服", "开奖信息", "更多选项"];
+    private _downImgsrc = ["zhxx_mine@2x", "yjmx_mine@2x", "gdjl_mine@2x", "laxin_mine@2x", "kefu_mine@2x", "kjxx_mine@2x", "gdxx_mine@2x"];
     private _downItem: GHashMap<MyViewInfo>;
 
     private _txzz: egret.Shape;
@@ -591,17 +591,15 @@ class MyViewInfo extends egret.DisplayObjectContainer {
                 LoginWnd.getInstance.show();
             else
                 ShareWnd.getInstance.show();
-        } else if (this._id == 4) {//合营计划
-            PlanWnd.getInstance.show();
-        } else if (this._id == 5) {//联系客服
+        } else if (this._id == 4) {//联系客服
             // KeFuWnd.getInstance.show();
             if(window["go2Url"]) {
                 window["go2Url"](GameValue.kfUrl);
             }
-        } else if (this._id == 6) {//开奖信息
+        } else if (this._id == 5) {//开奖信息
             AwareInfoMgr.getInstance.show();
             OpenAwareConfin.getInstance.sendHttp();
-        } else if (this._id == 7) {//更多信息
+        } else if (this._id == 6) {//更多信息
             SetUpWnd.getInstance.show();
         }
     }
