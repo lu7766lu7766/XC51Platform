@@ -19,7 +19,9 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     private hideLoading(): void {
-        document.getElementById('loading-box').style.display = 'none'
+        if (document.getElementById('loading-box')) {
+            document.getElementById('loading-box').style.display = 'none'
+        }
     }
 
     //键盘侦听
