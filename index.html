@@ -28,9 +28,98 @@
             height: 100%;
         }
     </style>
+    <style>
+    #loading-box {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        background: #222;
+        z-index: 100000;
+    }
+
+    .loading-content {
+        width: 120px;
+        height: 120px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .loading-content .loading {
+        border: 6px solid #ffde00;
+        border-right: 6px solid #fff;
+        border-bottom: 6px solid #fff;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        -webkit-animation: loading 1s infinite linear;
+        -moz-animation: loading 1s infinite linear;
+        -ms-animation: loading 1s infinite linear;
+        -o-animation: loading 1s infinite linear;
+        animation: loading 1s infinite linear;
+    }
+    .loading-content .word {
+        color: #ffde00;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -45%);
+        display: inline-block;
+        text-align: center;
+        font-size: 20px;
+        line-height: 28px;
+        font-family: 微軟正黑體, arial;
+        padding: 0;
+    }
+
+    @-webkit-keyframes loading {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+    }
+    @-moz-keyframes loading {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+    }
+    @-o-keyframes loading {
+    from {
+        -o-transform: rotate(0deg);
+    }
+    to {
+        -o-transform: rotate(360deg);
+    }
+    }
+    @keyframes loading {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+    }
+
+    .readyBody {
+        padding: 0;
+        margin: 0;
+        background: #000;
+    }
+    </style>
 </head>
 
 <body>
+    <div id="loading-box">
+        <div class="loading-content">
+        <div class="loading"></div>
+        <div class="word">加载中</div>
+        </div>
+    </div>
     <div id="video"></div>
     <div style="margin: auto;width: 100%;height: 100%;" class="egret-player" id="gameDiv"
          data-entry-class="Main"

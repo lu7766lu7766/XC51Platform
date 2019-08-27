@@ -15,6 +15,11 @@ class Main extends egret.DisplayObjectContainer {
         // this.iosUpDown();
         let game:GameMain = new GameMain();
         this.addChild(game);
+        this.hideLoading()
+    }
+
+    private hideLoading(): void {
+        document.getElementById('loading-box').style.display = 'none'
     }
 
     //键盘侦听
