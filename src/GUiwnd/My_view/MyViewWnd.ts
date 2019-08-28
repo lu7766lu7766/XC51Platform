@@ -593,16 +593,16 @@ class MyViewInfo extends egret.DisplayObjectContainer {
                 ShareWnd.getInstance.show();
         } else if (this._id == 4) {//联系客服
             // KeFuWnd.getInstance.show();
-            if(window["go2Url"]) {
-                window["go2Url"](GameValue.kfUrl, 1);
-            }
-            // try {
-            //     window['webkit'].messageHandlers.openUrl.postMessage({
-            //         url: GameValue.kfUrl
-            //     });
-            // } catch(e) {
-            //     console.log(e)
+            // if(window["go2Url"]) {
+            //     window["go2Url"](GameValue.kfUrl, 1);
             // }
+            try {
+                window['webkit'].messageHandlers.openUrl.postMessage({
+                    url: GameValue.kfUrl
+                });
+            } catch(e) {
+                console.log(e)
+            }
         } else if (this._id == 5) {//开奖信息
             AwareInfoMgr.getInstance.show();
             OpenAwareConfin.getInstance.sendHttp();
