@@ -594,9 +594,12 @@ class MyViewInfo extends egret.DisplayObjectContainer {
         } else if (this._id == 4) {//联系客服
             // KeFuWnd.getInstance.show();
             // if(window["go2Url"]) {
-            //     window["go2Url"](GameValue.kfUrl, 1);
+            //     window["go2Url"](GameValue.kfUrl);
             // }
             try {
+                if(window["openUrl"]) {
+                    window["openUrl"](GameValue.kfUrl);
+                }
                 window['webkit'].messageHandlers.openUrl.postMessage({
                     url: GameValue.kfUrl
                 });
