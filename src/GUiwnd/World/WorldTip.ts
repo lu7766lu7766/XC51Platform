@@ -23,6 +23,8 @@ class WorldTip extends egret.DisplayObjectContainer {
     private _status:number = 1;
     private _lastTime:number = 0;
 
+    private _index: number = 0;
+
 	public constructor() {
 		super();
         this.arrItem = new GHashMap<ReTextData>();
@@ -37,7 +39,7 @@ class WorldTip extends egret.DisplayObjectContainer {
         this.addChild(this.text1);
         this.addChild(this.text2);
         // this._lastTime = egret.getTimer();
-
+        this.getList()
         this.mask = new egret.Rectangle(0,-6,590,40);
         this.addEventListener(egret.Event.ENTER_FRAME,this.onEnterFrame,this);
 	}
@@ -45,23 +47,33 @@ class WorldTip extends egret.DisplayObjectContainer {
     /**添加公告 */
     public addGGxxList(data:NoticeData) {
         this._mGGxxList.push(data);
+        this._mGGxxList = this._mGGxxList.filter(data => data.id !== 0)
+    }
+
+    private getShowData(): NoticeData {
+        return this._mGGxxList[this._index++ % this._mGGxxList.length]
     }
 
     /**取数据 */
-    public getList():NoticeData {
-        if(this._mGGxxList.length == 2) {
-            NoticePhp.getInstance.sendHttp();
-        }  
-        if(this._mGGxxList.length <= 0) {
-            let data:NoticeData = new NoticeData();
-            data.id = 1;
-            data.conten = "全新51彩店震撼来袭，返奖快，返水高，易查询。";
+    public getList(): void {
+        let data:NoticeData = new NoticeData();
+        data.id = 0;
+        data.conten = "全新51彩店震撼来袭，返奖快，返水高，易查询。";
+        this.addGGxxList(data);
+        NoticePhp.getInstance.sendHttp();
+        // if(this._mGGxxList.length == 2) {
+        //     NoticePhp.getInstance.sendHttp();
+        // }  
+        // if(this._mGGxxList.length <= 0) {
+        //     let data:NoticeData = new NoticeData();
+        //     data.id = 1;
+        //     data.conten = "全新51彩店震撼来袭，返奖快，返水高，易查询。";
 
-            NoticePhp.getInstance.sendHttp();
-            return data;
-        } else {
-            return this._mGGxxList.pop();
-        }
+        //     NoticePhp.getInstance.sendHttp();
+        //     return data;
+        // } else {
+        //     return this._mGGxxList.pop();
+        // }
     }
 
     private onEnterFrame(e:egret.Event):void{
@@ -99,8 +111,8 @@ class WorldTip extends egret.DisplayObjectContainer {
         this._f.visible = this._s.visible = true;
         this._s.y = 40;
         let str:string[] =  this.arr[this.num].split("&");
-        this._s.text = str[0] + GUtilMath.randomNum(1,19) + str[1] + (GUtilMath.randomNum(10,99)) + str[2];
-        // this._s.text = this.getList().conten;
+        // this._s.text = str[0] + GUtilMath.randomNum(1,19) + str[1] + (GUtilMath.randomNum(10,99)) + str[2];
+        this._s.text = this.getShowData().conten // this.getList().conten;
         this.num+=1;
         if(this.num==this.arr.length)
             this.num=0;
