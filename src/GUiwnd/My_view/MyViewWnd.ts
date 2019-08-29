@@ -597,7 +597,7 @@ class MyViewInfo extends egret.DisplayObjectContainer {
             //     window["go2Url"](GameValue.kfUrl);
             // }
             try {
-                window['luck_m'].openUrl('js调用了android中的hello方法');
+                window['luck_m'].openUrl(GameValue.kfUrl);
             } catch(e) {
                 console.log(e)
             }
