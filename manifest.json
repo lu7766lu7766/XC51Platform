@@ -375,6 +375,7 @@
 		"bin-debug/Net/result/ProGame/Pro11004.js",
 		"bin-debug/Net/result/ProGame/Pro11005.js",
 		"bin-debug/Net/result/ProGame/Pro11006.js",
-		"bin-debug/Net/result/ProGame/Pro11007.js"
+		"bin-debug/Net/result/ProGame/Pro11007.js",
+		"bin-debug/Service/CallApp.js"
 	]
 }

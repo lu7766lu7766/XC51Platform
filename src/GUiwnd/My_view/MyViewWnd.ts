@@ -596,21 +596,7 @@ class MyViewInfo extends egret.DisplayObjectContainer {
             // if(window["go2Url"]) {
             //     window["go2Url"](GameValue.kfUrl);
             // }
-            try {
-                window['luck_m'].openUrl(GameValue.kfUrl);
-            } catch(e) {
-                console.log(e)
-            }
-            try {
-                if(window["openUrl"]) {
-                    window["openUrl"](GameValue.kfUrl);
-                }
-                window['webkit'].messageHandlers.openUrl.postMessage({
-                    url: GameValue.kfUrl
-                });
-            } catch(e) {
-                console.log(e)
-            }
+            CallApp.openUrl(GameValue.kfUrl);
         } else if (this._id == 5) {//开奖信息
             AwareInfoMgr.getInstance.show();
             OpenAwareConfin.getInstance.sendHttp();

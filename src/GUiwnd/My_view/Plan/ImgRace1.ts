@@ -69,9 +69,10 @@ class ImgRace1 extends egret.DisplayObjectContainer{
 
     private onclick() {
         // KeFuWnd.getInstance.show(true);
-        if(window["go2Url"]) {
-            window["go2Url"](GameValue.kfUrl);
-        }
+        // if(window["go2Url"]) {
+        //     window["go2Url"](GameValue.kfUrl);
+        // }
+        CallApp.openUrl(GameValue.kfUrl);
 	}
 
     // private _keepTime = 0;

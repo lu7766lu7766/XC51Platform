@@ -177,9 +177,10 @@ class KeFuWnd extends egret.DisplayObjectContainer{
             this.hide();
         }else if(e.target == this._link1){//qq
             if(this._mBool == undefined) {//跳转在线客服
-                if(window["go2Url"]) {
-                    window["go2Url"](GameValue.kfUrl);
-                }
+                // if(window["go2Url"]) {
+                //     window["go2Url"](GameValue.kfUrl);
+                // }
+                CallApp.openUrl(GameValue.kfUrl);
                 // window.open("https://vm.providesupport.com/0o9t1ktmxghcq1oagixycxoww1");
             } else {
                 //生成可复制input
