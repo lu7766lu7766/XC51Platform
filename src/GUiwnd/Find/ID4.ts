@@ -70,9 +70,10 @@ class ID4 extends egret.DisplayObjectContainer {
         if (e.target == this._return) {
             this.hide();
         } else if (e.target == this._btn) {//申请按钮
-            if(window["go2Url"]) {
-                window["go2Url"](GameValue.kfUrl);
-            }
+            // if(window["go2Url"]) {
+            //     window["go2Url"](GameValue.kfUrl);
+            // }
+            CallApp.openUrl(GameValue.kfUrl);
         }
     }
 

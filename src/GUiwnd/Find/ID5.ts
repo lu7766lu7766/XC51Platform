@@ -56,9 +56,10 @@ class ID5 extends egret.DisplayObjectContainer {
             this.hide();
         } else if (e.target == this._btn) {
             // KeFuWnd.getInstance.show();
-            if (window["go2Url"]) {
-                window["go2Url"](GameValue.kfUrl);
-            }
+            // if (window["go2Url"]) {
+            //     window["go2Url"](GameValue.kfUrl);
+            // }
+            CallApp.openUrl(GameValue.kfUrl);
         }
     }
 

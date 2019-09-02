@@ -80,9 +80,10 @@ class PayTipWindow extends egret.DisplayObjectContainer {
             RechargeWnd.getInstance.hide();
         } else if(e.target == this._leftBtn) {
             // KeFuWnd.getInstance.show();
-            if(window["go2Url"]) {
-                window["go2Url"](GameValue.kfUrl);
-            }
+            // if(window["go2Url"]) {
+            //     window["go2Url"](GameValue.kfUrl);
+            // }
+            CallApp.openUrl(GameValue.kfUrl);
         }
         this.hide();
     }
