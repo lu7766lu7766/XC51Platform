@@ -8,9 +8,9 @@ class Main extends egret.DisplayObjectContainer {
 
     private init(e:egret.Event):void{
         egret.ImageLoader.crossOrigin = "anonymous";
-        if(GameValue.isDebug == false) {//正式服
-            HTTPRequest.getInstance.httpHeadUrl = window["getSUrl"]();
-        }
+        // if(GameValue.isDebug == false) {//正式服
+        //     HTTPRequest.getInstance.httpHeadUrl = window["getSUrl"]();
+        // }
         // this.keyListen();
         // this.iosUpDown();
         let game:GameMain = new GameMain();
