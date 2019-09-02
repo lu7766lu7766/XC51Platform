@@ -353,9 +353,10 @@ class MyViewWnd extends egret.DisplayObjectContainer {
         else if (e.target == this._setUp) {//客服
             // SetUpWnd.getInstance.show();
             // KeFuWnd.getInstance.show();
-            if(window["go2Url"]) {
-                window["go2Url"](GameValue.kfUrl);
-            }
+            // if(window["go2Url"]) {
+            //     window["go2Url"](GameValue.kfUrl);
+            // }
+            CallApp.openUrl(GameValue.kfUrl);
         }
         else if (e.target == this._cenItem.Gget(0)) {//充值
             if (UserData.getInstance.isLogin() == false)
