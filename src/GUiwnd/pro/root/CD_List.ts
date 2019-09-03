@@ -83,7 +83,8 @@ class CD_List implements IProHandle {
                         sub.id = i;
                         sub._money = aaa["money"];
                         sub._dateTime = aaa["time"];
-                        obj.jItem.Gput(sub.id, sub);
+                        sub._is_mold = aaa["is_mold"];
+                        obj.jItem.Gput(sub.id, sub); 
                     }
                 }
 
