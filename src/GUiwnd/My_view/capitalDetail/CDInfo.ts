@@ -4,6 +4,8 @@ class CDInfo extends egret.DisplayObjectContainer {
     /**元 */
     private _yeText: egret.TextField;
 
+    private _isMoldText: egret.TextField;
+
     private status: egret.TextField;//状态
 
     constructor() {
@@ -32,6 +34,13 @@ class CDInfo extends egret.DisplayObjectContainer {
         this._yeText.verticalAlign = egret.VerticalAlign.MIDDLE;
         this._yeText.textAlign = egret.HorizontalAlign.RIGHT;
 
+        this._isMoldText = ToolMrg.getText(476, 50, 18, 0xF72E52, 250);
+        this.addChild(this._isMoldText);
+        this._isMoldText.text = "(含10％加奖)"
+        this._isMoldText.visible = false
+        this._isMoldText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this._isMoldText.textAlign = egret.HorizontalAlign.RIGHT;
+
         let shape = new egret.Shape();
         this.addChild(shape);
         shape.graphics.beginFill(0xdedede);
@@ -44,7 +53,7 @@ class CDInfo extends egret.DisplayObjectContainer {
     private _data: CDDataSub;
     public aa(data: CDDataSub, index: number) {
         this._data = data;
-
+        
         let num: number = 0;
         let str = "";
         if (index == 0) {
@@ -73,6 +82,7 @@ class CDInfo extends egret.DisplayObjectContainer {
         this._title.text = this._data.gettatleName();
         this.status.text = this._data.gettatle();
         this._dateText.text = `${ToolMrg.getTime11(data._dateTime)}`;
+        this._isMoldText.visible = typeof this._data._is_mold !== 'undefined' && this._data._is_mold === '2'
         if (num > 0) {
             this._yeText.textColor = 0xF72E52;
             this._yeText.text = `+${ToolMrg.getDecimal(num / 100, 2)}元`;
@@ -153,6 +163,8 @@ class CDDataSub {
     public id;
     public _money: number;
     public _dateTime: number;
+    // 是否单关1:单关(包括排三排五)2:串关
+    public _is_mold: string;
     public status: number = -1;//类型(提款 特有类型  提款  0:待审核 1:审核通过 2:审核不通过)
     //名字类型(4 1:佣金 2:中奖金额  5 1:发单奖励  3:佣金  6: "type": 10001  //10012=>返水  10001=>新用户注册即送18元 10002=>首存5888元等你 10003=>VIP成长礼包送不停 10004=>助力中超，每周彩金大放送 10005=>呼朋唤友一起来战斗)
     //2:充值吧 1=>充值 2=>人工代充
