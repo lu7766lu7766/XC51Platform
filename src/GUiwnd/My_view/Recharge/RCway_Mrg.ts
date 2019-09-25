@@ -71,4 +71,7 @@ class RCway_Data{
 
     /**支付类型 0转账 1扫码 */
     public payType:number;
+
+    public class: string;
+    public description: string;
 }

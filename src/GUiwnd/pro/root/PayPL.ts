@@ -40,6 +40,7 @@ class PayPL implements IProHandle {
 	public sendHttp(): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/p/pl.php";
 		let content = `id=${UserData.getInstance.userId}&rkey=${GameValue.orderKey}&v=${GameValue.verPhp}`;
+		console.log(url,content)
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
@@ -70,6 +71,8 @@ class PayPL implements IProHandle {
 						rCway_Data.money[j] = ToolMrg.getStrNum(""+lst_pay[i]["money"][j]);
 					}
 					rCway_Data.payType = 0;
+					rCway_Data.class = lst_pay[i]["class"];
+					rCway_Data.description = lst_pay[i]["description"];
 
 					RCway_Mrg.getInstance.addItem(i, rCway_Data);
 				}

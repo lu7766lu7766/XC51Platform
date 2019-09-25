@@ -334,6 +334,7 @@ class RechargeWnd extends egret.DisplayObjectContainer {
     private updata(): void {
         let item = RCway_Mrg.getInstance.getItem();
         let objheight = 92;
+        
         for (let key of item.keys) {
             let obj: RCway_info;
             if (this._infoItem.GhasKey(key)) {
@@ -349,6 +350,8 @@ class RechargeWnd extends egret.DisplayObjectContainer {
             if (obj.parent == undefined)
                 this._payWayContain.addChild(obj);
         }
+        console.log(item, this._infoItem)
+        
         ToolMrg.upItemofGHashMap(this._infoItem, item);
 
         this._downContain.y = this._payWayContain.y + objheight;

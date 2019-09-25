@@ -8,9 +8,9 @@ class HTTPRequest {
 
 	/**域名路径前缀 129.204.53.154 */
 	// prod
-	public httpHeadUrl: string = 'http://api.51caiz.com/test/';
+	// public httpHeadUrl: string = 'http://api.51caiz.com/test/';
 	// test 
-	// public httpHeadUrl: string = 'http://api.platform.51.xing99.cc/test/';
+	public httpHeadUrl: string = 'http://api.platform.51.xing99.cc/test/';
 
 	//public httpHeadUrl: string = 'http://129.204.53.154/other/test/';
 	// public httpHeadUrl: string = 'http://192.168.20.23/ticket/api/';

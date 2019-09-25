@@ -1,23 +1,65 @@
 {
-	"groups":[
-	{
-		"keys":"bg_jpg,egret_icon_png,description_json",
-		"name":"preload"
-	}],
-	"resources":[
-	{
-		"name":"bg_jpg",
-		"type":"image",
-		"url":"assets/bg.jpg"
-	},
-	{
-		"name":"egret_icon_png",
-		"type":"image",
-		"url":"assets/egret_icon.png"
-	},
-	{
-		"name":"description_json",
-		"type":"json",
-		"url":"config/description.json"
-	}]
+	"groups": [
+		{
+			"keys": "bg_jpg,egret_icon_png,description_json,ic_pay1_png,ic_pay2_png,ic_pay3_png,ic_pay4_png,ic_pay5_png,ic_pay6_png,ic_pay7_png,ic_pay8_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"name": "bg_jpg",
+			"type": "image",
+			"url": "assets/bg.jpg"
+		},
+		{
+			"name": "egret_icon_png",
+			"type": "image",
+			"url": "assets/egret_icon.png"
+		},
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "ic_pay1_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay1.png"
+		},
+		{
+			"name": "ic_pay2_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay2.png"
+		},
+		{
+			"name": "ic_pay3_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay3.png"
+		},
+		{
+			"name": "ic_pay4_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay4.png"
+		},
+		{
+			"name": "ic_pay5_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay5.png"
+		},
+		{
+			"name": "ic_pay6_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay6.png"
+		},
+		{
+			"name": "ic_pay7_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay7.png"
+		},
+		{
+			"name": "ic_pay8_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay8.png"
+		}
+	]
 }
