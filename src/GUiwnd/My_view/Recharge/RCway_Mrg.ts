@@ -48,6 +48,17 @@ class RCway_Mrg{
         return this._infoItem;
     }
 
+    public getItemClassList() {
+        const res = []
+        for(const key of this._infoItem.keys) {
+            const item = this._infoItem[key]
+            if(res.indexOf(item.class) === -1) {
+                res.push(item.class)
+            }
+        }
+        return res
+    }
+
     public clear():void{
         this._infoItem.clear();
     }

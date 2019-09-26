@@ -55,6 +55,11 @@ class RechargeWnd extends egret.DisplayObjectContainer {
     /**支付方式子类 */
     private _infoItem: GHashMap<RCway_info>;
 
+    // currentClass
+    private _currentClass: string;
+    private _classBtnContainer: egret.DisplayObjectContainer
+    private _classObjContainer: Array<PayWay> = []
+
     constructor() {
         super();
 
@@ -192,6 +197,14 @@ class RechargeWnd extends egret.DisplayObjectContainer {
         let wayText = ToolMrg.getText(38, 38 + 5, 24, 0x333333);
         this._payWayContain.addChild(wayText);
         wayText.text = "选择支付方式";
+
+        this._classBtnContainer = new egret.DisplayObjectContainer();
+        this._payWayContain.addChild(this._classBtnContainer);
+        this._classBtnContainer.y = 70;
+        this._classBtnContainer.x = 30
+        this._classBtnContainer.width = GameMain.getInstance.StageWidth - 60
+
+
 
         //底部按钮
         this._payBtn = new egret.Bitmap();
@@ -334,23 +347,29 @@ class RechargeWnd extends egret.DisplayObjectContainer {
     private updata(): void {
         let item = RCway_Mrg.getInstance.getItem();
         let objheight = 92;
-        
+        this._currentClass = null
+
         for (let key of item.keys) {
             let obj: RCway_info;
-            if (this._infoItem.GhasKey(key)) {
-                obj = this._infoItem.Gget(key);
-            } else {
-                obj = new RCway_info();
-                this._infoItem.Gput(key, obj);
+            const realItem = item[key]
+            this._currentClass = this._currentClass || realItem.class
+            if (this._currentClass === realItem.class) {
+                if (this._infoItem.GhasKey(key)) {
+                    obj = this._infoItem.Gget(key);
+                } else {
+                    obj = new RCway_info();
+                    this._infoItem.Gput(key, obj);
+                }
+                obj.aa(item.Gget(key), key);
+                obj.addEvent();
+                obj.y = objheight;
+                objheight = objheight + obj.height;
+                if (obj.parent == undefined) {
+                    // this._payWayContain.addChild(obj);
+                }
+                    
             }
-            obj.aa(item.Gget(key), key);
-            obj.addEvent();
-            obj.y = objheight;
-            objheight = objheight + obj.height;
-            if (obj.parent == undefined)
-                this._payWayContain.addChild(obj);
         }
-        console.log(item, this._infoItem)
         
         ToolMrg.upItemofGHashMap(this._infoItem, item);
 
@@ -362,6 +381,40 @@ class RechargeWnd extends egret.DisplayObjectContainer {
         }
         this._moneyText.text = "" + this._money;
         this._payText.text = this._money + "元";
+
+        // draw class btn
+        const classList = RCway_Mrg.getInstance.getItemClassList();
+        let lastRWx = 0, rows = 0
+        classList.forEach((className, index) => {
+            let payWay = new PayWay(className)
+            
+            this._classBtnContainer.addChild(payWay)
+            payWay.x = lastRWx
+            if ((payWay.x + payWay.width) > GameMain.getInstance.StageWidth) {
+                lastRWx = 0
+                rows++
+            }
+            payWay.y = rows * payWay.height + 20
+            payWay.touchEnabled = true
+            // payWay.width = (this._classBtnContainer.width - 30) / 4
+            // payWay.addEventListener(egret.TouchEvent.TOUCH_TAP, e => {
+            //     console.log(className, payWay.getClass())
+            // }, this)
+            payWay.addEventListener(egret.TouchEvent.TOUCH_TAP, this.changeClass, this)
+            this._classObjContainer.push(payWay)
+            if (className === this._currentClass) {
+                payWay.select()
+            }
+            lastRWx += payWay.x + payWay.width + 15
+        })
+    }
+
+    private changeClass(e) {
+        this._classObjContainer.forEach(payWay => {
+            payWay.noselect()
+        })
+        e.target.select()
+        // console.log(e.target, this)
     }
 
     private setUseNews(): void {

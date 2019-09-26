@@ -40,7 +40,6 @@ class PayPL implements IProHandle {
 	public sendHttp(): void {
 		let url: string = HTTPRequest.getInstance.httpHeadUrl + "/p/pl.php";
 		let content = `id=${UserData.getInstance.userId}&rkey=${GameValue.orderKey}&v=${GameValue.verPhp}`;
-		console.log(url,content)
 		HTTPRequest.getInstance.proSend(url, content, this.data);
 	}
 
