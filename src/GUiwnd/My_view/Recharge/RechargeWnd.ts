@@ -59,6 +59,8 @@ class RechargeWnd extends egret.DisplayObjectContainer {
     private _currentClass: string;
     private _classBtnContainer: egret.DisplayObjectContainer
     private _classObjContainer: Array<PayWay> = []
+    private _payWayBtnContainer: egret.DisplayObjectContainer
+    private _payWayObjContainer: Array<RCway_info> = []
 
     constructor() {
         super();
@@ -199,12 +201,17 @@ class RechargeWnd extends egret.DisplayObjectContainer {
         wayText.text = "选择支付方式";
 
         this._classBtnContainer = new egret.DisplayObjectContainer();
-        this._payWayContain.addChild(this._classBtnContainer);
         this._classBtnContainer.y = 70;
         this._classBtnContainer.x = 30
         this._classBtnContainer.width = GameMain.getInstance.StageWidth - 60
+        this._payWayContain.addChild(this._classBtnContainer);
 
-
+        this._payWayBtnContainer = new egret.DisplayObjectContainer();
+        // this._payWayBtnContainer.y = 70;
+        // this._payWayBtnContainer.x = 0
+        this._payWayBtnContainer.width = GameMain.getInstance.StageWidth - 60
+        this._payWayContain.addChild(this._payWayBtnContainer);
+        
 
         //底部按钮
         this._payBtn = new egret.Bitmap();
@@ -345,42 +352,8 @@ class RechargeWnd extends egret.DisplayObjectContainer {
     }
 
     private updata(): void {
-        let item = RCway_Mrg.getInstance.getItem();
-        let objheight = 92;
-        this._currentClass = null
-
-        for (let key of item.keys) {
-            let obj: RCway_info;
-            const realItem = item[key]
-            this._currentClass = this._currentClass || realItem.class
-            if (this._currentClass === realItem.class) {
-                if (this._infoItem.GhasKey(key)) {
-                    obj = this._infoItem.Gget(key);
-                } else {
-                    obj = new RCway_info();
-                    this._infoItem.Gput(key, obj);
-                }
-                obj.aa(item.Gget(key), key);
-                obj.addEvent();
-                obj.y = objheight;
-                objheight = objheight + obj.height;
-                if (obj.parent == undefined) {
-                    // this._payWayContain.addChild(obj);
-                }
-                    
-            }
-        }
-        
-        ToolMrg.upItemofGHashMap(this._infoItem, item);
-
-        this._downContain.y = this._payWayContain.y + objheight;
-
-        this.changeWayInfo();
-        if (this.decideInput == false) {
-            this._money = this._data.money[0];
-        }
-        this._moneyText.text = "" + this._money;
-        this._payText.text = this._money + "元";
+        let item = RCway_Mrg.getInstance.getItem()
+        this._currentClass = item[item.keys[0]].class
 
         // draw class btn
         const classList = RCway_Mrg.getInstance.getItemClassList();
@@ -407,14 +380,71 @@ class RechargeWnd extends egret.DisplayObjectContainer {
             }
             lastRWx += payWay.x + payWay.width + 15
         })
+        this.drawPayWay()
+    }
+
+    private drawPayWay() {
+        let objheight:number = 0
+        let item = RCway_Mrg.getInstance.getItem()
+        // draw payWay
+        this._payWayBtnContainer.y = this._classBtnContainer.y + this._classBtnContainer.height +20
+        for (let key of item.keys) {
+            let obj: RCway_info;
+            const realItem = item[key]
+            if (this._currentClass === realItem.class) {
+                if (this._infoItem.GhasKey(key)) {
+                    obj = this._infoItem.Gget(key);
+                } else {
+                    obj = new RCway_info();
+                    this._infoItem.Gput(key, obj);
+                }
+                obj.aa(item.Gget(key), key);
+                obj.addEvent();
+                obj.y = objheight + 20;
+                objheight += obj.height;
+                if (obj.parent == undefined) {
+                    this._payWayBtnContainer.addChild(obj);
+                }    
+                this._payWayObjContainer.push(obj)
+            }
+        }
+        
+        ToolMrg.upItemofGHashMap(this._infoItem, item);
+
+        this._downContain.y = this._payWayContain.y + this._payWayContain.height + 60;
+
+        this.changeWayInfo();
+        if (this.decideInput == false) {
+            this._money = this._data.money[0];
+        }
+        this._moneyText.text = "" + this._money;
+        this._payText.text = this._money + "元";
     }
 
     private changeClass(e) {
-        this._classObjContainer.forEach(payWay => {
-            payWay.noselect()
+        this._classObjContainer.forEach(classObj => {
+            classObj.noselect()
         })
+        this._payWayObjContainer.forEach(payWay => {
+            this._payWayBtnContainer.removeChild(payWay)
+        })
+        this._payWayObjContainer = []
         e.target.select()
-        // console.log(e.target, this)
+        this._currentClass = e.target.getClass()
+        this.changeWayNum(this.getWayNum(this._currentClass))
+        this.drawPayWay()
+    }
+
+    private getWayNum(className) {
+        let item = RCway_Mrg.getInstance.getItem()
+        let res = 0
+        for(const key of item.keys) {
+            if(item[key].class === className) {
+                res = +key
+                break
+            }
+        }
+        return res
     }
 
     private setUseNews(): void {

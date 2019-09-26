@@ -5,6 +5,7 @@ class RCway_info extends egret.DisplayObjectContainer{
     private _content:egret.TextField;
     private _link:egret.Bitmap;
     private _click:egret.Bitmap;
+    private _icon:egret.Bitmap;
 
     constructor(){
         super();
@@ -28,19 +29,28 @@ class RCway_info extends egret.DisplayObjectContainer{
         // RES.getResByUrl("resource/assets/images/ui/select_nor_home@2x.png",(e)=>{this._click.$setBitmapData(e); },this);
         // RES.getResByUrl("resource/assets/images/ui/select_home@2x.png",(e)=>{},this);
 
-        this._title = ToolMrg.getText(80,14+6,28,0x333333);
+        this._title = ToolMrg.getText(150,14+6,28,0x333333);
         this.addChild(this._title);
 
-        this._content = ToolMrg.getText(80,75,24,0xf72e52);
+        this._content = ToolMrg.getText(150,75,24,0xf72e52);
         this.addChild(this._content);
+
+        this._icon = new egret.Bitmap();
+        this.addChild(this._icon);
+        this._icon.width = 40;
+        this._icon.height = 40;
+        this._icon.x = 80;
+        this._icon.y = 40;
     }
 
     public select():void{
         RES.getResByUrl("resource/assets/images/ui/select_home@2x.png",(e)=>{this._click.$setBitmapData(e); },this);
+        // RES.getResByUrl("resource/assets/images/ui/czxz_mine@2x.png",(e)=>{this._border.$setBitmapData(e); },this);
     }
 
     public noselect():void{
         RES.getResByUrl("resource/assets/images/ui/select_nor_home@2x.png",(e)=>{this._click.$setBitmapData(e); },this);
+        // RES.getResByUrl("resource/assets/images/ui/czxz_nor_mine@2x.png",(e)=>{this._border.$setBitmapData(e); },this);
     }
 
     public getData():RCway_Data{
@@ -53,8 +63,36 @@ class RCway_info extends egret.DisplayObjectContainer{
         this._data = data;
         this._id = id;
         
-        this._title.text = data._title;
-        this._content.text = `充值范围${data.small}元~${data.max}元`;
+        this._title.text = `充值范围${data.small}元~${data.max}元` //data._title;
+        this._content.text = data.description;
+        let imageNuumber: string
+        switch(data.class) {
+            //支付寶
+            case 'AliPay':
+                imageNuumber = '1'
+            break
+            //微信支付
+            case 'WeChatPay':
+                imageNuumber = '5'
+            break
+            //銀聯支付
+            case 'unionPay':
+                imageNuumber = '3'
+            break
+            //京東支付
+            case 'JDPay':
+                imageNuumber = '4'
+            break
+             //QQ支付
+            case 'QQPay':
+                imageNuumber = '6'
+            break
+            //銀行轉帳
+            case 'BankPay':
+                imageNuumber = '2'
+            break
+        }
+        RES.getResByUrl('resource/assets/images/pay/ic_pay' + imageNuumber + '.png',(e)=>{this._icon.$setBitmapData(e); },this);
     }
 
     private touchDown():void{

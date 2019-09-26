@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,ic_pay1_png,ic_pay2_png,ic_pay3_png,ic_pay4_png,ic_pay5_png,ic_pay6_png,ic_pay7_png,ic_pay8_png",
+			"keys": "bg_jpg,egret_icon_png,description_json,ic_pay1_png,ic_pay2_png,ic_pay3_png,ic_pay4_png,ic_pay5_png,ic_pay6_png,ic_pay7_png,ic_pay8_png,ic_pay12_png,ic_pay22_png,ic_pay32_png,ic_pay42_png,ic_pay52_png,ic_pay62_png,ic_pay72_png,ic_pay82_png",
 			"name": "preload"
 		}
 	],
@@ -58,6 +58,46 @@
 		},
 		{
 			"name": "ic_pay8_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay8.png"
+		},
+		{
+			"name": "ic_pay12_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay1.png"
+		},
+		{
+			"name": "ic_pay22_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay2.png"
+		},
+		{
+			"name": "ic_pay32_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay3.png"
+		},
+		{
+			"name": "ic_pay42_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay4.png"
+		},
+		{
+			"name": "ic_pay52_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay5.png"
+		},
+		{
+			"name": "ic_pay62_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay6.png"
+		},
+		{
+			"name": "ic_pay72_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_pay7.png"
+		},
+		{
+			"name": "ic_pay82_png",
 			"type": "image",
 			"url": "assets/images/pay/ic_pay8.png"
 		}
