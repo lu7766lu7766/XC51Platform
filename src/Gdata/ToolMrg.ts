@@ -183,7 +183,7 @@ class ToolMrg {
 	public static upItemofGHashMap(infoItem: GHashMap<any>, dataItem: GHashMap<any>): void {
 		let str = [];
 		for (let key of infoItem.keys) {//保存该数组不存在的值
-			if (!dataItem.GhasKey(key)) {
+			if (!dataItem[key]) {
 				str = str.concat(key);
 			}
 		}

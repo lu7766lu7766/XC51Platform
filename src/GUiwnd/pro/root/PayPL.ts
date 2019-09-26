@@ -70,6 +70,8 @@ class PayPL implements IProHandle {
 						rCway_Data.money[j] = ToolMrg.getStrNum(""+lst_pay[i]["money"][j]);
 					}
 					rCway_Data.payType = 0;
+					rCway_Data.class = lst_pay[i]["class"];
+					rCway_Data.description = lst_pay[i]["description"];
 
 					RCway_Mrg.getInstance.addItem(i, rCway_Data);
 				}
