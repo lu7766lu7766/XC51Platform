@@ -14,7 +14,7 @@ class ImgRace extends egret.DisplayObjectContainer{
 
     private _imgItem:GHashMap<imgInfo>;
     private _spotItem:GHashMap<egret.Bitmap>;
-    public imgSrc:string[] = ["xyh750","dnn750","vip750","jiaj750px"];
+    public imgSrc:string[] = ["xyh750","dnn750","vip750","51ad2"]; // jiaj750px
 
     constructor(){
         super();

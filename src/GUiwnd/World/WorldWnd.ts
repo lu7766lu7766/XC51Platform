@@ -247,7 +247,11 @@ class WorldWnd extends egret.DisplayObjectContainer {
         this._banner.touchEnabled = true;
         this._banner.y = objHeight + 20;
         // this._banner.y = objHeight + 20 + 136;
-        RES.getResByUrl("resource/assets/images/ui/haibao_home@2x.png", (e) => {
+        // RES.getResByUrl("resource/assets/images/ui/haibao_home@2x.png", (e) => {
+        //     this._banner.$setBitmapData(e);
+        //     this._banner.x = (GameMain.getInstance.StageWidth - this._banner.width) * 0.5;
+        // }, this)
+        RES.getResByUrl("resource/assets/images/51ad/ic_ad.png", (e) => {
             this._banner.$setBitmapData(e);
             this._banner.x = (GameMain.getInstance.StageWidth - this._banner.width) * 0.5;
         }, this)
