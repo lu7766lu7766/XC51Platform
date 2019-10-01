@@ -206,11 +206,25 @@ class RechargeWnd extends egret.DisplayObjectContainer {
         this._classBtnContainer.width = GameMain.getInstance.StageWidth - 60
         this._payWayContain.addChild(this._classBtnContainer);
 
+
         this._payWayBtnContainer = new egret.DisplayObjectContainer();
         // this._payWayBtnContainer.y = 70;
         // this._payWayBtnContainer.x = 0
         this._payWayBtnContainer.width = GameMain.getInstance.StageWidth - 60
         this._payWayContain.addChild(this._payWayBtnContainer);
+
+        let warning = new egret.Bitmap();
+        this._payWayBtnContainer.addChild(warning);
+        warning.x = 42;
+        warning.width = 27;
+        warning.height = 27;
+        RES.getResByUrl("resource/assets/images/pay/ic_warning.png", (e) => { warning.$setBitmapData(e); }, this);
+        let wayText2 = ToolMrg.getText(75, 2, 24, 0xbbbbbb);
+        this._payWayBtnContainer.addChild(wayText2);
+        wayText2.text = "选择支付方式";
+        let wayText3 = ToolMrg.getText(220, 2, 24, 0xe80707);
+        this._payWayBtnContainer.addChild(wayText3);
+        wayText3.text = "如有充值未到帐请联系【在线客服】";
         
 
         //底部按钮
@@ -360,14 +374,13 @@ class RechargeWnd extends egret.DisplayObjectContainer {
         let lastRWx = 0, rows = 0
         classList.forEach((className, index) => {
             let payWay = new PayWay(className)
-            
             this._classBtnContainer.addChild(payWay)
-            payWay.x = lastRWx
-            if ((payWay.x + payWay.width) > GameMain.getInstance.StageWidth) {
+            if ((lastRWx + payWay.width) > GameMain.getInstance.StageWidth) {
                 lastRWx = 0
                 rows++
             }
-            payWay.y = rows * payWay.height + 20
+            payWay.x = lastRWx
+            payWay.y = rows * (payWay.height + 20)
             payWay.touchEnabled = true
             // payWay.width = (this._classBtnContainer.width - 30) / 4
             // payWay.addEventListener(egret.TouchEvent.TOUCH_TAP, e => {
@@ -378,13 +391,13 @@ class RechargeWnd extends egret.DisplayObjectContainer {
             if (className === this._currentClass) {
                 payWay.select()
             }
-            lastRWx += payWay.x + payWay.width + 15
+            lastRWx = payWay.x + payWay.width + 15
         })
         this.drawPayWay()
     }
 
     private drawPayWay() {
-        let objheight:number = 0
+        let objheight:number = 20
         let item = RCway_Mrg.getInstance.getItem()
         // draw payWay
         this._payWayBtnContainer.y = this._classBtnContainer.y + this._classBtnContainer.height +20
@@ -535,6 +548,9 @@ class RechargeWnd extends egret.DisplayObjectContainer {
             this._moneyItem.Gget(key).removeEvent();
         for (let key of this._infoItem.keys)
             this._infoItem.Gget(key).removeEvent();
+        this._classObjContainer.forEach(payWay => {
+            payWay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.changeClass, this)
+        })
     }
 
     private clearMoneyText(): void {
