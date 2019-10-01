@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,ic_pay1_png,ic_pay2_png,ic_pay3_png,ic_pay4_png,ic_pay5_png,ic_pay6_png,ic_pay7_png,ic_pay8_png,ic_pay12_png,ic_pay22_png,ic_pay32_png,ic_pay42_png,ic_pay52_png,ic_pay62_png,ic_pay72_png,ic_pay82_png,51ad1_png,51ad2_png,ic_ad_png,51ad22_png,51ad3_jpg,wenzi5_png",
+			"keys": "bg_jpg,egret_icon_png,description_json,ic_pay1_png,ic_pay2_png,ic_pay3_png,ic_pay4_png,ic_pay5_png,ic_pay6_png,ic_pay7_png,ic_pay8_png,ic_pay12_png,ic_pay22_png,ic_pay32_png,ic_pay42_png,ic_pay52_png,ic_pay62_png,ic_pay72_png,ic_pay82_png,51ad1_png,51ad2_png,ic_ad_png,51ad22_png,51ad3_jpg,wenzi5_png,ic_pay13_png,ic_pay23_png,ic_pay33_png,ic_pay43_png,ic_pay53_png,ic_pay63_png,ic_pay73_png,ic_pay83_png,ic_warning_png",
 			"name": "preload"
 		}
 	],
@@ -141,6 +141,7 @@
 			"type": "image",
 			"url": "assets/images/pay/ic_pay8.png"
 		},
+		{
 			"name": "51ad1_png",
 			"type": "image",
 			"url": "assets/images/51ad/51ad1.png"
@@ -169,6 +170,11 @@
 			"name": "wenzi5_png",
 			"type": "image",
 			"url": "assets/images/ui/wenzi5.png"
+		},
+		{
+			"name": "ic_warning_png",
+			"type": "image",
+			"url": "assets/images/pay/ic_warning.png"
 		}
 	]
 }

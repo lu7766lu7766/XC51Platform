@@ -37,9 +37,9 @@ class RCway_info extends egret.DisplayObjectContainer{
 
         this._icon = new egret.Bitmap();
         this.addChild(this._icon);
-        this._icon.width = 40;
-        this._icon.height = 40;
-        this._icon.x = 80;
+        // this._icon.width = 40;
+        // this._icon.height = 40;
+        // this._icon.x = 80;
         this._icon.y = 40;
     }
 
@@ -92,7 +92,13 @@ class RCway_info extends egret.DisplayObjectContainer{
                 imageNuumber = '2'
             break
         }
-        RES.getResByUrl('resource/assets/images/pay/ic_pay' + imageNuumber + '.png',(e)=>{this._icon.$setBitmapData(e); },this);
+        RES.getResByUrl('resource/assets/images/pay/ic_pay' + imageNuumber + '.png',(e)=>{
+            this._icon.$setBitmapData(e); 
+            const rate = this._icon.$getWidth() / this._icon.$getHeight()
+            this._icon.height = 40
+            this._icon.width = 40 * rate
+            this._icon.x = (110 - this._icon.width) / 2 + 40;
+        },this);
     }
 
     private touchDown():void{
@@ -184,11 +190,16 @@ class PayWay extends egret.DisplayObjectContainer{
 
         this._icon = new egret.Bitmap();
         this.addChild(this._icon);
-        this._icon.x = (this.width - 50) / 2;
         this._icon.y = 10;
-        this._icon.width = 50
-        this._icon.height = 50
-        RES.getResByUrl(this._iconUrl, (e)=>{this._icon.$setBitmapData(e);},this);
+        // this._icon.width = 50
+        // this._icon.height = 50
+        RES.getResByUrl(this._iconUrl, (e)=>{
+            this._icon.$setBitmapData(e);
+            const rate = this._icon.$getWidth() / this._icon.$getHeight()
+            this._icon.height = 50
+            this._icon.width = 50 * rate
+            this._icon.x = (this.width - this._icon.width) / 2;
+        },this);
 
         this._title = ToolMrg.getText(0, 70, 28, 0x333333);
         this._title.text = this._titleTxt
