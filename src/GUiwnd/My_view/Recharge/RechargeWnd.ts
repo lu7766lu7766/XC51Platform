@@ -55,6 +55,13 @@ class RechargeWnd extends egret.DisplayObjectContainer {
     /**支付方式子类 */
     private _infoItem: GHashMap<RCway_info>;
 
+    // currentClass
+    private _currentClass: string;
+    private _classBtnContainer: egret.DisplayObjectContainer
+    private _classObjContainer: Array<PayWay> = []
+    private _payWayBtnContainer: egret.DisplayObjectContainer
+    private _payWayObjContainer: Array<RCway_info> = []
+
     constructor() {
         super();
 
@@ -192,6 +199,33 @@ class RechargeWnd extends egret.DisplayObjectContainer {
         let wayText = ToolMrg.getText(38, 38 + 5, 24, 0x333333);
         this._payWayContain.addChild(wayText);
         wayText.text = "选择支付方式";
+
+        this._classBtnContainer = new egret.DisplayObjectContainer();
+        this._classBtnContainer.y = 70;
+        this._classBtnContainer.x = 30
+        this._classBtnContainer.width = GameMain.getInstance.StageWidth - 60
+        this._payWayContain.addChild(this._classBtnContainer);
+
+
+        this._payWayBtnContainer = new egret.DisplayObjectContainer();
+        // this._payWayBtnContainer.y = 70;
+        // this._payWayBtnContainer.x = 0
+        this._payWayBtnContainer.width = GameMain.getInstance.StageWidth - 60
+        this._payWayContain.addChild(this._payWayBtnContainer);
+
+        let warning = new egret.Bitmap();
+        this._payWayBtnContainer.addChild(warning);
+        warning.x = 42;
+        warning.width = 27;
+        warning.height = 27;
+        RES.getResByUrl("resource/assets/images/pay/ic_warning.png", (e) => { warning.$setBitmapData(e); }, this);
+        let wayText2 = ToolMrg.getText(75, 2, 24, 0xbbbbbb);
+        this._payWayBtnContainer.addChild(wayText2);
+        wayText2.text = "选择支付方式";
+        let wayText3 = ToolMrg.getText(220, 2, 24, 0xe80707);
+        this._payWayBtnContainer.addChild(wayText3);
+        wayText3.text = "如有充值未到帐请联系【在线客服】";
+        
 
         //底部按钮
         this._payBtn = new egret.Bitmap();
@@ -332,26 +366,65 @@ class RechargeWnd extends egret.DisplayObjectContainer {
     }
 
     private updata(): void {
-        let item = RCway_Mrg.getInstance.getItem();
-        let objheight = 92;
+        let item = RCway_Mrg.getInstance.getItem()
+        this._currentClass = item[item.keys[0]].class
+
+        // draw class btn
+        const classList = RCway_Mrg.getInstance.getItemClassList();
+        let lastRWx = 0, rows = 0
+        classList.forEach((className, index) => {
+            let payWay = new PayWay(className)
+            this._classBtnContainer.addChild(payWay)
+            if ((lastRWx + payWay.width) > GameMain.getInstance.StageWidth) {
+                lastRWx = 0
+                rows++
+            }
+            payWay.x = lastRWx
+            payWay.y = rows * (payWay.height + 20)
+            payWay.touchEnabled = true
+            // payWay.width = (this._classBtnContainer.width - 30) / 4
+            // payWay.addEventListener(egret.TouchEvent.TOUCH_TAP, e => {
+            //     console.log(className, payWay.getClass())
+            // }, this)
+            payWay.addEventListener(egret.TouchEvent.TOUCH_TAP, this.changeClass, this)
+            this._classObjContainer.push(payWay)
+            if (className === this._currentClass) {
+                payWay.select()
+            }
+            lastRWx = payWay.x + payWay.width + 15
+        })
+        this.drawPayWay()
+    }
+
+    private drawPayWay() {
+        let objheight:number = 20
+        let item = RCway_Mrg.getInstance.getItem()
+        // draw payWay
+        this._payWayBtnContainer.y = this._classBtnContainer.y + this._classBtnContainer.height +20
         for (let key of item.keys) {
             let obj: RCway_info;
-            if (this._infoItem.GhasKey(key)) {
-                obj = this._infoItem.Gget(key);
-            } else {
-                obj = new RCway_info();
-                this._infoItem.Gput(key, obj);
+            const realItem = item[key]
+            if (this._currentClass === realItem.class) {
+                if (this._infoItem.GhasKey(key)) {
+                    obj = this._infoItem.Gget(key);
+                } else {
+                    obj = new RCway_info();
+                    this._infoItem.Gput(key, obj);
+                }
+                obj.aa(item.Gget(key), key);
+                obj.addEvent();
+                obj.y = objheight + 20;
+                objheight += obj.height;
+                if (obj.parent == undefined) {
+                    this._payWayBtnContainer.addChild(obj);
+                }    
+                this._payWayObjContainer.push(obj)
             }
-            obj.aa(item.Gget(key), key);
-            obj.addEvent();
-            obj.y = objheight;
-            objheight = objheight + obj.height;
-            if (obj.parent == undefined)
-                this._payWayContain.addChild(obj);
         }
+        
         ToolMrg.upItemofGHashMap(this._infoItem, item);
 
-        this._downContain.y = this._payWayContain.y + objheight;
+        this._downContain.y = this._payWayContain.y + this._payWayContain.height + 60;
 
         this.changeWayInfo();
         if (this.decideInput == false) {
@@ -359,6 +432,32 @@ class RechargeWnd extends egret.DisplayObjectContainer {
         }
         this._moneyText.text = "" + this._money;
         this._payText.text = this._money + "元";
+    }
+
+    private changeClass(e) {
+        this._classObjContainer.forEach(classObj => {
+            classObj.noselect()
+        })
+        this._payWayObjContainer.forEach(payWay => {
+            this._payWayBtnContainer.removeChild(payWay)
+        })
+        this._payWayObjContainer = []
+        e.target.select()
+        this._currentClass = e.target.getClass()
+        this.changeWayNum(this.getWayNum(this._currentClass))
+        this.drawPayWay()
+    }
+
+    private getWayNum(className) {
+        let item = RCway_Mrg.getInstance.getItem()
+        let res = 0
+        for(const key of item.keys) {
+            if(item[key].class === className) {
+                res = +key
+                break
+            }
+        }
+        return res
     }
 
     private setUseNews(): void {
@@ -449,6 +548,9 @@ class RechargeWnd extends egret.DisplayObjectContainer {
             this._moneyItem.Gget(key).removeEvent();
         for (let key of this._infoItem.keys)
             this._infoItem.Gget(key).removeEvent();
+        this._classObjContainer.forEach(payWay => {
+            payWay.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.changeClass, this)
+        })
     }
 
     private clearMoneyText(): void {
