@@ -485,7 +485,7 @@ class JJTiao extends egret.DisplayObjectContainer {
 
         if (this._dtWZ == undefined) {
             this._dtWZ = new egret.Bitmap();
-            RES.getResByUrl(`resource/assets/images/ui/wenzi.png`, (e) => {
+            RES.getResByUrl(`resource/assets/images/ui/wenzi5.png`, (e) => {
                 this._dtWZ.$setBitmapData(e);
             }, this);
         }
