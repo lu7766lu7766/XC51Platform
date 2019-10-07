@@ -43,8 +43,8 @@ class ID1 extends egret.DisplayObjectContainer{
     private init():void{
         let btn1 = new egret.Bitmap();
         this._mContain.addChild(btn1);
-        // RES.getResByUrl(`resource/assets/images/ui/jqs1_find@2x.png`,(e)=>{btn1.$setBitmapData(e); },this);
-        RES.getResByUrl(`resource/assets/images/51ad/51ad3.jpg`,(e)=>{btn1.$setBitmapData(e); },this);
+        RES.getResByUrl(`resource/assets/images/ui/jqs1_find@2x.png`,(e)=>{btn1.$setBitmapData(e); },this);
+        // RES.getResByUrl(`resource/assets/images/51ad/51ad3.jpg`,(e)=>{btn1.$setBitmapData(e); },this);
 
         let text = ToolMrg.getText(44,410,24,0x333333);
         this._mContain.addChild(text);
@@ -59,9 +59,9 @@ class ID1 extends egret.DisplayObjectContainer{
         text.textFlow = <Array<egret.ITextElement>>[
             { "text": "活动对象：51彩站首存会员\n活动开始时间：2019-06-11 11:00:00开始\n活动结束时间：2022-06-30 00:00:00\n\n\n", style: { "textColor": 0x333333, size: 24 } },
             { "text": "申请方式：", style: { "textColor": 0x333333, size: 24 , bold: true } },
-            { "text": "\n\n竞彩足球与竞彩篮球2串1或以上的串关，串关赔率在1.75以上\n的单注盈利上加奖5%，加奖奖金不封顶无上限，符合要求的\n"
+            { "text": "\n\n竞彩足球与竞彩篮球2串1或以上的串关，串关赔率在1.75以上\n的单注盈利上加奖10%，加奖奖金不封顶无上限，符合要求的\n"
         +"单注系统自动派奖无需申请。\n例如：A队对战B队，C队对战D队，选择A让胜串C让负，赔率\n为5.8，下注金额为100元，赢得580元，另外加奖"
-        +"5%为29元，\n最终实际赢得609元彩金，计算公式为：\n (100*5.8)+(100*5.8*5%)=609元彩金。\n\n\n", style: { "textColor": 0x333333, size: 24 } },
+        +"10%为58元，\n最终实际赢得638元彩金，计算公式为：\n (100*5.8)+(100*5.8*10%)=638元彩金。\n\n\n", style: { "textColor": 0x333333, size: 24 } },
         { "text": "活动细则：", style: { "textColor": 0x333333, size: 24 , bold: true } },
         
         { "text": "\n\n1.本活动适用于51彩站全体会员。\n\n2.每位有效玩家"
