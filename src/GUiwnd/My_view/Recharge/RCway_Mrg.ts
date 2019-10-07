@@ -85,4 +85,5 @@ class RCway_Data{
 
     public class: string;
     public description: string;
+    public bank_card_id: string;
 }

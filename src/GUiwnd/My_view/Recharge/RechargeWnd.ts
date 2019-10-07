@@ -523,7 +523,11 @@ class RechargeWnd extends egret.DisplayObjectContainer {
                 Alertpaner.getInstance.show("不能高于所选最大充值金额");
                 return;
             }
-            PayGo.getInstance.sendHttp(this._money, this._data._type, this._data._type);
+            if (this._data.class === 'BankPay') {
+
+            } else {
+                PayGo.getInstance.sendHttp(this._money, this._data._type, this._data._type);
+            }
             // if(window["go2Url"]) {
             //     window["go2Url"]("http://baidu.com");
             // }
