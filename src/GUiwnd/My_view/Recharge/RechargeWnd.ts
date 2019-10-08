@@ -524,7 +524,8 @@ class RechargeWnd extends egret.DisplayObjectContainer {
                 return;
             }
             if (this._data.class === 'BankPay') {
-
+                BankCardDepositWnd.getInstance.money = this._money
+                BankCardInfoRequest.getInstance.sendHttp(this._data.bank_card_id);
             } else {
                 PayGo.getInstance.sendHttp(this._money, this._data._type, this._data._type);
             }

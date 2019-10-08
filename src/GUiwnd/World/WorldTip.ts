@@ -112,7 +112,8 @@ class WorldTip extends egret.DisplayObjectContainer {
         this._s.y = 40;
         let str:string[] =  this.arr[this.num].split("&");
         // this._s.text = str[0] + GUtilMath.randomNum(1,19) + str[1] + (GUtilMath.randomNum(10,99)) + str[2];
-        this._s.text = this.getShowData().conten // this.getList().conten;
+        const data = this.getShowData()
+        this._s.text = data ? data.conten : '' // this.getList().conten;
         this.num+=1;
         if(this.num==this.arr.length)
             this.num=0;

@@ -247,8 +247,8 @@ class ToolMrg {
 		return str;
 	}
 
-	public static getText(x: number, y: number, size: number, color: number, width?: number, isbold?: boolean): egret.TextField {
-		let text = new egret.TextField();
+	public static getText(x: number, y: number, size: number, color: number, width?: number, isbold?: boolean): JacText {
+		let text = new JacText();
 		// if(isbold!=undefined&&isbold==true){
 		// 	text.fontFamily = "text";
 		// 	text.bold = isbold;
@@ -439,4 +439,107 @@ class ToolMrg {
 			return Number(strT);
 		}
 	}
+}
+
+interface iObject {
+	x: number
+	y: number
+	width: number
+	height: number
+}
+
+class PositionTool {
+	public static getBelow(obj: iObject) {
+		return obj.y + obj.height
+	}
+
+	public static getRight(obj: iObject) {
+		return obj.x + obj.width
+	}
+}
+
+class JacText extends egret.TextField
+{
+	private _placholder: string
+	private _color: number
+	private _initColor: number = 0xaaaaaa
+	
+	public set placeholder(_text) {
+		this._placholder = _text
+		this._color = this.textColor
+		this.placeholderInit()
+		this.touchEnabled = true
+		this.addEventListener(egret.TouchEvent.FOCUS_IN, this.focus, this)
+		this.addEventListener(egret.TouchEvent.FOCUS_OUT, this.blur, this)
+	}
+
+	constructor() {
+		super()
+	}
+
+	private placeholderInit() {
+		this.text = this._placholder
+		this.textColor = this._initColor
+	}
+
+	private startInput() {
+		this.text = ''
+		this.textColor = this._color
+	}
+
+	private focus(e: egret.TouchEvent): void {
+		if (this.text === this._placholder) {
+			this.startInput()
+		}
+	}
+
+	private blur(e: egret.TouchEvent): void {
+		if (this.text === '') {
+			this.placeholderInit()
+		}
+	}
+
+	public getText() {
+		if (this.text === this._placholder) {
+			return ''
+		} 
+		return this.text
+	}
+}
+
+class CopyBtn extends egret.TextField 
+{
+    private copyTxt: string
+
+    constructor(size, copyTxt) {
+        super()
+        this.copyTxt = copyTxt
+        this.size = size
+        this.height = size + 16
+        this.width = size * 2 + 33
+        this.textAlign = egret.HorizontalAlign.CENTER
+        this.verticalAlign = egret.VerticalAlign.MIDDLE
+        this.text = '复制'
+        this.textColor = 0x18a1db
+        this.border = true
+        this.borderColor = 0x333333
+        this.touchEnabled = true
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.touchDown, this)
+    }
+
+    private touchDown(e: egret.TouchEvent) {
+        this.copy(this.copyTxt)
+        Alertpaner.getInstance.show("复制成功");
+    }
+
+    private copy(text:string) {
+        let copy = document.createElement("input");
+        copy.value = text;
+        document.body.appendChild(copy);
+        copy.select();
+        copy.setSelectionRange(0,copy.value.length);
+        document.execCommand('Copy');
+        document.body.removeChild(copy);
+        copy.setAttribute('readOnly','readOnly');
+    }
 }
