@@ -307,7 +307,7 @@ class BankCardDepositWnd extends egret.DisplayObjectContainer {
             } else {
                 BankCardDepositRequest.getInstance.sendHttp(
                     this.transferSaverInput.getText(), 
-                    this.depositTimeInput.getText(), 
+                    (new Date(this.depositTimeInput.getText()).getTime() / 1000).toString(), 
                     this.money.toString(),
                     this.data.id,
                     UserData.getInstance.userId,
