@@ -72,6 +72,10 @@ class PayPL implements IProHandle {
 					rCway_Data.payType = 0;
 					rCway_Data.class = lst_pay[i]["class"];
 					rCway_Data.description = lst_pay[i]["description"];
+					if (lst_pay[i].bank_card) {
+						rCway_Data.bank_card_id = lst_pay[i].bank_card["id"];
+						rCway_Data.bank_name = lst_pay[i].bank_card["bank_name"];
+					}
 
 					RCway_Mrg.getInstance.addItem(i, rCway_Data);
 				}

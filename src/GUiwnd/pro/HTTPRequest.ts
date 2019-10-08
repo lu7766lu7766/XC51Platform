@@ -11,6 +11,8 @@ class HTTPRequest {
 	// public httpHeadUrl: string = 'http://api.51caiz.com/test/';
 	// test 
 	public httpHeadUrl: string = 'http://api.platform.51.xing99.cc/test/';
+	public getApiUrl(url):string { return this.httpHeadUrl.replace('/test', '/' + url) }
+
 
 	//public httpHeadUrl: string = 'http://129.204.53.154/other/test/';
 	// public httpHeadUrl: string = 'http://192.168.20.23/ticket/api/';
@@ -60,6 +62,8 @@ class HTTPRequest {
 		this._mProHandleMap.Gput("Super_Ft", Super_Ft.getInstance);
 		this._mProHandleMap.Gput("PayGo", PayGo.getInstance);
 		this._mProHandleMap.Gput("PayPL", PayPL.getInstance);
+		this._mProHandleMap.Gput("BankCardInfo", BankCardInfoRequest.getInstance);
+		this._mProHandleMap.Gput("BankCardDeposit", BankCardDepositRequest.getInstance);
 		this._mProHandleMap.Gput("UserInfoPhp", UserInfoPhp.getInstance);
 		this._mProHandleMap.Gput("BK_List", BK_List.getInstance);
 		this._mProHandleMap.Gput("BK_List_More", BK_List_More.getInstance);

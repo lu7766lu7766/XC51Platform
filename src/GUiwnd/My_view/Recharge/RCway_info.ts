@@ -62,8 +62,11 @@ class RCway_info extends egret.DisplayObjectContainer{
     public aa(data:RCway_Data,id):void{
         this._data = data;
         this._id = id;
-        
-        this._title.text = `充值范围${data.small}元~${data.max}元` //data._title;
+        if (data.class === 'BankPay') {
+            this._title.text = `${data.bank_name}${data.small}元~${data.max}元` //data._title;
+        } else {
+            this._title.text = `充值范围${data.small}元~${data.max}元` //data._title;
+        }
         this._content.text = data.description;
         let imageNuumber: string
         switch(data.class) {
