@@ -247,14 +247,14 @@ class WorldWnd extends egret.DisplayObjectContainer {
         this._banner.touchEnabled = true;
         this._banner.y = objHeight + 20;
         // this._banner.y = objHeight + 20 + 136;
-        // RES.getResByUrl("resource/assets/images/ui/haibao_home@2x.png", (e) => {
-        //     this._banner.$setBitmapData(e);
-        //     this._banner.x = (GameMain.getInstance.StageWidth - this._banner.width) * 0.5;
-        // }, this)
-        RES.getResByUrl("resource/assets/images/51ad/ic_ad.png", (e) => {
+        RES.getResByUrl("resource/assets/images/ui/haibao_home@2x.png", (e) => {
             this._banner.$setBitmapData(e);
             this._banner.x = (GameMain.getInstance.StageWidth - this._banner.width) * 0.5;
         }, this)
+        // RES.getResByUrl("resource/assets/images/51ad/ic_ad.png", (e) => {
+        //     this._banner.$setBitmapData(e);
+        //     this._banner.x = (GameMain.getInstance.StageWidth - this._banner.width) * 0.5;
+        // }, this)
 
         this._downContain.y = this._centerContain.y + objHeight + 20 + 140 + 34;
 
@@ -485,9 +485,12 @@ class JJTiao extends egret.DisplayObjectContainer {
 
         if (this._dtWZ == undefined) {
             this._dtWZ = new egret.Bitmap();
-            RES.getResByUrl(`resource/assets/images/ui/wenzi5.png`, (e) => {
+            RES.getResByUrl(`resource/assets/images/ui/wenzi.png`, (e) => {
                 this._dtWZ.$setBitmapData(e);
             }, this);
+            // RES.getResByUrl(`resource/assets/images/ui/wenzi5.png`, (e) => {
+            //     this._dtWZ.$setBitmapData(e);
+            // }, this);
         }
         this.addChild(this._dtWZ);
         this._dtWZ.x = x + 6;
