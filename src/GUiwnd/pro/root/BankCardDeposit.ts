@@ -84,7 +84,7 @@ class BankCardDepositRequest implements IProHandle {
 			} catch (error) {
 				return;
 			}
-			if(text["code"] != "200"){
+			if([200, 201].indexOf(text["code"]) === -1){
                 Alertpaner.getInstance.show("申請失败");
             } else {
 				Alertpaner.getInstance.show("申请成功");
