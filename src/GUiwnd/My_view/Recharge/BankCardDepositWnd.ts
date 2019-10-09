@@ -10,6 +10,7 @@ class BankCardDepositWnd extends egret.DisplayObjectContainer {
     private _topUI: TopUIWhite;
     private _return: egret.Shape;
 
+    private now: Date
 
     private _mContain: egret.DisplayObjectContainer;
     private _scroContain: egret.DisplayObjectContainer;
@@ -78,12 +79,13 @@ class BankCardDepositWnd extends egret.DisplayObjectContainer {
         depositTimeTitle.text = "存款时间:";
         depositContainer.addChild(depositTimeTitle);
         
-        const now = new Date()
+        this.now = new Date()
         this.depositTimeInput = ToolMrg.getText(200, PositionTool.getBelow(depositTitle) + 50, 28, 0x333333, 500);
         this.depositTimeInput.type = egret.TextFieldType.INPUT;
         this.depositTimeInput.verticalAlign = egret.VerticalAlign.MIDDLE;
         // depositTimeInput.placeholder = '2019-01-01 12:00:00'
-        this.depositTimeInput.text = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+        this.depositTimeInput.text = `${this.now.getFullYear()}-${(this.now.getMonth() + 1).FillLeft(2)}-${this.now.getDate().FillLeft(2)} ` + 
+                                    `${this.now.getHours().FillLeft(2)}:${this.now.getMinutes().FillLeft(2)}:${this.now.getSeconds().FillLeft(2)}`
         depositContainer.addChild(this.depositTimeInput);
 
         const depositTimeHR = new egret.Shape();
@@ -307,8 +309,8 @@ class BankCardDepositWnd extends egret.DisplayObjectContainer {
             } else {
                 BankCardDepositRequest.getInstance.sendHttp(
                     this.transferSaverInput.getText(), 
-                    (new Date(this.depositTimeInput.getText()).getTime() / 1000).toString(), 
-                    this.money.toString(),
+                    (this.now.getTime() / 1000).toString(), 
+                    (this.money*100).toString(),
                     this.data.id,
                     UserData.getInstance.userId,
                     GameValue.orderKey)
@@ -338,4 +340,14 @@ class BankCardInfo
     public delete_time: string;
     public status: string;
     public update_time: string;
+}
+
+interface Number {
+    FillLeft(str: number): string;
+}
+
+Number.prototype.FillLeft = function(len) {
+    let res = this + ''
+    while(res.length < len) res = '0' + res
+    return res
 }
